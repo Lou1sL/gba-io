@@ -1,0 +1,90 @@
+19:54:24 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+19:54:28 **** Auto Build of configuration Debug for project ddr3_test ****
+make all 
+'Building file: ../src/memorytest.c'
+'Invoking: MicroBlaze gcc compiler'
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/memorytest.o" -I../../ddr3_test_bsp/microblaze_0/include -mlittle-endian -mcpu=v11.0 -mxl-soft-mul -Wl,--no-relax -ffunction-sections -fdata-sections -MMD -MP -MF"src/memorytest.d" -MT"src/memorytest.o" -o "src/memorytest.o" "../src/memorytest.c"
+'Finished building: ../src/memorytest.c'
+' '
+'Building target: ddr3_test.elf'
+'Invoking: MicroBlaze gcc linker'
+mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../ddr3_test_bsp/microblaze_0/lib -mlittle-endian -mcpu=v11.0 -mxl-soft-mul -Wl,--no-relax -Wl,--gc-sections -o "ddr3_test.elf"  ./src/memory_config_g.o ./src/memorytest.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ddr3_test.elf'
+' '
+'Invoking: MicroBlaze Print Size'
+mb-size ddr3_test.elf  |tee "ddr3_test.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+   8496	    288	   1064	   9848	   2678	ddr3_test.elf
+'Finished building: ddr3_test.elf.size'
+' '
+19:55:37 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+19:58:06 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+20:01:05 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+20:01:37 **** Auto Build of configuration Debug for project ddr3_test ****
+make all 
+'Building file: ../src/memorytest.c'
+'Invoking: MicroBlaze gcc compiler'
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/memorytest.o" -I../../ddr3_test_bsp/microblaze_0/include -mlittle-endian -mcpu=v11.0 -mxl-soft-mul -Wl,--no-relax -ffunction-sections -fdata-sections -MMD -MP -MF"src/memorytest.d" -MT"src/memorytest.o" -o "src/memorytest.o" "../src/memorytest.c"
+'Finished building: ../src/memorytest.c'
+' '
+'Building target: ddr3_test.elf'
+'Invoking: MicroBlaze gcc linker'
+mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../ddr3_test_bsp/microblaze_0/lib -mlittle-endian -mcpu=v11.0 -mxl-soft-mul -Wl,--no-relax -Wl,--gc-sections -o "ddr3_test.elf"  ./src/memory_config_g.o ./src/memorytest.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ddr3_test.elf'
+' '
+'Invoking: MicroBlaze Print Size'
+mb-size ddr3_test.elf  |tee "ddr3_test.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+   8496	    288	   1064	   9848	   2678	ddr3_test.elf
+'Finished building: ddr3_test.elf.size'
+' '
+20:01:43 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+20:02:25 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+20:08:34 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+20:11:10 **** Auto Build of configuration Debug for project ddr3_test ****
+make all 
+'Building file: ../src/memorytest.c'
+'Invoking: MicroBlaze gcc compiler'
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/memorytest.o" -I../../ddr3_test_bsp/microblaze_0/include -mlittle-endian -mcpu=v11.0 -mxl-soft-mul -Wl,--no-relax -ffunction-sections -fdata-sections -MMD -MP -MF"src/memorytest.d" -MT"src/memorytest.o" -o "src/memorytest.o" "../src/memorytest.c"
+'Finished building: ../src/memorytest.c'
+' '
+'Building target: ddr3_test.elf'
+'Invoking: MicroBlaze gcc linker'
+mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../ddr3_test_bsp/microblaze_0/lib -mlittle-endian -mcpu=v11.0 -mxl-soft-mul -Wl,--no-relax -Wl,--gc-sections -o "ddr3_test.elf"  ./src/memory_config_g.o ./src/memorytest.o ./src/platform.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+'Finished building target: ddr3_test.elf'
+' '
+'Invoking: MicroBlaze Print Size'
+mb-size ddr3_test.elf  |tee "ddr3_test.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+   8532	    288	   1068	   9888	   26a0	ddr3_test.elf
+'Finished building: ddr3_test.elf.size'
+' '
+20:11:20 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+20:20:32 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+20:20:48 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+20:21:31 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.
+22:59:35 **** Incremental Build of configuration Debug for project ddr3_test ****
+make all 
+make: Nothing to be done for 'all'.

@@ -1,0 +1,28 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Wed Feb  5 20:43:12 2025
+# Process ID: 29460
+# Current directory: E:/Projects/Hardware/gba-io/reference/Aritx7开发板资料d/FPGA例程/100T/gpif_vfifo
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent24424 E:\Projects\Hardware\gba-io\reference\Aritx7开发板资料d\FPGA例程\100T\gpif_vfifo\gpif_vfifo.xpr
+# Log file: E:/Projects/Hardware/gba-io/reference/Aritx7开发板资料d/FPGA例程/100T/gpif_vfifo/vivado.log
+# Journal file: E:/Projects/Hardware/gba-io/reference/Aritx7开发板资料d/FPGA例程/100T/gpif_vfifo\vivado.jou
+# Running On        :RyuBAI-PC
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :19044
+# Processor Detail  :AMD Ryzen 9 5900X 12-Core Processor            
+# CPU Frequency     :3700 MHz
+# CPU Physical cores:12
+# CPU Logical cores :24
+# Host memory       :34281 MB
+# Swap memory       :17448 MB
+# Total Virtual     :51729 MB
+# Available Virtual :28050 MB
+#-----------------------------------------------------------
+start_gui
+open_project E:/Projects/Hardware/gba-io/reference/Aritx7开发板资料d/FPGA例程/100T/gpif_vfifo/gpif_vfifo.xpr
+update_compile_order -fileset sources_1
+open_bd_design {E:/Projects/Hardware/gba-io/reference/Aritx7开发板资料d/FPGA例程/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/vfifo.bd}
+open_bd_design {E:/Projects/Hardware/gba-io/reference/Aritx7开发板资料d/FPGA例程/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/vfifo.bd}

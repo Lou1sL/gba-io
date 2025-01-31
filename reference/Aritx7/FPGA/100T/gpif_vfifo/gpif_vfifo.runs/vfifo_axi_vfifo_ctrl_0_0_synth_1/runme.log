@@ -1,0 +1,552 @@
+
+*** Running vivado
+    with args -log vfifo_axi_vfifo_ctrl_0_0.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source vfifo_axi_vfifo_ctrl_0_0.tcl
+
+
+****** Vivado v2019.1 (64-bit)
+  **** SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+  **** IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source vfifo_axi_vfifo_ctrl_0_0.tcl -notrace
+Command: synth_design -top vfifo_axi_vfifo_ctrl_0_0 -part xc7a100tfgg484-2 -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Device 21-403] Loading part xc7a100tfgg484-2
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 3324 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:16 ; elapsed = 00:00:21 . Memory (MB): peak = 754.797 ; gain = 177.477
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'vfifo_axi_vfifo_ctrl_0_0' [f:/workspace/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/ip/vfifo_axi_vfifo_ctrl_0_0/synth/vfifo_axi_vfifo_ctrl_0_0.vhd:130]
+	Parameter C_FAMILY bound to: artix7 - type: string 
+	Parameter C_SELECT_XPM bound to: 0 - type: integer 
+	Parameter C_DRAM_BASE_ADDR bound to: 80000000 - type: string 
+	Parameter C_HAS_AXIS_TUSER bound to: 0 - type: integer 
+	Parameter C_AXIS_TDATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_AXIS_TUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXIS_TID_WIDTH bound to: 1 - type: integer 
+	Parameter C_AXI_BURST_SIZE bound to: 1024 - type: integer 
+	Parameter C_AXI_ADDR_WIDTH bound to: 32 - type: integer 
+	Parameter C_NUM_CHANNEL bound to: 2 - type: integer 
+	Parameter C_NUM_PAGE_CH0 bound to: 512 - type: integer 
+	Parameter C_NUM_PAGE_CH1 bound to: 16 - type: integer 
+	Parameter C_NUM_PAGE_CH2 bound to: 16 - type: integer 
+	Parameter C_NUM_PAGE_CH3 bound to: 16 - type: integer 
+	Parameter C_NUM_PAGE_CH4 bound to: 16 - type: integer 
+	Parameter C_NUM_PAGE_CH5 bound to: 16 - type: integer 
+	Parameter C_NUM_PAGE_CH6 bound to: 16 - type: integer 
+	Parameter C_NUM_PAGE_CH7 bound to: 16 - type: integer 
+	Parameter C_IMPLEMENTATION_TYPE bound to: 1 - type: integer 
+	Parameter C_HAS_AXIS_TID bound to: 1 - type: integer 
+	Parameter C_ENABLE_INTERRUPT bound to: 0 - type: integer 
+	Parameter C_AR_WEIGHT_CH0 bound to: 8 - type: integer 
+	Parameter C_AR_WEIGHT_CH1 bound to: 8 - type: integer 
+	Parameter C_AR_WEIGHT_CH2 bound to: 8 - type: integer 
+	Parameter C_AR_WEIGHT_CH3 bound to: 8 - type: integer 
+	Parameter C_AR_WEIGHT_CH4 bound to: 8 - type: integer 
+	Parameter C_AR_WEIGHT_CH5 bound to: 8 - type: integer 
+	Parameter C_AR_WEIGHT_CH6 bound to: 8 - type: integer 
+	Parameter C_AR_WEIGHT_CH7 bound to: 8 - type: integer 
+	Parameter C_DEASSERT_TREADY bound to: 0 - type: integer 
+	Parameter C_S2MM_TXN_TIMEOUT_VAL bound to: 64 - type: integer 
+INFO: [Synth 8-3491] module 'axi_vfifo_ctrl_v2_0_21' declared at 'f:/workspace/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/ipshared/d078/hdl/axi_vfifo_ctrl_v2_0_rfs.vhd:12281' bound to instance 'U0' of component 'axi_vfifo_ctrl_v2_0_21' [f:/workspace/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/ip/vfifo_axi_vfifo_ctrl_0_0/synth/vfifo_axi_vfifo_ctrl_0_0.vhd:319]
+INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_sync_rst' [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1059]
+INFO: [Synth 8-5534] Detected attribute (* ASYNC_REG = "TRUE" *) [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1111]
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_sync_rst' (2#1) [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1059]
+INFO: [Synth 8-256] done synthesizing module 'vfifo_axi_vfifo_ctrl_0_0' (63#1) [f:/workspace/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/ip/vfifo_axi_vfifo_ctrl_0_0/synth/vfifo_axi_vfifo_ctrl_0_0.vhd:130]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH[5]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH[4]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH[3]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH[2]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH[1]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH[0]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_ASSERT[5]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_ASSERT[4]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_ASSERT[3]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_ASSERT[2]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_ASSERT[1]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_ASSERT[0]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_NEGATE[5]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_NEGATE[4]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_NEGATE[3]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_NEGATE[2]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_NEGATE[1]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port PROG_FULL_THRESH_NEGATE[0]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port WR_RST
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port RST_FULL_FF
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port FULL
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port EMPTY
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port RAM_ALMOST_FULL
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port RAM_ALMOST_EMPTY
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port WR_PNTR[5]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port WR_PNTR[4]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port WR_PNTR[3]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port WR_PNTR[2]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port WR_PNTR[1]
+WARNING: [Synth 8-3331] design fifo_generator_v13_2_4_wr_pf_ss__parameterized2 has unconnected port WR_PNTR[0]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port RST_FULL_FF
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_RST
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port SRST
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port SAFETY_CKT_WR_RST
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS2[5]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS2[4]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS2[3]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS2[2]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS2[1]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS2[0]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS3[5]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS3[4]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS3[3]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS3[2]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS3[1]
+WARNING: [Synth 8-3331] design wr_status_flags_ss__parameterized1 has unconnected port WR_PNTR_PLUS3[0]
+WARNING: [Synth 8-3331] design wr_bin_cntr__parameterized1 has unconnected port RST
+WARNING: [Synth 8-3331] design wr_logic__parameterized2 has unconnected port WR_EN_INTO_LOGIC
+WARNING: [Synth 8-3331] design wr_logic__parameterized2 has unconnected port WR_RST_INTO_LOGIC
+WARNING: [Synth 8-3331] design wr_logic__parameterized2 has unconnected port RD_EN
+WARNING: [Synth 8-3331] design wr_logic__parameterized2 has unconnected port WR_RST_BUSY
+WARNING: [Synth 8-3331] design rd_fwft has unconnected port RD_RST
+WARNING: [Synth 8-3331] design rd_fwft has unconnected port SAFETY_CKT_RD_RST
+WARNING: [Synth 8-3331] design rd_fwft has unconnected port RAM_ALMOST_EMPTY
+WARNING: [Synth 8-3331] design rd_status_flags_ss__parameterized1 has unconnected port RD_RST
+WARNING: [Synth 8-3331] design rd_status_flags_ss__parameterized1 has unconnected port SAFETY_CKT_RD_RST
+WARNING: [Synth 8-3331] design rd_status_flags_ss__parameterized1 has unconnected port RD_PNTR_PLUS2[5]
+WARNING: [Synth 8-3331] design rd_status_flags_ss__parameterized1 has unconnected port RD_PNTR_PLUS2[4]
+WARNING: [Synth 8-3331] design rd_status_flags_ss__parameterized1 has unconnected port RD_PNTR_PLUS2[3]
+WARNING: [Synth 8-3331] design rd_status_flags_ss__parameterized1 has unconnected port RD_PNTR_PLUS2[2]
+WARNING: [Synth 8-3331] design rd_status_flags_ss__parameterized1 has unconnected port RD_PNTR_PLUS2[1]
+WARNING: [Synth 8-3331] design rd_status_flags_ss__parameterized1 has unconnected port RD_PNTR_PLUS2[0]
+WARNING: [Synth 8-3331] design rd_bin_cntr__parameterized1 has unconnected port RST
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port RD_EN_INTO_LOGIC
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port RD_RST_INTO_LOGIC
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port RD_RST_BUSY
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port RST_FULL_FF
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port ALMOST_FULL_FB
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port FULL
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port WR_PNTR_PLUS1_RD[5]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port WR_PNTR_PLUS1_RD[4]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port WR_PNTR_PLUS1_RD[3]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port WR_PNTR_PLUS1_RD[2]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port WR_PNTR_PLUS1_RD[1]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port WR_PNTR_PLUS1_RD[0]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH[5]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH[4]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH[3]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH[2]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH[1]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH[0]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_ASSERT[5]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_ASSERT[4]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_ASSERT[3]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_ASSERT[2]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_ASSERT[1]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_ASSERT[0]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_NEGATE[5]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_NEGATE[4]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_NEGATE[3]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_NEGATE[2]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_NEGATE[1]
+WARNING: [Synth 8-3331] design rd_logic__parameterized1 has unconnected port PROG_EMPTY_THRESH_NEGATE[0]
+WARNING: [Synth 8-3331] design dmem__parameterized1 has unconnected port RD_RST
+WARNING: [Synth 8-3331] design memory__parameterized3 has unconnected port FAB_REGOUT_EN
+WARNING: [Synth 8-3331] design memory__parameterized3 has unconnected port RD_RST
+WARNING: [Synth 8-3331] design memory__parameterized3 has unconnected port SFT_RST
+WARNING: [Synth 8-3331] design memory__parameterized3 has unconnected port SLEEP
+WARNING: [Synth 8-3331] design memory__parameterized3 has unconnected port INJECTDBITERR
+WARNING: [Synth 8-3331] design memory__parameterized3 has unconnected port INJECTSBITERR
+INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:04:41 ; elapsed = 00:04:55 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:04:42 ; elapsed = 00:04:56 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:04:42 ; elapsed = 00:04:56 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+INFO: [Netlist 29-17] Analyzing 72 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [f:/workspace/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/ip/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0_ooc.xdc] for cell 'U0'
+Finished Parsing XDC File [f:/workspace/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/ip/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0_ooc.xdc] for cell 'U0'
+Parsing XDC File [f:/workspace/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/ip/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0_ip.xdc] for cell 'U0'
+Finished Parsing XDC File [f:/workspace/gpif_vfifo/gpif_vfifo.srcs/sources_1/bd/vfifo/ip/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0_ip.xdc] for cell 'U0'
+Parsing XDC File [F:/workspace/gpif_vfifo/gpif_vfifo.runs/vfifo_axi_vfifo_ctrl_0_0_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [F:/workspace/gpif_vfifo/gpif_vfifo.runs/vfifo_axi_vfifo_ctrl_0_0_synth_1/dont_touch.xdc]
+Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/ar_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Finished Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/ar_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/aw_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Finished Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/aw_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/gvfifo_top/argen_inst/ar_mpf_inst/ar_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Finished Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/gvfifo_top/argen_inst/ar_mpf_inst/ar_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/gvfifo_top/tdest_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Finished Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/gvfifo_top/tdest_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/gvfifo_top/tid_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Finished Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/gvfifo_top/tid_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/w_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Finished Sourcing Tcl File [D:/Xilinx/Vivado/2019.1/data/ip/xpm/xpm_cdc/tcl/xpm_cdc_sync_rst.tcl] for cell 'U0/inst_vfifo/w_fifo_inst/fifo_gen/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst'
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1353.598 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.199 . Memory (MB): peak = 1353.598 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:04:53 ; elapsed = 00:05:07 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tfgg484-2
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:04:53 ; elapsed = 00:05:07 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property DONT_TOUCH = true for U0. (constraint file  F:/workspace/gpif_vfifo/gpif_vfifo.runs/vfifo_axi_vfifo_ctrl_0_0_synth_1/dont_touch.xdc, line 9).
+Applied set_property DONT_TOUCH = true for U0/inst_vfifo/aw_fifo_inst/fifo_gen/inst_fifo_gen/\gconvfifo.rf /\grf.rf /rstblk/\ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for U0/inst_vfifo/w_fifo_inst/fifo_gen/inst_fifo_gen/\gconvfifo.rf /\grf.rf /rstblk/\ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for U0/inst_vfifo/ar_fifo_inst/fifo_gen/inst_fifo_gen/\gconvfifo.rf /\grf.rf /rstblk/\ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for U0/inst_vfifo/gvfifo_top/argen_inst/ar_mpf_inst/ar_fifo_inst/fifo_gen/inst_fifo_gen/\gconvfifo.rf /\grf.rf /rstblk/\ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for U0/inst_vfifo/gvfifo_top/tdest_fifo_inst/fifo_gen/inst_fifo_gen/\gconvfifo.rf /\grf.rf /rstblk/\ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst . (constraint file  auto generated constraint, line ).
+Applied set_property DONT_TOUCH = true for U0/inst_vfifo/gvfifo_top/tid_fifo_inst/fifo_gen/inst_fifo_gen/\gconvfifo.rf /\grf.rf /rstblk/\ngwrdrst.grst.g7serrst.gsckt_wrst.xpm_cdc_sync_rst_inst_wrst . (constraint file  auto generated constraint, line ).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:04:53 ; elapsed = 00:05:07 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'gfwd_rev.state_reg' in module 'axic_register_slice'
+INFO: [Synth 8-5545] ROM "ch_arb_weight" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    zero |                             0010 |                               10
+                     one |                             1000 |                               11
+                     two |                             0100 |                               01
+                  iSTATE |                             0001 |                               00
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'gfwd_rev.state_reg' using encoding 'one-hot' in module 'axic_register_slice'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:04:57 ; elapsed = 00:05:11 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mctf_inst/mcf_inst/mcf_dfl_wr_inst/gmcpf_pf_gen.thresh_rom_inst/greg_out.QSPO_reg[0]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[1]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[2]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[3]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[4]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[5]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[6]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[7]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[8]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[9]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[10]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[11]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[12]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[13]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[14]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[28]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[29]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[30]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[31]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[0]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[1]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[2]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[3]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[4]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[5]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[6]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[7]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[8]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[9]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[10]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[11]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[12]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[13]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[14]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[28]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[29]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[30]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[31]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mctf_inst/mcf_inst/mcf_dfl_wr_inst/gmcpf_pf_gen.thresh_rom_inst/greg_out.QSPO_reg[1]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_wr_inst/gmcpf_pf_gen.thresh_rom_inst/greg_out.QSPO_reg[0]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_wr_inst/gmcpf_pf_gen.thresh_rom_inst/greg_out.QSPO_reg[1]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[15]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[17]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[18]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[19]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[20]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[22]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[23]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[24]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[25]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[26]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/depth_rom_inst/greg_out.QSPO_reg[27]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[15]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[16]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[17]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[18]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[19]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[20]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[5]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[21]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[6]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[22]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[7]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[23]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[8]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[24]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[9]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[25]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[10]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[26]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[11]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[27]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[12]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[15]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[16]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[1]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[17]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[2]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[18]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[3]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[19]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[4]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[20]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[5]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[21]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[6]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[22]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[7]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[23]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[8]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[24]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[9]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[25]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[10]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[26]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[11]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[27]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_wr_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.rd_pntr_pf_dly_reg[12]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[15]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[17]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[18]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[19]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[20]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[22]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[23]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[24]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[25]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[26]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/depth_rom_inst/greg_out.QSPO_reg[0]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[0]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[15]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[1]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[16]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[2]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[17]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[3]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[18]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[4]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[19]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[5]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[20]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[6]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[21]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[7]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[22]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[8]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[23]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[9]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[24]'
+INFO: [Synth 8-3886] merging instance 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/gin_reg.wr_pntr_pf_dly_reg[10]' (FDR) to 'U0/inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.rdp_dly_inst/gstage1.q_dly_reg[25]'
+INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (U0/\inst_vfifo/gvfifo_top/mcpf_inst/mcf_inst/mcf_dfl_rd_inst/gmcpf_pf_gen.thresh_rom_inst/greg_out.QSPO_reg[11] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (U0/\inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gch_idle.wrp_dly_inst/gstage1.q_dly_reg[1] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (U0/\inst_vfifo/gvfifo_top/awgen_inst/aw_rslice1/gfwd_mode.storage_data1_reg[4] )
+WARNING: [Synth 8-3332] Sequential element (inst_vfifo/gvfifo_top/garb/ch_req_rgslice/FSM_onehot_gfwd_rev.state_reg[0]) is unused and will be removed from module axi_vfifo_ctrl_v2_0_21.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:05:07 ; elapsed = 00:05:21 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:05:19 ; elapsed = 00:05:33 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:05:25 ; elapsed = 00:05:39 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:05:26 ; elapsed = 00:05:41 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5365] Flop inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/diff_pntr_reg[12] is being inverted and renamed to inst_vfifo/gvfifo_top/mcdf_inst/mcf_dfl_rd_inst/gptr_mcdf.gwr_data_1.mcdf_pf_gen_inst/diff_pntr_reg[12]_inv.
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:05:29 ; elapsed = 00:05:43 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:05:29 ; elapsed = 00:05:43 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:05:29 ; elapsed = 00:05:44 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:05:29 ; elapsed = 00:05:44 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:05:29 ; elapsed = 00:05:44 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:05:30 ; elapsed = 00:05:44 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----------+------+
+|      |Cell       |Count |
++------+-----------+------+
+|1     |CARRY4     |    80|
+|2     |DSP48E1    |    18|
+|3     |LUT1       |    39|
+|4     |LUT2       |   311|
+|5     |LUT3       |   164|
+|6     |LUT4       |   326|
+|7     |LUT5       |   240|
+|8     |LUT6       |   142|
+|9     |MUXCY      |    46|
+|10    |RAM16X1D   |    12|
+|11    |RAM32M     |    68|
+|12    |RAM64M     |     1|
+|13    |RAMB18E1   |     2|
+|14    |RAMB18E1_1 |     4|
+|15    |RAMB18E1_2 |     2|
+|16    |SRL16E     |    23|
+|17    |FDRE       |  1693|
+|18    |FDSE       |    76|
++------+-----------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:05:30 ; elapsed = 00:05:44 . Memory (MB): peak = 1353.598 ; gain = 776.277
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 134 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:41 ; elapsed = 00:05:37 . Memory (MB): peak = 1353.598 ; gain = 776.277
+Synthesis Optimization Complete : Time (s): cpu = 00:05:30 ; elapsed = 00:05:44 . Memory (MB): peak = 1353.598 ; gain = 776.277
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 233 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1353.598 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 99 instances were transformed.
+  (MUXCY,XORCY) => CARRY4: 18 instances
+  RAM16X1D => RAM32X1D (RAMD32, RAMD32): 12 instances
+  RAM32M => RAM32M (RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMS32, RAMS32): 68 instances
+  RAM64M => RAM64M (RAMD64E, RAMD64E, RAMD64E, RAMD64E): 1 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+128 Infos, 101 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:05:40 ; elapsed = 00:05:56 . Memory (MB): peak = 1353.598 ; gain = 1038.340
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1353.598 ; gain = 0.000
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint 'F:/workspace/gpif_vfifo/gpif_vfifo.runs/vfifo_axi_vfifo_ctrl_0_0_synth_1/vfifo_axi_vfifo_ctrl_0_0.dcp' has been generated.
+WARNING: [Common 17-576] 'use_project_ipc' is deprecated. This option is deprecated and no longer used.
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP vfifo_axi_vfifo_ctrl_0_0, cache-ID = 3e1945a4836b8758
+INFO: [Coretcl 2-1174] Renamed 392 cell refs.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1353.598 ; gain = 0.000
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint 'F:/workspace/gpif_vfifo/gpif_vfifo.runs/vfifo_axi_vfifo_ctrl_0_0_synth_1/vfifo_axi_vfifo_ctrl_0_0.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file vfifo_axi_vfifo_ctrl_0_0_utilization_synth.rpt -pb vfifo_axi_vfifo_ctrl_0_0_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Jul 19 22:03:41 2022...

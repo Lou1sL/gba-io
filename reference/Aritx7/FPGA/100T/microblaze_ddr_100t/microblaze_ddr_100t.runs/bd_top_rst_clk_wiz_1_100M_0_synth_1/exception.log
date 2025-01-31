@@ -1,0 +1,4 @@
+ERROR: Exception caught trying to open file E:\Projects\Hardware\gba-io\reference\Aritx7\FPGA\100T\microblaze_ddr_100t\microblaze_ddr_100t.runs\bd_top_rst_clk_wiz_1_100M_0_synth_1/runme.log
+	Exception name: Error
+	Exception error code: 70
+	Exception message: Permission denied

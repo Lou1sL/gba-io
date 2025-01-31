@@ -1,0 +1,12 @@
+set_property PACKAGE_PIN D17 [get_ports clk_in1_0]
+set_property IOSTANDARD LVCMOS33 [get_ports clk_in1_0]
+set_property PACKAGE_PIN AA1 [get_ports init_calib_complete_0]
+set_property IOSTANDARD SSTL135 [get_ports init_calib_complete_0]
+set_property PACKAGE_PIN F18 [get_ports reset_rtl_0]
+set_property IOSTANDARD LVCMOS33 [get_ports reset_rtl_0]
+set_property PULLUP true [get_ports reset_rtl_0]
+set_property IOSTANDARD LVCMOS33 [get_ports uart_rtl_0_rxd]
+set_property IOSTANDARD LVCMOS33 [get_ports uart_rtl_0_txd]
+set_property PACKAGE_PIN AB10 [get_ports uart_rtl_0_rxd]
+set_property PACKAGE_PIN AB15 [get_ports uart_rtl_0_txd]
+

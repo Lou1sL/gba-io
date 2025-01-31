@@ -1,0 +1,567 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Sat Feb 22 14:26:38 2025
+# Process ID: 32264
+# Current directory: E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1
+# Command line: vivado.exe -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
+# Log file: E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/top.vds
+# Journal file: E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1\vivado.jou
+# Running On        :RyuBAI-PC
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :19044
+# Processor Detail  :AMD Ryzen 9 5900X 12-Core Processor            
+# CPU Frequency     :3700 MHz
+# CPU Physical cores:12
+# CPU Logical cores :24
+# Host memory       :34281 MB
+# Swap memory       :17448 MB
+# Total Virtual     :51729 MB
+# Available Virtual :25865 MB
+#-----------------------------------------------------------
+source top.tcl -notrace
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 510.172 ; gain = 200.223
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'E:/ProgramTools/Xilinx/Vivado/2024.1/data/ip'.
+WARNING: [BD 41-1661] One or more IPs have been locked in the design 'vfifo.bd'. Please run report_ip_status for more details and recommendations on how to fix this issue.
+List of locked IPs:
+vfifo_rst_mig_7series_0_100M_0
+vfifo_axis_data_fifo_0_0
+vfifo_auto_us_0
+vfifo_axis_data_fifo_1_0
+vfifo_axi_mem_intercon_0
+vfifo_axi_vfifo_ctrl_0_0
+vfifo_axis_switch_0_0
+vfifo_axis_switch_1_0
+
+Command: synth_design -top top -part xc7a100tfgg484-2
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Device 21-403] Loading part xc7a100tfgg484-2
+INFO: [Device 21-9227] Part: xc7a100tfgg484-2 does not have CEAM library.
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 13228
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1418.930 ; gain = 447.332
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-6901] identifier 'slrd2' is used before its declaration [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:82]
+INFO: [Synth 8-6157] synthesizing module 'top' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/new/top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'PLLE2_BASE' [E:/ProgramTools/Xilinx/Vivado/2024.1/scripts/rt/data/unisim_comp.v:114829]
+	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
+	Parameter CLKFBOUT_MULT bound to: 10 - type: integer 
+	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKIN1_PERIOD bound to: 10.000000 - type: double 
+	Parameter CLKOUT0_DIVIDE bound to: 10 - type: integer 
+	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT1_DIVIDE bound to: 10 - type: integer 
+	Parameter CLKOUT1_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT1_PHASE bound to: 180.000000 - type: double 
+	Parameter CLKOUT2_DIVIDE bound to: 5 - type: integer 
+	Parameter CLKOUT2_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT2_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT3_DIVIDE bound to: 10 - type: integer 
+	Parameter CLKOUT3_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT3_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT4_DIVIDE bound to: 10 - type: integer 
+	Parameter CLKOUT4_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT4_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT5_DIVIDE bound to: 10 - type: integer 
+	Parameter CLKOUT5_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT5_PHASE bound to: 0.000000 - type: double 
+	Parameter DIVCLK_DIVIDE bound to: 1 - type: integer 
+	Parameter REF_JITTER1 bound to: 0.000000 - type: double 
+	Parameter STARTUP_WAIT bound to: FALSE - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'PLLE2_BASE' (0#1) [E:/ProgramTools/Xilinx/Vivado/2024.1/scripts/rt/data/unisim_comp.v:114829]
+INFO: [Synth 8-6157] synthesizing module 'gpif2_to_fifo32' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:24]
+INFO: [Synth 8-6157] synthesizing module 'hs_tx_fifo' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/hs_tx_fifo_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'hs_tx_fifo' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/hs_tx_fifo_stub.v:6]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'hs_tx_fifo' is unconnected for instance 'data_fifo_data_tx' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:485]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'hs_tx_fifo' is unconnected for instance 'data_fifo_data_tx' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:485]
+WARNING: [Synth 8-7023] instance 'data_fifo_data_tx' of module 'hs_tx_fifo' has 14 connections declared, but only 12 given [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:485]
+INFO: [Synth 8-6157] synthesizing module 'hs_rx_pkt_fifo' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/hs_rx_pkt_fifo_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'hs_rx_pkt_fifo' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/hs_rx_pkt_fifo_stub.v:6]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'hs_rx_pkt_fifo' is unconnected for instance 'data_fifo_data_rx' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:494]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'hs_rx_pkt_fifo' is unconnected for instance 'data_fifo_data_rx' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:494]
+WARNING: [Synth 8-7023] instance 'data_fifo_data_rx' of module 'hs_rx_pkt_fifo' has 12 connections declared, but only 10 given [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:494]
+INFO: [Synth 8-6157] synthesizing module 'data_fifo' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/data_fifo_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'data_fifo' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/data_fifo_stub.v:6]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'data_fifo' is unconnected for instance 'data_fifo_ctrl_tx' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:502]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'data_fifo' is unconnected for instance 'data_fifo_ctrl_tx' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:502]
+WARNING: [Synth 8-7023] instance 'data_fifo_ctrl_tx' of module 'data_fifo' has 14 connections declared, but only 12 given [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:502]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'data_fifo' is unconnected for instance 'data_fifo_ctrl_rx' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:511]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'data_fifo' is unconnected for instance 'data_fifo_ctrl_rx' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:511]
+WARNING: [Synth 8-7023] instance 'data_fifo_ctrl_rx' of module 'data_fifo' has 14 connections declared, but only 12 given [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:511]
+INFO: [Synth 8-6155] done synthesizing module 'gpif2_to_fifo32' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:24]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_wrapper' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/hdl/vfifo_wrapper.v:12]
+INFO: [Synth 8-6157] synthesizing module 'vfifo' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:392]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_axi_mem_intercon_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:855]
+INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_1CRLDBR' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:12]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_auto_us_0' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_auto_us_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_auto_us_0' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_auto_us_0_stub.v:5]
+WARNING: [Synth 8-7071] port 'm_axi_awregion' of module 'vfifo_auto_us_0' is unconnected for instance 'auto_us' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:315]
+WARNING: [Synth 8-7071] port 'm_axi_arregion' of module 'vfifo_auto_us_0' is unconnected for instance 'auto_us' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:315]
+WARNING: [Synth 8-7023] instance 'auto_us' of module 'vfifo_auto_us_0' has 76 connections declared, but only 74 given [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:315]
+INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_1CRLDBR' (0#1) [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:12]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_axi_mem_intercon_0' (0#1) [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:855]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_axi_vfifo_ctrl_0_0' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axi_vfifo_ctrl_0_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_axi_vfifo_ctrl_0_0' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axi_vfifo_ctrl_0_0_stub.v:5]
+WARNING: [Synth 8-7071] port 'm_axi_awuser' of module 'vfifo_axi_vfifo_ctrl_0_0' is unconnected for instance 'axi_vfifo_ctrl_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:676]
+WARNING: [Synth 8-7071] port 'm_axi_wuser' of module 'vfifo_axi_vfifo_ctrl_0_0' is unconnected for instance 'axi_vfifo_ctrl_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:676]
+WARNING: [Synth 8-7071] port 'm_axi_aruser' of module 'vfifo_axi_vfifo_ctrl_0_0' is unconnected for instance 'axi_vfifo_ctrl_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:676]
+WARNING: [Synth 8-7071] port 'vfifo_s2mm_channel_full' of module 'vfifo_axi_vfifo_ctrl_0_0' is unconnected for instance 'axi_vfifo_ctrl_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:676]
+WARNING: [Synth 8-7071] port 'vfifo_mm2s_channel_empty' of module 'vfifo_axi_vfifo_ctrl_0_0' is unconnected for instance 'axi_vfifo_ctrl_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:676]
+WARNING: [Synth 8-7071] port 'vfifo_idle' of module 'vfifo_axi_vfifo_ctrl_0_0' is unconnected for instance 'axi_vfifo_ctrl_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:676]
+WARNING: [Synth 8-7023] instance 'axi_vfifo_ctrl_0' of module 'vfifo_axi_vfifo_ctrl_0_0' has 66 connections declared, but only 60 given [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:676]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_axis_data_fifo_0_0' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axis_data_fifo_0_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_axis_data_fifo_0_0' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axis_data_fifo_0_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_axis_data_fifo_1_0' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axis_data_fifo_1_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_axis_data_fifo_1_0' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axis_data_fifo_1_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_axis_switch_0_0' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axis_switch_0_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_axis_switch_0_0' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axis_switch_0_0_stub.v:5]
+WARNING: [Synth 8-689] width (1) of port connection 's_axis_tready' does not match port width (2) of module 'vfifo_axis_switch_0_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:770]
+WARNING: [Synth 8-7071] port 's_decode_err' of module 'vfifo_axis_switch_0_0' is unconnected for instance 'axis_switch_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:761]
+WARNING: [Synth 8-7023] instance 'axis_switch_0' of module 'vfifo_axis_switch_0_0' has 12 connections declared, but only 11 given [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:761]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_axis_switch_1_0' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axis_switch_1_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_axis_switch_1_0' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_axis_switch_1_0_stub.v:5]
+WARNING: [Synth 8-689] width (32) of port connection 'm_axis_tdata' does not match port width (64) of module 'vfifo_axis_switch_1_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:776]
+WARNING: [Synth 8-689] width (1) of port connection 'm_axis_tlast' does not match port width (2) of module 'vfifo_axis_switch_1_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:777]
+WARNING: [Synth 8-689] width (1) of port connection 'm_axis_tvalid' does not match port width (2) of module 'vfifo_axis_switch_1_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:779]
+WARNING: [Synth 8-7071] port 'm_axis_tstrb' of module 'vfifo_axis_switch_1_0' is unconnected for instance 'axis_switch_1' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:773]
+WARNING: [Synth 8-7071] port 'm_axis_tkeep' of module 'vfifo_axis_switch_1_0' is unconnected for instance 'axis_switch_1' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:773]
+WARNING: [Synth 8-7071] port 'm_axis_tid' of module 'vfifo_axis_switch_1_0' is unconnected for instance 'axis_switch_1' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:773]
+WARNING: [Synth 8-7071] port 'm_axis_tdest' of module 'vfifo_axis_switch_1_0' is unconnected for instance 'axis_switch_1' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:773]
+WARNING: [Synth 8-7071] port 's_decode_err' of module 'vfifo_axis_switch_1_0' is unconnected for instance 'axis_switch_1' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:773]
+WARNING: [Synth 8-7023] instance 'axis_switch_1' of module 'vfifo_axis_switch_1_0' has 19 connections declared, but only 14 given [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:773]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_mig_7series_0_0' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_mig_7series_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_mig_7series_0_0' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_mig_7series_0_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'app_sr_active' of module 'vfifo_mig_7series_0_0' is unconnected for instance 'mig_7series_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:788]
+WARNING: [Synth 8-7071] port 'app_ref_ack' of module 'vfifo_mig_7series_0_0' is unconnected for instance 'mig_7series_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:788]
+WARNING: [Synth 8-7071] port 'app_zq_ack' of module 'vfifo_mig_7series_0_0' is unconnected for instance 'mig_7series_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:788]
+WARNING: [Synth 8-7071] port 's_axi_bid' of module 'vfifo_mig_7series_0_0' is unconnected for instance 'mig_7series_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:788]
+WARNING: [Synth 8-7071] port 's_axi_rid' of module 'vfifo_mig_7series_0_0' is unconnected for instance 'mig_7series_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:788]
+WARNING: [Synth 8-7071] port 'device_temp' of module 'vfifo_mig_7series_0_0' is unconnected for instance 'mig_7series_0' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:788]
+WARNING: [Synth 8-7023] instance 'mig_7series_0' of module 'vfifo_mig_7series_0_0' has 63 connections declared, but only 57 given [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:788]
+INFO: [Synth 8-6157] synthesizing module 'vfifo_rst_mig_7series_0_100M_0' [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_rst_mig_7series_0_100M_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_rst_mig_7series_0_100M_0' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/.Xil/Vivado-32264-RyuBAI-PC/realtime/vfifo_rst_mig_7series_0_100M_0_stub.v:5]
+WARNING: [Synth 8-7071] port 'mb_reset' of module 'vfifo_rst_mig_7series_0_100M_0' is unconnected for instance 'rst_mig_7series_0_100M' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:846]
+WARNING: [Synth 8-7071] port 'bus_struct_reset' of module 'vfifo_rst_mig_7series_0_100M_0' is unconnected for instance 'rst_mig_7series_0_100M' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:846]
+WARNING: [Synth 8-7071] port 'peripheral_reset' of module 'vfifo_rst_mig_7series_0_100M_0' is unconnected for instance 'rst_mig_7series_0_100M' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:846]
+WARNING: [Synth 8-7071] port 'interconnect_aresetn' of module 'vfifo_rst_mig_7series_0_100M_0' is unconnected for instance 'rst_mig_7series_0_100M' [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:846]
+WARNING: [Synth 8-7023] instance 'rst_mig_7series_0_100M' of module 'vfifo_rst_mig_7series_0_100M_0' has 10 connections declared, but only 6 given [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:846]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo' (0#1) [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/synth/vfifo.v:392]
+INFO: [Synth 8-6155] done synthesizing module 'vfifo_wrapper' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/hdl/vfifo_wrapper.v:12]
+INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/new/top.v:23]
+WARNING: [Synth 8-6014] Unused sequential element last_addr_reg was removed.  [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/sources_1/imports/sources_1/imports/slave_fifo_raw_data/gpif2_to_fifo32.v:168]
+WARNING: [Synth 8-7129] Port M_ACLK in module s00_couplers_imp_1CRLDBR is either unconnected or has no load
+WARNING: [Synth 8-7129] Port M_ARESETN in module s00_couplers_imp_1CRLDBR is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ACLK in module vfifo_axi_mem_intercon_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ARESETN in module vfifo_axi_mem_intercon_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port gpif_ctl[3] in module gpif2_to_fifo32 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port gpif_ctl[2] in module gpif2_to_fifo32 is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1541.672 ; gain = 570.074
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1541.672 ; gain = 570.074
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1541.672 ; gain = 570.074
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.024 . Memory (MB): peak = 1541.672 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_auto_us_0/vfifo_auto_us_0/vfifo_auto_us_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axi_mem_intercon/s00_couplers/auto_us'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_auto_us_0/vfifo_auto_us_0/vfifo_auto_us_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axi_mem_intercon/s00_couplers/auto_us'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axi_vfifo_ctrl_0'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0/vfifo_axi_vfifo_ctrl_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axi_vfifo_ctrl_0'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axis_data_fifo_0_0/vfifo_axis_data_fifo_0_0/vfifo_axis_data_fifo_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axis_data_fifo_0'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axis_data_fifo_0_0/vfifo_axis_data_fifo_0_0/vfifo_axis_data_fifo_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axis_data_fifo_0'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axis_data_fifo_1_0/vfifo_axis_data_fifo_1_0/vfifo_axis_data_fifo_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axis_data_fifo_1'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axis_data_fifo_1_0/vfifo_axis_data_fifo_1_0/vfifo_axis_data_fifo_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axis_data_fifo_1'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axis_switch_0_0/vfifo_axis_switch_0_0/vfifo_axis_switch_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axis_switch_0'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axis_switch_0_0/vfifo_axis_switch_0_0/vfifo_axis_switch_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axis_switch_0'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axis_switch_1_0/vfifo_axis_switch_1_0/vfifo_axis_switch_1_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axis_switch_1'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_axis_switch_1_0/vfifo_axis_switch_1_0/vfifo_axis_switch_1_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/axis_switch_1'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/mig_7series_0'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/mig_7series_0'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_rst_mig_7series_0_100M_0/vfifo_rst_mig_7series_0_100M_0/vfifo_rst_mig_7series_0_100M_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/rst_mig_7series_0_100M'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_rst_mig_7series_0_100M_0/vfifo_rst_mig_7series_0_100M_0/vfifo_rst_mig_7series_0_100M_0_in_context.xdc] for cell 'vfifo_i/vfifo_i/rst_mig_7series_0_100M'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/ip/hs_tx_fifo/hs_tx_fifo/hs_tx_fifo_in_context.xdc] for cell 'gpif2_to_fifo32_i/data_fifo_data_tx'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/ip/hs_tx_fifo/hs_tx_fifo/hs_tx_fifo_in_context.xdc] for cell 'gpif2_to_fifo32_i/data_fifo_data_tx'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/ip/data_fifo/data_fifo/data_fifo_in_context.xdc] for cell 'gpif2_to_fifo32_i/data_fifo_ctrl_tx'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/ip/data_fifo/data_fifo/data_fifo_in_context.xdc] for cell 'gpif2_to_fifo32_i/data_fifo_ctrl_tx'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/ip/data_fifo/data_fifo/data_fifo_in_context.xdc] for cell 'gpif2_to_fifo32_i/data_fifo_ctrl_rx'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/ip/data_fifo/data_fifo/data_fifo_in_context.xdc] for cell 'gpif2_to_fifo32_i/data_fifo_ctrl_rx'
+Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/ip/hs_rx_pkt_fifo/hs_rx_pkt_fifo/hs_rx_pkt_fifo_in_context.xdc] for cell 'gpif2_to_fifo32_i/data_fifo_data_rx'
+Finished Parsing XDC File [e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/ip/hs_rx_pkt_fifo/hs_rx_pkt_fifo/hs_rx_pkt_fifo_in_context.xdc] for cell 'gpif2_to_fifo32_i/data_fifo_data_rx'
+Parsing XDC File [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/constrs_1/new/top.xdc]
+Finished Parsing XDC File [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/constrs_1/new/top.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.srcs/constrs_1/new/top.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/dont_touch.xdc]
+Finished Parsing XDC File [E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/dont_touch.xdc]
+INFO: [Timing 38-2] Deriving generated clocks
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1642.480 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 1 instances were transformed.
+  PLLE2_BASE => PLLE2_ADV: 1 instance 
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1642.480 ; gain = 0.000
+WARNING: [Timing 38-316] Clock period '100.000' specified during out-of-context synthesis of instance 'vfifo_i/vfifo_i/axis_switch_0' at clock pin 'aclk' is different from the actual clock period '10.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '100.000' specified during out-of-context synthesis of instance 'vfifo_i/vfifo_i/axis_switch_1' at clock pin 'aclk' is different from the actual clock period '10.000', this can lead to different synthesis results.
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a100tfgg484-2
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 3).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 4).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[10]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 5).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[10]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 6).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[11]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 7).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[11]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 8).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[12]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 9).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[12]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 10).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[13]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 11).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[13]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 12).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[14]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 13).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[14]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 14).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 15).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 16).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[2]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 17).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[2]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 18).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[3]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 19).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[3]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 20).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[4]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 21).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[4]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 22).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[5]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 23).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[5]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 24).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[6]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 25).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[6]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 26).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[7]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 27).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[7]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 28).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[8]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 29).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[8]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 30).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_addr[9]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 31).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_addr[9]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 32).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_ba[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 33).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_ba[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 34).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_ba[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 35).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_ba[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 36).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_ba[2]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 37).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_ba[2]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 38).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_cas_n. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 39).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_cas_n. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 40).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_ck_n[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 41).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_ck_n[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 42).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_ck_p[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 43).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_ck_p[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 44).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_cke[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 45).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_cke[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 46).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dm[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 47).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dm[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 48).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dm[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 49).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dm[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 50).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 51).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 52).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[10]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 53).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[10]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 54).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[11]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 55).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[11]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 56).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[12]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 57).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[12]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 58).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[13]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 59).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[13]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 60).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[14]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 61).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[14]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 62).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[15]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 63).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[15]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 64).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 65).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 66).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[2]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 67).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[2]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 68).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[3]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 69).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[3]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 70).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[4]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 71).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[4]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 72).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[5]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 73).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[5]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 74).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[6]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 75).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[6]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 76).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[7]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 77).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[7]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 78).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[8]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 79).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[8]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 80).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dq[9]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 81).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dq[9]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 82).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dqs_n[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 83).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dqs_n[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 84).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dqs_n[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 85).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dqs_n[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 86).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dqs_p[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 87).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dqs_p[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 88).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_dqs_p[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 89).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_dqs_p[1]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 90).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_odt[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 91).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_odt[0]. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 92).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_ras_n. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 93).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_ras_n. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 94).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_reset_n. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 95).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_reset_n. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 96).
+Applied set_property IO_BUFFER_TYPE = NONE for DDR3_0_we_n. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 97).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for DDR3_0_we_n. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 98).
+Applied set_property IO_BUFFER_TYPE = NONE for sys_clk_i_0. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 99).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for sys_clk_i_0. (constraint file  e:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.gen/sources_1/bd/vfifo/ip/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0/vfifo_mig_7series_0_0_in_context.xdc, line 100).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i/axi_mem_intercon/s00_couplers/auto_us. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i/axi_mem_intercon. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i/axi_vfifo_ctrl_0. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i/axis_data_fifo_0. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i/axis_data_fifo_1. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i/axis_switch_0. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i/axis_switch_1. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i/mig_7series_0. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for vfifo_i/vfifo_i/rst_mig_7series_0_100M. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for gpif2_to_fifo32_i/data_fifo_data_tx. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for gpif2_to_fifo32_i/data_fifo_ctrl_rx. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for gpif2_to_fifo32_i/data_fifo_ctrl_tx. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for gpif2_to_fifo32_i/data_fifo_data_rx. (constraint file  auto generated constraint).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'gpif2_to_fifo32'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+              STATE_IDLE |                              000 |                             0000
+              STATE_WAIT |                              111 |                             0100
+             STATE_THINK |                              110 |                             0001
+              STATE_READ |                              100 |                             0010
+        STATE_READ_FLUSH |                              011 |                             0101
+       STATE_READ_SINGLE |                              101 |                             0111
+             STATE_WRITE |                              010 |                             0011
+       STATE_WRITE_FLUSH |                              001 |                             0110
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'gpif2_to_fifo32'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   16 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 1     
+	   2 Input    2 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 2     
+	               16 Bit    Registers := 1     
+	                3 Bit    Registers := 1     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 21    
++---Muxes : 
+	   2 Input   32 Bit        Muxes := 1     
+	   8 Input   32 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 4     
+	   8 Input   16 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 2     
+	   3 Input    3 Bit        Muxes := 1     
+	   8 Input    3 Bit        Muxes := 1     
+	  14 Input    3 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 17    
+	   3 Input    1 Bit        Muxes := 3     
+	   8 Input    1 Bit        Muxes := 19    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-3917] design top has port slcs driven by constant 0
+WARNING: [Synth 8-7129] Port ACLK in module vfifo_axi_mem_intercon_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ARESETN in module vfifo_axi_mem_intercon_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port M00_ACLK in module vfifo_axi_mem_intercon_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port M00_ARESETN in module vfifo_axi_mem_intercon_0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port flagc in module top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port flagd in module top is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+-------------------------------+----------+
+|      |BlackBox name                  |Instances |
++------+-------------------------------+----------+
+|1     |hs_tx_fifo                     |         1|
+|2     |hs_rx_pkt_fifo                 |         1|
+|3     |data_fifo                      |         2|
+|4     |vfifo_auto_us_0                |         1|
+|5     |vfifo_axi_vfifo_ctrl_0_0       |         1|
+|6     |vfifo_axis_data_fifo_0_0       |         1|
+|7     |vfifo_axis_data_fifo_1_0       |         1|
+|8     |vfifo_axis_switch_0_0          |         1|
+|9     |vfifo_axis_switch_1_0          |         1|
+|10    |vfifo_mig_7series_0_0          |         1|
+|11    |vfifo_rst_mig_7series_0_100M_0 |         1|
++------+-------------------------------+----------+
+
+Report Cell Usage: 
++------+-----------------------------+------+
+|      |Cell                         |Count |
++------+-----------------------------+------+
+|1     |data_fifo                    |     2|
+|3     |hs_rx_pkt_fifo               |     1|
+|4     |hs_tx_fifo                   |     1|
+|5     |vfifo_auto_us                |     1|
+|6     |vfifo_axi_vfifo_ctrl_0       |     1|
+|7     |vfifo_axis_data_fifo_0       |     1|
+|8     |vfifo_axis_data_fifo_1       |     1|
+|9     |vfifo_axis_switch_0          |     1|
+|10    |vfifo_axis_switch_1          |     1|
+|11    |vfifo_mig_7series_0          |     1|
+|12    |vfifo_rst_mig_7series_0_100M |     1|
+|13    |BUFG                         |     1|
+|14    |CARRY4                       |     2|
+|15    |LUT1                         |     4|
+|16    |LUT2                         |    11|
+|17    |LUT3                         |     5|
+|18    |LUT4                         |    11|
+|19    |LUT5                         |    51|
+|20    |LUT6                         |    42|
+|21    |PLLE2_BASE                   |     1|
+|22    |FDRE                         |    92|
+|23    |FDSE                         |    11|
+|24    |IBUF                         |     3|
+|25    |IOBUF                        |    32|
+|26    |OBUF                         |     9|
++------+-----------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1642.480 ; gain = 670.883
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 8 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:16 ; elapsed = 00:00:22 . Memory (MB): peak = 1642.480 ; gain = 570.074
+Synthesis Optimization Complete : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 1642.480 ; gain = 670.883
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1642.480 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 35 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1642.480 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 33 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 32 instances
+  PLLE2_BASE => PLLE2_ADV: 1 instance 
+
+Synth Design complete | Checksum: 3ef401dc
+INFO: [Common 17-83] Releasing license: Synthesis
+60 Infos, 65 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 1642.480 ; gain = 1087.207
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1642.480 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/top.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sat Feb 22 14:27:16 2025...

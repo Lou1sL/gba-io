@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Sat Feb 22 14:26:38 2025
+# Process ID: 32264
+# Current directory: E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1
+# Command line: vivado.exe -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
+# Log file: E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1/top.vds
+# Journal file: E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_vfifo/gpif_vfifo.runs/synth_1\vivado.jou
+# Running On        :RyuBAI-PC
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :19044
+# Processor Detail  :AMD Ryzen 9 5900X 12-Core Processor            
+# CPU Frequency     :3700 MHz
+# CPU Physical cores:12
+# CPU Logical cores :24
+# Host memory       :34281 MB
+# Swap memory       :17448 MB
+# Total Virtual     :51729 MB
+# Available Virtual :25865 MB
+#-----------------------------------------------------------
+source top.tcl -notrace

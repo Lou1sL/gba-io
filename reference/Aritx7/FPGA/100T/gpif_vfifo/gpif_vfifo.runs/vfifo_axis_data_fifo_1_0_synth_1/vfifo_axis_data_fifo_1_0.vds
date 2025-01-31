@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Tue Jul 19 21:58:47 2022
+# Process ID: 8232
+# Current directory: F:/workspace/gpif_vfifo/gpif_vfifo.runs/vfifo_axis_data_fifo_1_0_synth_1
+# Command line: vivado.exe -log vfifo_axis_data_fifo_1_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source vfifo_axis_data_fifo_1_0.tcl
+# Log file: F:/workspace/gpif_vfifo/gpif_vfifo.runs/vfifo_axis_data_fifo_1_0_synth_1/vfifo_axis_data_fifo_1_0.vds
+# Journal file: F:/workspace/gpif_vfifo/gpif_vfifo.runs/vfifo_axis_data_fifo_1_0_synth_1\vivado.jou
+#-----------------------------------------------------------
+source vfifo_axis_data_fifo_1_0.tcl -notrace
+INFO: [IP_Flow 19-4838] Using cached IP synthesis design for IP vfifo_axis_data_fifo_1_0, cache-ID = ddda456bdbbacb09.
+INFO: [Common 17-206] Exiting Vivado at Tue Jul 19 21:58:54 2022...

@@ -1,0 +1,352 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
+| Date         : Sat Feb 22 13:04:37 2025
+| Host         : RyuBAI-PC running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'data_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of data_fifo (xilinx.com:ip:fifo_generator:13.2) from (Rev. 4) to (Rev. 10)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
+| Date         : Sat Feb 22 13:04:20 2025
+| Host         : RyuBAI-PC running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'hs_rx_pkt_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of hs_rx_pkt_fifo (xilinx.com:ip:fifo_generator:13.2) from (Rev. 4) to (Rev. 10)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
+| Date         : Sat Feb 22 13:03:52 2025
+| Host         : RyuBAI-PC running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'hs_tx_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of hs_tx_fifo (xilinx.com:ip:fifo_generator:13.2) from (Rev. 4) to (Rev. 10)
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:35 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'vfifo_rst_mig_7series_0_100M_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of vfifo_rst_mig_7series_0_100M_0 (xilinx.com:ip:proc_sys_reset:5.0 (Rev. 13)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:35 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'vfifo_mig_7series_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of vfifo_mig_7series_0_0 (xilinx.com:ip:mig_7series:4.2 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:35 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'vfifo_axis_switch_1_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of vfifo_axis_switch_1_0 (xilinx.com:ip:axis_switch:1.1 (Rev. 19)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:35 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'vfifo_axis_switch_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of vfifo_axis_switch_0_0 (xilinx.com:ip:axis_switch:1.1 (Rev. 19)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:35 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'vfifo_axis_data_fifo_1_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of vfifo_axis_data_fifo_1_0 (xilinx.com:ip:axis_data_fifo:2.0 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:35 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'vfifo_axis_data_fifo_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of vfifo_axis_data_fifo_0_0 (xilinx.com:ip:axis_data_fifo:2.0 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:35 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'vfifo_axi_vfifo_ctrl_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of vfifo_axi_vfifo_ctrl_0_0 (xilinx.com:ip:axi_vfifo_ctrl:2.0 (Rev. 21)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:35 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'vfifo_axi_mem_intercon_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of vfifo_axi_mem_intercon_0 (xilinx.com:ip:axi_interconnect:2.1 (Rev. 20)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:09 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'hs_tx_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of hs_tx_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 4)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:08 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'hs_rx_pkt_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of hs_rx_pkt_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 4)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Tue Jul 19 16:27:07 2022
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a100tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'data_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of data_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 4)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Mon Sep 14 20:43:45 2020
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a50tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'data_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of data_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 4)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Mon Sep 14 20:43:17 2020
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a50tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'hs_tx_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of hs_tx_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 4)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
+| Date         : Mon Sep 14 20:39:59 2020
+| Host         : DESKTOP-8P19OKJ running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xc7a50tfgg484-2
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'hs_rx_pkt_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of hs_rx_pkt_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 4)) to Vivado generation flows.
+

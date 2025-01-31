@@ -1,0 +1,65 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Sat Feb 22 14:03:13 2025
+# Process ID: 30836
+# Current directory: E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_speed_test
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent31240 E:\Projects\Hardware\gba-io\reference\Aritx7\FPGA\100T\gpif_speed_test\gpif_speed_test.xpr
+# Log file: E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_speed_test/vivado.log
+# Journal file: E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_speed_test\vivado.jou
+# Running On        :RyuBAI-PC
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :19044
+# Processor Detail  :AMD Ryzen 9 5900X 12-Core Processor            
+# CPU Frequency     :3700 MHz
+# CPU Physical cores:12
+# CPU Logical cores :24
+# Host memory       :34281 MB
+# Swap memory       :17448 MB
+# Total Virtual     :51729 MB
+# Available Virtual :28683 MB
+#-----------------------------------------------------------
+start_gui
+open_project E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_speed_test/gpif_speed_test.xpr
+update_compile_order -fileset sources_1
+upgrade_ip -srcset hs_tx_fifo -vlnv xilinx.com:ip:fifo_generator:13.2 [get_ips  hs_tx_fifo] -log ip_upgrade.log
+export_ip_user_files -of_objects [get_ips hs_tx_fifo] -no_script -sync -force -quiet
+upgrade_ip -srcset hs_rx_pkt_fifo -vlnv xilinx.com:ip:fifo_generator:13.2 [get_ips  hs_rx_pkt_fifo] -log ip_upgrade.log
+export_ip_user_files -of_objects [get_ips hs_rx_pkt_fifo] -no_script -sync -force -quiet
+update_compile_order -fileset sources_1
+upgrade_ip -srcset data_fifo -vlnv xilinx.com:ip:fifo_generator:13.2 [get_ips  data_fifo] -log ip_upgrade.log
+export_ip_user_files -of_objects [get_ips data_fifo] -no_script -sync -force -quiet
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+open_hw_manager
+connect_hw_server -allow_non_jtag
+open_hw_target
+set_property PROGRAM.FILE {E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_speed_test/gpif_speed_test.runs/impl_1/top.bit} [get_hw_devices xc7a100t_0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_speed_test/gpif_speed_test.runs/impl_1/top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+create_hw_cfgmem -hw_device [get_hw_devices xc7a100t_0] -mem_dev [lindex [get_cfgmem_parts {w25q128bv-spi-x1_x2_x4}] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_speed_test/gpif_speed_test.runs/impl_1/top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_speed_test/gpif_speed_test.runs/impl_1/top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {E:/Projects/Hardware/gba-io/reference/Aritx7/FPGA/100T/gpif_speed_test/gpif_speed_test.runs/impl_1/top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
