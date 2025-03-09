@@ -20,38 +20,30 @@ module usb (
     localparam VIDEO_FEED_FRAME_SIZE         = 26'h00020000;
     localparam SOUND_FEED_FRAME_SIZE         = 26'h00000010;
     localparam KEY_AND_STATUS_SIZE           = 26'h00000020;
-    localparam USB_TRANS_TYPE_NONE           = 3'b000;
-    localparam USB_TRANS_TYPE_CODE           = 3'b001;
-    localparam USB_TRANS_TYPE_V_BUFFER       = 3'b010;
-    localparam USB_TRANS_TYPE_SL_BUFFER      = 3'b110;
-    localparam USB_TRANS_TYPE_SR_BUFFER      = 3'b101;
-    localparam USB_TRANS_TYPE_KEY_AND_STATUS = 3'b011;
+    localparam USB_TRANS_TYPE_NONE           = 3'b000; // 0
+    localparam USB_TRANS_TYPE_CODE           = 3'b001; // 1
+    localparam USB_TRANS_TYPE_V_BUFFER       = 3'b010; // 2
+    localparam USB_TRANS_TYPE_SL_BUFFER      = 3'b110; // 6
+    localparam USB_TRANS_TYPE_SR_BUFFER      = 3'b101; // 5
+    localparam USB_TRANS_TYPE_KEY_AND_STATUS = 3'b011; // 3
     
 
     // fifo_data_tx, 0x02, OUT, read from fifo, pc -> fpga
-    logic data_tx_ready;
-    logic data_tx_valid;
-    logic data_tx_pktend;
-    logic [31:0] data_tx;
+    logic data_tx_ready; // out
+    logic data_tx_valid; // in
+    logic data_tx_pktend; // in
+    logic [31:0] data_tx; // in
 
-    assign data_tx_ready = (mux_usb.mux_wr_valid | 1'b1) & (trans_byte_remain > 0) & ( // TODO: remove | 1'b1
+    assign data_tx_ready = mux_usb.usb_wr_ready & (trans_byte_remain > 0) & (
         current_trans_type == USB_TRANS_TYPE_CODE |
         current_trans_type == USB_TRANS_TYPE_V_BUFFER |
         current_trans_type == USB_TRANS_TYPE_SL_BUFFER |
         current_trans_type == USB_TRANS_TYPE_SR_BUFFER
     );
-    always_ff @(posedge clk) begin
-        if(rst) begin
-        end else if(data_tx_ready & data_tx_valid) begin
-            mux_usb.usb_rd = 1'b0;
-            mux_usb.usb_wr = 1'b1;
-            mux_usb.usb_trans_type = current_trans_type;
-            mux_usb.usb_wr_data = data_tx;
-        end else begin
-            // TODO: data rx
-        end
-    end
-
+    assign mux_usb.usb_wr = data_tx_ready & data_tx_valid;
+    assign mux_usb.usb_wr_data = 
+        (data_tx_ready & data_tx_valid) ? data_tx :
+        32'h0;
 
     // fifo_data_rx, 0x86, IN, write to fifo, fpga -> pc
     logic data_rx_ready; // in
@@ -59,65 +51,16 @@ module usb (
     logic data_rx_pktend; // out
     logic [31:0] data_rx; // out
 
-    localparam TEST_INPUT_LEN = 32;
-    logic [7:0] TEST_INPUT_0 [TEST_INPUT_LEN] = {
-        8'b0, 8'b0, 8'b0, 8'b0,
-        8'b0, 8'b0, 8'b0, 8'b0,
-        8'b0, 8'b0,
-        8'b0, 8'b0,
-        8'b0, 8'b0, 8'b0, 8'b0,
-        8'b10011111, 8'b11111111,
-        8'b0, 8'b0, 8'b0, 8'b0, 8'b0, 8'b0, 
-        8'b0, 8'b0,
-        8'b0, 8'b0,
-        8'b0, 8'b0,
-        8'b0, 8'b0
-    };
-    logic [7:0] TEST_INPUT_1 [TEST_INPUT_LEN] = {
-        8'b0, 8'b0, 8'b0, 8'b0,
-        8'b0, 8'b0, 8'b0, 8'b0,
-        8'b0, 8'b0,
-        8'b0, 8'b0,
-        8'b0, 8'b0, 8'b0, 8'b0,
-        8'b01101111, 8'b11111111,
-        8'b0, 8'b0, 8'b0, 8'b0, 8'b0, 8'b0, 
-        8'b0, 8'b0,
-        8'b0, 8'b0,
-        8'b0, 8'b0,
-        8'b0, 8'b0
-    };
-    bit current_test_input_sel = 1'b0;
-    logic [7:0] current_test_input [TEST_INPUT_LEN];
-    assign current_test_input = current_test_input_sel ? TEST_INPUT_1 : TEST_INPUT_0;
-    int current_test_input_index = 0;
-    assign data_rx_valid = data_rx_ready;
-    assign data_rx_pktend = current_test_input_index == (TEST_INPUT_LEN - 4);
-    assign data_rx = {
-        current_test_input[current_test_input_index + 3],
-        current_test_input[current_test_input_index + 2],
-        current_test_input[current_test_input_index + 1],
-        current_test_input[current_test_input_index + 0]
-    };
-    int counter = 0;
-
-    always_ff @(posedge clk) begin
-        if(rst) begin
-            current_test_input_sel <= 1'b0;
-            current_test_input_index <= 0;
-            counter <= 0;
-        end else begin
-            counter <= counter + 1;
-            if(counter >= 100000000) begin
-                counter <= 0;
-                current_test_input_sel <= ~current_test_input_sel;
-            end
-            if(data_rx_ready) begin
-                current_test_input_index <=
-                    (current_test_input_index >= (TEST_INPUT_LEN - 4)) ? 'd0 :
-                    (current_test_input_index + 4);
-            end
-        end
-    end
+    assign data_rx_valid = data_rx_ready & mux_usb.usb_rd_ready & mux_usb.usb_rd_valid & (trans_byte_remain > 0) & (
+        current_trans_type == USB_TRANS_TYPE_KEY_AND_STATUS
+    );
+    assign data_rx_pktend =
+        data_rx_valid ? (trans_byte_remain <= 4) :
+        1'b0;
+    assign data_rx = 
+        data_rx_valid ? mux_usb.usb_rd_data :
+        32'h0;
+    assign mux_usb.usb_rd = data_rx_valid;
 
 
     // fifo_ctrl_tx, 0x04, OUT, read from fifo, pc -> fpga
@@ -129,21 +72,29 @@ module usb (
     bit [2:0] current_trans_type = USB_TRANS_TYPE_NONE;
     int trans_byte_remain = 0;
     assign ctrl_tx_ready = (trans_byte_remain <= 0);
+    assign mux_usb.usb_trans_type = current_trans_type;
 
     always_ff @(posedge clk) begin
         if(rst) begin
             current_trans_type <= USB_TRANS_TYPE_NONE;
             trans_byte_remain <= 0;
-        end else if(ctrl_tx_ready & ctrl_tx_valid) begin
-            current_trans_type <= ctrl_tx[2:0];
-            trans_byte_remain <=
-                (ctrl_tx[2:0] == USB_TRANS_TYPE_NONE) ? 0 :
-                (ctrl_tx[2:0] == USB_TRANS_TYPE_CODE) ? CODE_SIZE :
-                (ctrl_tx[2:0] == USB_TRANS_TYPE_V_BUFFER) ? VIDEO_FEED_FRAME_SIZE :
-                (ctrl_tx[2:0] == USB_TRANS_TYPE_SL_BUFFER) ? SOUND_FEED_FRAME_SIZE :
-                (ctrl_tx[2:0] == USB_TRANS_TYPE_SR_BUFFER) ? SOUND_FEED_FRAME_SIZE :
-                (ctrl_tx[2:0] == USB_TRANS_TYPE_KEY_AND_STATUS) ? KEY_AND_STATUS_SIZE :
-                0;
+        end else begin
+            if(ctrl_tx_ready & ctrl_tx_valid) begin
+                current_trans_type <= ctrl_tx[2:0];
+                trans_byte_remain <=
+                    (ctrl_tx[2:0] == USB_TRANS_TYPE_NONE) ? 0 :
+                    (ctrl_tx[2:0] == USB_TRANS_TYPE_CODE) ? CODE_SIZE :
+                    (ctrl_tx[2:0] == USB_TRANS_TYPE_V_BUFFER) ? VIDEO_FEED_FRAME_SIZE :
+                    (ctrl_tx[2:0] == USB_TRANS_TYPE_SL_BUFFER) ? SOUND_FEED_FRAME_SIZE :
+                    (ctrl_tx[2:0] == USB_TRANS_TYPE_SR_BUFFER) ? SOUND_FEED_FRAME_SIZE :
+                    (ctrl_tx[2:0] == USB_TRANS_TYPE_KEY_AND_STATUS) ? KEY_AND_STATUS_SIZE :
+                    0;
+            end
+            if(mux_usb.usb_rd) begin
+                trans_byte_remain <= (trans_byte_remain - 4);
+            end else if(mux_usb.usb_wr) begin
+                trans_byte_remain <= (trans_byte_remain - 4);
+            end
         end
     end
 

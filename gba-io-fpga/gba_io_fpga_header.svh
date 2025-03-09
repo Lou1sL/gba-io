@@ -45,17 +45,18 @@ interface mux_mem_interface();
 endinterface
 
 interface mux_usb_interface();
-    logic usb_rd, usb_wr, mux_rd_valid, mux_wr_valid;
+    logic usb_rd, usb_rd_ready, usb_rd_valid;
+    logic usb_wr, usb_wr_ready;
     logic [2:0] usb_trans_type;
     logic [31:0] usb_rd_data;
     logic [31:0] usb_wr_data;
     modport mux (
-        input usb_rd, usb_wr, usb_trans_type, usb_wr_data,
-        output usb_rd_data, mux_rd_valid, mux_wr_valid
+        input usb_trans_type, usb_rd, usb_wr, usb_wr_data,
+        output usb_rd_ready, usb_wr_ready, usb_rd_data, usb_rd_valid
     );
     modport usb (
-        input usb_rd_data, mux_rd_valid, mux_wr_valid,
-        output usb_rd, usb_wr, usb_trans_type, usb_wr_data
+        input usb_rd_ready, usb_wr_ready, usb_rd_data, usb_rd_valid,
+        output usb_trans_type, usb_rd, usb_wr, usb_wr_data
     );
 endinterface
 

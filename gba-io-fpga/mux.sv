@@ -10,6 +10,14 @@ module mux (
     mux_mem_interface.mux mux_mem,
     mux_usb_interface.mux mux_usb
 );
+
+    localparam USB_TRANS_TYPE_NONE           = 3'b000; // 0
+    localparam USB_TRANS_TYPE_CODE           = 3'b001; // 1
+    localparam USB_TRANS_TYPE_V_BUFFER       = 3'b010; // 2
+    localparam USB_TRANS_TYPE_SL_BUFFER      = 3'b110; // 6
+    localparam USB_TRANS_TYPE_SR_BUFFER      = 3'b101; // 5
+    localparam USB_TRANS_TYPE_KEY_AND_STATUS = 3'b011; // 3
+
     // Cart Address / USB FIFO Trans Type -> Buffer Combinational Translation -> Translated Address
     assign mux_buffer.from_cart = cart_mux.cart_rd | cart_mux.cart_wr;
     assign mux_buffer.cart_addr = cart_mux.cart_addr;
@@ -121,8 +129,70 @@ module mux (
     // );
 
     // USB -> Mux
-    // TODO: Add USB
+    assign mux_usb.usb_wr_ready =
+        (mux_usb.usb_trans_type == USB_TRANS_TYPE_CODE) | 
+        (mux_usb.usb_trans_type == USB_TRANS_TYPE_V_BUFFER) | 
+        (mux_usb.usb_trans_type == USB_TRANS_TYPE_SL_BUFFER) | 
+        (mux_usb.usb_trans_type == USB_TRANS_TYPE_SR_BUFFER);
 
-
+    // Testing
+    localparam TEST_INPUT_LEN = 32;
+    logic [7:0] TEST_INPUT_0 [TEST_INPUT_LEN] = {
+        8'b0, 8'b0, 8'b0, 8'b0,
+        8'b0, 8'b0, 8'b0, 8'b0,
+        8'b0, 8'b0,
+        8'b0, 8'b0,
+        8'b0, 8'b0, 8'b0, 8'b0,
+        8'b10011111, 8'b11111111,
+        8'b0, 8'b0, 8'b0, 8'b0, 8'b0, 8'b0, 
+        8'b0, 8'b0,
+        8'b0, 8'b0,
+        8'b0, 8'b0,
+        8'b0, 8'b0
+    };
+    logic [7:0] TEST_INPUT_1 [TEST_INPUT_LEN] = {
+        8'b0, 8'b0, 8'b0, 8'b0,
+        8'b0, 8'b0, 8'b0, 8'b0,
+        8'b0, 8'b0,
+        8'b0, 8'b0,
+        8'b0, 8'b0, 8'b0, 8'b0,
+        8'b01101111, 8'b11111111,
+        8'b0, 8'b0, 8'b0, 8'b0, 8'b0, 8'b0, 
+        8'b0, 8'b0,
+        8'b0, 8'b0,
+        8'b0, 8'b0,
+        8'b0, 8'b0
+    };
+    bit current_test_input_sel = 1'b0;
+    logic [7:0] current_test_input [TEST_INPUT_LEN];
+    assign current_test_input = current_test_input_sel ? TEST_INPUT_1 : TEST_INPUT_0;
+    int current_test_input_index = 0;
+    assign mux_usb.usb_rd_ready = (mux_usb.usb_trans_type == USB_TRANS_TYPE_KEY_AND_STATUS);
+    assign mux_usb.usb_rd_valid = (mux_usb.usb_trans_type == USB_TRANS_TYPE_KEY_AND_STATUS);
+    assign mux_usb.usb_rd_data = {
+        current_test_input[current_test_input_index + 3],
+        current_test_input[current_test_input_index + 2],
+        current_test_input[current_test_input_index + 1],
+        current_test_input[current_test_input_index + 0]
+    };
+    int counter = 0;
+    always_ff @(posedge clk) begin
+        if(rst) begin
+            current_test_input_sel <= 1'b0;
+            current_test_input_index <= 0;
+            counter <= 0;
+        end else begin
+            counter <= counter + 1;
+            if(counter >= 100000000) begin
+                counter <= 0;
+                current_test_input_sel <= ~current_test_input_sel;
+            end
+            if(mux_usb.usb_rd & mux_usb.usb_rd_ready & mux_usb.usb_rd_valid) begin
+                current_test_input_index <=
+                    (current_test_input_index >= (TEST_INPUT_LEN - 4)) ? 'd0 :
+                    (current_test_input_index + 4);
+            end
+        end
+    end
 
 endmodule
