@@ -51,7 +51,7 @@ module mux (
     // assign mux_mem.mem_rd_valid = cart_mux.mux_rd_valid;
 
     // Testing
-    assign mux_mem.mem_data_width = 2'b11; // 32-bit
+    assign mux_mem.mem_data_width = 2'b11; // 01: 8-bit cart cs2, 10: 16-bit cart cs1, 11: 32-bit usb
     bit result_passed = 1'b0;
     bit result_failed = 1'b0;
     bit [31:0] data_to_write = 32'h0123ABCD;
@@ -129,11 +129,7 @@ module mux (
     // );
 
     // USB -> Mux
-    assign mux_usb.usb_wr_ready =
-        (mux_usb.usb_trans_type == USB_TRANS_TYPE_CODE) | 
-        (mux_usb.usb_trans_type == USB_TRANS_TYPE_V_BUFFER) | 
-        (mux_usb.usb_trans_type == USB_TRANS_TYPE_SL_BUFFER) | 
-        (mux_usb.usb_trans_type == USB_TRANS_TYPE_SR_BUFFER);
+    assign mux_usb.usb_wr_ready = 1'b1;
 
     // Testing
     localparam TEST_INPUT_LEN = 32;
@@ -167,8 +163,8 @@ module mux (
     logic [7:0] current_test_input [TEST_INPUT_LEN];
     assign current_test_input = current_test_input_sel ? TEST_INPUT_1 : TEST_INPUT_0;
     int current_test_input_index = 0;
-    assign mux_usb.usb_rd_ready = (mux_usb.usb_trans_type == USB_TRANS_TYPE_KEY_AND_STATUS);
-    assign mux_usb.usb_rd_valid = (mux_usb.usb_trans_type == USB_TRANS_TYPE_KEY_AND_STATUS);
+    assign mux_usb.usb_rd_ready = 1'b1;
+    assign mux_usb.usb_rd_valid = 1'b1;
     assign mux_usb.usb_rd_data = {
         current_test_input[current_test_input_index + 3],
         current_test_input[current_test_input_index + 2],
