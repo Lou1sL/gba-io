@@ -178,6 +178,12 @@ Assuming the Prefetch Buffer on GBA console requested cartridge ROM data at each
 | Maximum Continuous ROM Read Speed | 0x1000000 cycles/sec * 2 Bytes/cycle = 33554432 Bytes/sec | = 32 MBytes/sec |
 | Maximum Continuous SRAM Read & Write Speed | 0x1000000 cycles/sec * 1 Byte/cycle = 16777216 Bytes/sec | = 16 MBytes/sec |
 
+### Impedance of the GBA Cartridge Bus
+
+Just couldn't find this piece of info all around the Internet, so I measured it myself.
+
+TODO
+
 ## Thanks
 
 The [GBA_CartConnector.step](https://www.printables.com/model/441016-gameboy-cartconnector/files) by @Icesythe7_256778

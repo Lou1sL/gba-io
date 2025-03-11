@@ -11,19 +11,6 @@ module mux (
     mux_usb_interface.mux mux_usb
 );
 
-    localparam USB_TRANS_TYPE_NONE           = 3'b000; // 0
-    localparam USB_TRANS_TYPE_CODE           = 3'b001; // 1
-    localparam USB_TRANS_TYPE_V_BUFFER       = 3'b010; // 2
-    localparam USB_TRANS_TYPE_SL_BUFFER      = 3'b110; // 6
-    localparam USB_TRANS_TYPE_SR_BUFFER      = 3'b101; // 5
-    localparam USB_TRANS_TYPE_KEY_AND_STATUS = 3'b011; // 3
-
-    // Cart Address / USB FIFO Trans Type -> Buffer Combinational Translation -> Translated Address
-    assign mux_buffer.from_cart = cart_mux.cart_rd | cart_mux.cart_wr;
-    assign mux_buffer.cart_addr = cart_mux.cart_addr;
-    assign mux_buffer.from_usb = 1'b0; // TODO: Allowing USB when (~mux_buffer.from_cart)
-    assign mux_buffer.usb_trans_type = 3'b000;
-
     // Testing With Block RAM
     bit [7:0] TEST_RAM [0:2047];
     initial begin
@@ -40,6 +27,12 @@ module mux (
             // TEST_RAM[cart_mux.cart_addr[10:1]] <= cart_mux.cart_wr_data;
         end
     end
+
+    // Cart Address / USB FIFO Trans Type -> Buffer Combinational Translation -> Translated Address
+    assign mux_buffer.from_cart = cart_mux.cart_rd | cart_mux.cart_wr;
+    assign mux_buffer.from_usb = 1'b0; // TODO: Allowing USB when (~mux_buffer.from_cart)
+    assign mux_buffer.cart_usb_addr = cart_mux.cart_addr;
+
 
     // Mux -> Memory
     // assign mux_mem.mem_rd = cart_mux.cart_rd; // TODO: Add USB

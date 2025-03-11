@@ -18,14 +18,13 @@ endinterface
 
 interface mux_buffer_interface();
     logic from_cart, from_usb;
-    logic [25:0] cart_addr;
-    logic [2:0] usb_trans_type;
+    logic [25:0] cart_usb_addr;
     logic [25:0] mem_addr;
     modport mux (
         input mem_addr,
-        output from_cart, from_usb, cart_addr, usb_trans_type);
+        output from_cart, from_usb, cart_usb_addr);
     modport buffer (
-        input from_cart, from_usb, cart_addr, usb_trans_type,
+        input from_cart, from_usb, cart_usb_addr,
         output mem_addr);
 endinterface
 
@@ -47,16 +46,16 @@ endinterface
 interface mux_usb_interface();
     logic usb_rd, usb_rd_ready, usb_rd_valid;
     logic usb_wr, usb_wr_ready;
-    logic [2:0] usb_trans_type;
+    logic [25:0] usb_addr;
     logic [31:0] usb_rd_data;
     logic [31:0] usb_wr_data;
     modport mux (
-        input usb_trans_type, usb_rd, usb_wr, usb_wr_data,
+        input usb_addr, usb_rd, usb_wr, usb_wr_data,
         output usb_rd_ready, usb_wr_ready, usb_rd_data, usb_rd_valid
     );
     modport usb (
         input usb_rd_ready, usb_wr_ready, usb_rd_data, usb_rd_valid,
-        output usb_trans_type, usb_rd, usb_wr, usb_wr_data
+        output usb_addr, usb_rd, usb_wr, usb_wr_data
     );
 endinterface
 
