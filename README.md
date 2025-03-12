@@ -1,17 +1,17 @@
 # GBA I/O
 
-Turning the Gameboy Advance into a USB 3.1 peripheral I/O device so that we can freely do anything we want.
+Turning the Gameboy Advance into a USB 3.1 peripheral I/O device, allowing us to use it freely for anything we'd like.
 
-For example, a desktop display while also a keyboard/mouse controller, so we can play PC games on it!
+For example, it can be used as a display monitor while simultaneously as a keyboard/mouse controller and a speaker, allowing us to play computer games on it!
 
 ## Contents
 
 | Folder | Description |
 |-|-|
-| gba-io-cart-slot-connector | A fairly simple edge connector PCB design between a custom-made third party Xilinx Artix 7 FPGA development board and the cartridge slot of the GBA console. |
-| gba-io-fpga | The Verilog circuit design for the Xilinx Artix 7 FPGA. It works in between with the GBA console (through the cart slot edge connector), the DDR3 SDRAM, and the CYUSB3014 USB 3.1 Peripheral Controller. |
-| gba-io-rom | The GBA ROM that is going to be deployed in to the FPGA SDRAM and be executed by the GBA console. It can actively read video/sound feed from cartridge ROM, and write keypad input feed to the cartridge SRAM. (both are located in the SDRAM of the FPGA development board) |
-| gba-io-app | A Windows application that interacts with the FPGA device through the USB driver. It opens up a websocket server locally, allowing other program to access the inputs and outputs of the GBA console. It also supports sending the PC's display and system sound outputs to the GBA LCD and audio outputs, and receiving the GBA keypad input as the PC's keyboard or mouse input. The CYUSB driver is required, ideally it will be automatically installed by Windows. |
+| gba-io-cart-slot-connector | A fairly simple edge connector PCB design between a custom-made third-party Xilinx Artix 7 FPGA development board and the cartridge slot of the GBA console. |
+| gba-io-fpga | The Verilog circuit design for the Xilinx Artix 7 FPGA. It works in between the GBA console (through the cart slot edge connector), the DDR3 SDRAM, and the CYUSB3014 USB 3.1 Peripheral Controller. |
+| gba-io-rom | The GBA ROM that is going to be deployed into the FPGA SDRAM and executed by the GBA console. It can actively read video/sound feed from the cartridge ROM, and write keypad input feed to the cartridge SRAM. (both are located in the SDRAM of the FPGA development board) |
+| gba-io-app | A Windows application that interacts with the FPGA device through the USB driver. It opens up the web-socket server locally, allowing other programs to access the inputs and outputs of the GBA console. It also supports sending the PC's display and system sound outputs to the GBA LCD and audio outputs and receiving the GBA keypad input as the PC's keyboard or mouse input. The CYUSB driver is required, ideally, it will be automatically installed by Windows. |
 
 ### Prior to Build
 
@@ -19,7 +19,7 @@ For example, a desktop display while also a keyboard/mouse controller, so we can
 
 I'm using the JLCPCB for the edge connector, and Vivado for the FPGA design.
 
-Since there are many FPGA board floating around, and I'm using a not so common one. You might need to customize the gba-io-cart-slot-connector based on the port defination of your own FPGA board to suit your need, the same goes with the gba-io-fpga project too, you may need to update the Constraints file or the DDR3 Memory Interface based on your own board's spec. Anyway, here's the spec of what I've been using:
+Since many FPGA boards are floating around, and since I'm using a not-so-common one, you might need to customize the gba-io-cart-slot-connector based on the port definition of your own FPGA board to suit your need, the same goes with the gba-io-fpga project too, you may need to update the Constraints file or the DDR3 Memory Interface based on your own board's spec. Anyway, here's the spec of what I've been using:
 
 1. FPGA: XC7A100T-2FGG484I Xilinx Artix-7
 2. SDRAM: MT41J256M16TW-107 1.35v DDR3L IT:P 256x16bit
@@ -30,13 +30,13 @@ Since there are many FPGA board floating around, and I'm using a not so common o
 
 Install DevKitPro and make sure the `DEVKITARM` environmental variable is set.
 
-Run `make` command under the gba-io-rom folder, it should generate the `gba-io-rom/target/gba-io-rom.gba` ROM file that is depended upon the gba-io-app project.
+Run the `make` command under the gba-io-rom folder, it should generate the `gba-io-rom/target/gba-io-rom.gba` ROM file that is dependent upon the gba-io-app project.
 
 #### gba-io-app
 
 Install Visual Studio 2022(v143) with Windows SDK v10.0.
 
-Download and install the CYUSB SDK from the [Infineon's official website](https://www.infineon.com/cms/en/design-support/tools/sdk/usb-controllers-sdk/ez-usb-fx3-software-development-kit/), it should contain the CyAPI.h and CyAPI.lib dependencies.
+Download and install the CYUSB SDK from [Infineon's official website](https://www.infineon.com/cms/en/design-support/tools/sdk/usb-controllers-sdk/ez-usb-fx3-software-development-kit/), it should contain the CyAPI.h and CyAPI.lib dependencies.
 
 Project Property → C/C++ → Additional Include Directories → [ Update your CyAPI.h file location ]
 
@@ -73,7 +73,7 @@ And here's the corresponding address encoding:
 └──────────────────────────────────────────────────────────────── 0: ^CS1 == 1, 1: ^CS2 == 1 (for SDRAM)
 ```
 
-There are two types of addresses in general, and we treat them differently, one is the shared memory for both GBA console and PC, incuding the cartridge ROM data, the key feed, and some status registers, another one is the buffers, including the video feed and the double channel sound feeds. The selection is driven by the GBA console from both the current GBA cartridge bus address and the cartridge bus's RD/WR signal. You can get the details in the following sections.
+There are two types of addresses in general, and we treat them differently, one is the shared memory for both the GBA console and PC, including the cartridge ROM data, the key feed, and some status registers, another one is the buffers, including the video feed and the double channel sound feeds. The selection is driven by the GBA console from both the current GBA cartridge bus address and the cartridge bus's RD/WR signal. You can get the details in the following sections.
 
 The SDRAM is shared between the GBA console and the USB FIFO, instead of using a memory controller, the accessing to it is multiplexed.
 
@@ -81,6 +81,8 @@ The SDRAM is shared between the GBA console and the USB FIFO, instead of using a
 
 This part is dedicated to any of the memory segments.
 ![Mux State Machine](gba_io_mux_state.jpg)
+
+Since the GBA console's cartridge accessing is very time-critical, we cannot afford to use a FIFO pipeline to streamline the SDRAM memory accessing, instead, we implement a state machine to minimize cycle delay.
 
 #### Reading from the SDRAM
 
@@ -90,7 +92,7 @@ This part is dedicated to any of the memory segments.
 | 2nd | GBA → PC | USB Port ← CYUSB3014 GPIF ← AXI Stream FIFO ← | | |
 | | | | ← Multiplexer ← Buffer Address Translation ← SDRAM |
 
-When the GBA console starts to read from the SDRAM, the FPGA will immediately fetch the data from the SDRAM and store it into the Holding Register, which is directly connected to the cartridge bus, and feeds the GBA. The USB FIFO will be put on hold during the GBA console ↔ SDRAM transaction.
+When the GBA console starts to read from the SDRAM, the FPGA will immediately fetch the data from the SDRAM and store it in the Holding Register, which is directly connected to the cartridge bus, and feeds the GBA. The USB FIFO will be put on hold during the GBA console ↔ SDRAM transaction.
 
 #### Writing to the SDRAM
 
@@ -100,7 +102,7 @@ When the GBA console starts to read from the SDRAM, the FPGA will immediately fe
 | 2nd | PC → GBA | USB Port → CYUSB3014 GPIF → AXI Stream FIFO → | |
 | | | | → Multiplexer → Buffer Address Translation → SDRAM |
 
-When the GBA console starts to write to the SDRAM, the FPGA will first check if the address range is within the available SRAM address range, then store the data to the SDRAM directly. The USB FIFO will be put on hold during the GBA console ↔ SDRAM transaction.
+When the GBA console starts to write to the SDRAM, the FPGA will first check if the address range is within the available SRAM address range, then send the data to the SDRAM directly. The USB FIFO will be put on hold during the GBA console ↔ SDRAM transaction.
 
 ### SDRAM Triple Frame Buffering, Cross Frequency Synchronization with Semaphores and Frames
 
@@ -114,7 +116,7 @@ This part is dedicated only to the buffers including V_Buffer, SL_Buffer, and th
 
 The GBA console will always only consume one single frame at a time from the triple frame buffer, since the GBA cartridge bus address space is a lot larger, this single frame will be presented repeatedly in a mirrored style.
 
-Since the GBA console and the PC are accessing the buffer acrossing a different clock frequency (and domain of course), the binary [Semaphore](https://en.wikipedia.org/wiki/Semaphore_(programming))s are utilized for each frame of the triple frame buffer. In short, each frame can be marked as `OCCUPIER_CART`, `OCCUPIER_USB` or `OCCUPIER_NONE`, at each time when the GBA console or the PC tries to access the buffer, the FPGA logic will choose the appropriate frame according to its semaphore status, and update it with the new one.
+Since the GBA console and the PC are accessing the buffer across different clock frequencies (and domains of course), the binary [Semaphore](https://en.wikipedia.org/wiki/Semaphore_(programming))s are utilized for each frame of the triple frame buffer. In short, each frame can be marked as `OCCUPIER_CART`, `OCCUPIER_USB`, or `OCCUPIER_NONE`, at each time when the GBA console or the PC tries to access the buffer, the FPGA logic will choose the appropriate frame according to its semaphore status, and update it with the new one.
 
 ### USB 3.1 Implementation
 
@@ -150,7 +152,7 @@ The address offset is automatically incremented, and it will reset to 0 when any
 
 [Edge detecting on a slow external clock](https://adaptivesupport.amd.com/s/question/0D52E00006iHtI7SAK/edge-detecting-on-a-slow-external-clock?language=en_US)
 
-In the FPGA's point of view, the wires come from the GBA console are all in a metastable state, we want to handle and conceal this uncertainty in a single place, which is the `gba-io-fpga\cart.sv`, so that the metastability won't spread to everywhere and creating nightmares.
+From the FPGA's side of view, the wires coming from the GBA console are all in a metastable state, we want to handle and conceal this uncertainty in a single place, which is the `gba-io-fpga\cart.sv`, so that the metastability won't spread to everywhere and creating nightmares.
 
 Here are the pinouts of the GBA Cartridge Bus:
 
@@ -161,7 +163,7 @@ Here are the pinouts of the GBA Cartridge Bus:
 
 <sub>_*The lowest address bit is not presented in the address line of the GBA Cartridge Bus, it will always be zero, which creates a 16-bit data alignment, hence the 32 MB address space._</sub>
 
-For the GBA → FPGA inputs, each one of the wire shall go into a flip-flop synchronizer first, 2 stages for each of the address/data line, and 3 stages for each of the signal line (an extra one for checking the edges).
+For the GBA → FPGA inputs, each one of the wires shall go into a flip-flop synchronizer first, 2 stages for each of the address/data lines, and 3 stages for each of the signal lines (an extra one for checking the edges).
 
 For the FPGA → GBA outputs, instead of stretching out the cycles, the value will be indefinitely stored in a holding register, until it has been refreshed.
 
@@ -169,7 +171,7 @@ For the FPGA → GBA outputs, instead of stretching out the cycles, the value wi
 
 ### Maximum Load of the Cartridge Bus
 
-Assuming the Prefetch Buffer on GBA console requested cartridge ROM data at each of every phase, that will be either 24 bits of address or 16 bits of data (AD[0:15], A[16:23]), auto address incrementing is utilized, so a continuous address access will omit the following addresses, plus 5 control bits (^WR, ^RD, ^CS1, ^CS2, IRQ\DREQ), in total average, about 3bytes/cycle data load on cartridge slot. The clock rate is around 16.78MHz, thus the maximum data load on the cartridge slot is around 16.78 * 3 = 50.34 MB/s. To make our device support an almost-real-time communication in the most simplistic estimation (not considering buffers or etc.) for the maximum load, the real world maximum speed of the USB 2.0 is not fast enough with a speed around 43 MB/s ([Source](https://superuser.com/questions/317217/whats-the-maximum-typical-speed-possible-with-a-usb2-0-drive)).
+Assuming the Prefetch Buffer on the GBA console requested cartridge ROM data at each of every phase, that will be either 24 bits of address or 16 bits of data (AD[0:15], A[16:23]), auto address incrementing is utilized, so a continuous address access will omit the following addresses, plus 5 control bits (^WR, ^RD, ^CS1, ^CS2, IRQ\DREQ), in total average, about 3bytes/cycle data load on cartridge slot. The clock rate is around 16.78MHz, thus the maximum data load on the cartridge slot is around 16.78 * 3 = 50.34 MB/s. To make our device support an almost-real-time communication in the most simplistic estimation (not considering buffers, etc.) for the maximum load, the real-world maximum speed of the USB 2.0 is not fast enough with a speed of around 43 MB/s ([Source](https://superuser.com/questions/317217/whats-the-maximum-typical-speed-possible-with-a-usb2-0-drive)).
 
 ### Byte Rate Baseline
 
@@ -187,7 +189,7 @@ Assuming the Prefetch Buffer on GBA console requested cartridge ROM data at each
 
 ### Impedance of the GBA Cartridge Bus
 
-Just couldn't find this piece of info all around the Internet, so I measured it myself.
+I just couldn't find this piece of info all around the Internet, so I measured it myself.
 
 TODO
 
