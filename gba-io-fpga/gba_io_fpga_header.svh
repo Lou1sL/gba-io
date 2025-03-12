@@ -3,17 +3,17 @@
 `define _gba_io_fpga_header_svh_
 
 interface cart_mux_interface();
-    logic cart_rd, cart_wr, mux_rd_valid;
+    logic cart_rd, cart_wr, cart_rd_valid;
     logic [1:0] cart_data_width; // 01: 8-bit cart cs2, 10: 16-bit cart cs1
     logic [25:0] cart_addr; // cs1: { 1'b0, 25-bit }, cs2: { 1'b1, 9'b0, 16-bit }
     logic [15:0] cart_rd_data; // cs1: 16-bit, cs2: 8-bit
     logic [15:0] cart_wr_data; // cs1: 16-bit, cs2: 8-bit
     modport cart (
-        input cart_rd_data, mux_rd_valid,
+        input cart_rd_data, cart_rd_valid,
         output cart_rd, cart_wr, cart_data_width, cart_addr, cart_wr_data);
     modport mux (
         input cart_rd, cart_wr, cart_data_width, cart_addr, cart_wr_data,
-        output cart_rd_data, mux_rd_valid);
+        output cart_rd_data, cart_rd_valid);
 endinterface
 
 interface mux_buffer_interface();

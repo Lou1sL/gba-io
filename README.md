@@ -13,11 +13,11 @@ For example, a desktop display while also a keyboard/mouse controller, so we can
 | gba-io-rom | The GBA ROM that is going to be deployed in to the FPGA SDRAM and be executed by the GBA console. It can actively read video/sound feed from cartridge ROM, and write keypad input feed to the cartridge SRAM. (both are located in the SDRAM of the FPGA development board) |
 | gba-io-app | A Windows application that interacts with the FPGA device through the USB driver. It opens up a websocket server locally, allowing other program to access the inputs and outputs of the GBA console. It also supports sending the PC's display and system sound outputs to the GBA LCD and audio outputs, and receiving the GBA keypad input as the PC's keyboard or mouse input. The CYUSB driver is required, ideally it will be automatically installed by Windows. |
 
-### Prior to Development
+### Prior to Build
 
 #### gba-io-cart-slot-connector & gba-io-fpga
 
-I'm using the JLC for the PCB, and Vivado for the FPGA design.
+I'm using the JLCPCB for the edge connector, and Vivado for the FPGA design.
 
 Since there are many FPGA board floating around, and I'm using a not so common one. You might need to customize the gba-io-cart-slot-connector based on the port defination of your own FPGA board to suit your need, the same goes with the gba-io-fpga project too, you may need to update the Constraints file or the DDR3 Memory Interface based on your own board's spec. Anyway, here's the spec of what I've been using:
 
@@ -75,11 +75,12 @@ And here's the corresponding address encoding:
 
 There are two types of addresses in general, and we treat them differently, one is the shared memory for both GBA console and PC, incuding the cartridge ROM data, the key feed, and some status registers, another one is the buffers, including the video feed and the double channel sound feeds. The selection is driven by the GBA console from both the current GBA cartridge bus address and the cartridge bus's RD/WR signal. You can get the details in the following sections.
 
-The SDRAM is shared between the GBA console and the USB FIFO, instead of using a memory controller, the accessing to it is time-multiplexed.
+The SDRAM is shared between the GBA console and the USB FIFO, instead of using a memory controller, the accessing to it is multiplexed.
 
-### SDRAM Shared Memory Time-Multiplexing
+### Shared SDRAM Memory Multiplexer
 
 This part is dedicated to any of the memory segments.
+![Mux State Machine](gba_io_mux_state.jpg)
 
 #### Reading from the SDRAM
 
@@ -123,19 +124,25 @@ We emphasize both the default CYUSB driver for the PC and the default 2-bit addr
 |-|-|-|-|-|-|-|
 | fifo_data_tx | 0b00 | 0x02 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | CODE, V_Buffer, SL_Buffer, and SR_Buffer |
 | fifo_data_rx | 0b01 | 0x86 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | KEY_AND_STATUS |
-| fifo_ctrl_tx | 0b10 | 0x04 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | Current Transmission Type |
+| fifo_ctrl_tx | 0b10 | 0x04 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | Current Transmission Code |
 | fifo_ctrl_rx | 0b11 | 0x88 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | Repeating 0x47424120492F4F0A (`GBA I/O\n` in Hex) for Device Identification |
 
-The address offset is automatically incremented and will reset to 0 when any of the following Transmission Type is sent to the fifo_ctrl_tx.
+The address offset is automatically incremented, and it will reset to 0 when any of the Transmission Code (1 byte in size) is sent to the fifo_ctrl_tx.
 
-| FPGA SDRAM Address (gba-io-fpga) | Transmission Type | Packet Count for a Complete Transmission |
+| Transmission Code High | Enabled FPGA FIFO Component | Direction |
 |-|-|-|
-| None | 0b000 | N/A |
-| CODE 0x00000000 | 0b001 | 0x1000000 / 0x2000 = 0x800 = 2048 |
-| V_Buffer 0x01000000 | 0b010 | 0x20000 / 0x2000 = 0x10 = 16 |
-| SL_Buffer 0x01E00000 | 0b110 | 0x10 / 0x10 = 1 |
-| SR_Buffer 0x01F00000 | 0b101 | 0x10 / 0x10 = 1 |
-| KEY_AND_STATUS 0x02000000 | 0b011 | 0x20 / 0x20 = 1 |
+| 0x0X | None | N/A |
+| 0x4X | fifo_data_rx | IN |
+| 0x8X | fifo_data_tx | OUT |
+
+| Transmission Code Low | FPGA SDRAM Address (gba-io-fpga) | Packet Count for a Complete Transmission |
+|-|-|-|
+| 0xX0 | None | N/A |
+| 0xX1 | CODE 0x00000000 | 0x1000000 / 0x2000 = 0x800 = 2048 |
+| 0xX2 | V_Buffer 0x01000000 | 0x20000 / 0x2000 = 0x10 = 16 |
+| 0xX3 | SL_Buffer 0x01E00000 | 0x10 / 0x10 = 1 |
+| 0xX4 | SR_Buffer 0x01F00000 | 0x10 / 0x10 = 1 |
+| 0xX5 | KEY_AND_STATUS 0x02000000 | 0x20 / 0x20 = 1 |
 
 ### Handling CDC (Clock Domain Crossing) between the GBA Console and the FPGA
 

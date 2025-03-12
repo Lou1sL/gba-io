@@ -118,7 +118,7 @@ void USB::WriteCode(std::string GBAIOROMPath)
 	romFile.close();
 
 	std::cout << "Transferring GBA I/O ROM to the GBA I/O USB device..." << std::endl;
-	SendTransType(TRANS_TYPE_CODE);
+	SendTransType(TRANS_OUT_CODE);
 	LONG len = TRANS_SIZE_CODE;
 	if (!FIFODataTxEndPt->XferData(pCode, len)) {
 		std::cout << "Failed to transfer ROM data to the device." << std::endl;
@@ -130,7 +130,7 @@ void USB::WriteCode(std::string GBAIOROMPath)
 void USB::WriteVBuffer(uint8_t* v)
 {
 	std::lock_guard<std::mutex> lock(mutex);
-	SendTransType(TRANS_TYPE_V_BUFFER);
+	SendTransType(TRANS_OUT_V_BUFFER);
 	LONG len = TRANS_SIZE_V_BUFFER;
 	if (!FIFODataTxEndPt->XferData(v, len)) {
 		std::cout << "Failed to write to the V_Buffer." << std::endl;
@@ -140,12 +140,12 @@ void USB::WriteVBuffer(uint8_t* v)
 void USB::WriteSLAndSRBuffer(uint8_t* sl, uint8_t* sr)
 {
 	std::lock_guard<std::mutex> lock(mutex);
-	SendTransType(TRANS_TYPE_SL_BUFFER);
+	SendTransType(TRANS_OUT_SL_BUFFER);
 	LONG len = TRANS_SIZE_S_BUFFER;
 	if (!FIFODataTxEndPt->XferData(sl, len)) {
 		std::cout << "Failed to write to the SL_Buffer." << std::endl;
 	}
-	SendTransType(TRANS_TYPE_SR_BUFFER);
+	SendTransType(TRANS_OUT_SR_BUFFER);
 	if (!FIFODataTxEndPt->XferData(sr, len)) {
 		std::cout << "Failed to write to the SR_Buffer." << std::endl;
 	}
@@ -154,7 +154,7 @@ void USB::WriteSLAndSRBuffer(uint8_t* sl, uint8_t* sr)
 KeyAndStatus* USB::ReadKeyAndStatus()
 {
 	std::lock_guard<std::mutex> lock(mutex);
-	SendTransType(TRANS_TYPE_KEY_AND_STATUS);
+	SendTransType(TRANS_IN_KEY_AND_STATUS);
 	LONG len = TRANS_SIZE_KEY_AND_STATUS;
 	if (!FIFODataRxEndPt->XferData(reinterpret_cast<PUCHAR>(pKeyAndStatus), len)) {
 		std::cout << "Failed to read from the KEY_AND_STATUS." << std::endl;

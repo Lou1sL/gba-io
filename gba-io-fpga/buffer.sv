@@ -47,47 +47,48 @@ module buffer (
     localparam KEY_AND_STATUS_SIZE           = 26'h00000020;
     localparam KEY_AND_STATUS_OFFSET_MASK    = 26'h0000001F;
 
-    localparam SEG_INDEX_CART_VIDEO_FEED   = 3'd0;
-    localparam SEG_INDEX_CART_SOUND_L_FEED = 3'd1;
-    localparam SEG_INDEX_CART_SOUND_R_FEED = 3'd2;
-    localparam SEG_INDEX_USB_VIDEO_FEED    = 3'd3;
-    localparam SEG_INDEX_USB_SOUND_L_FEED  = 3'd4;
-    localparam SEG_INDEX_USB_SOUND_R_FEED  = 3'd5;
-    localparam SEG_INDEX_NONE              = 3'b111;
-    logic [3:0] current_seg_index;
+    localparam SEG_CART_VIDEO_FEED   = 3'd0;
+    localparam SEG_CART_SOUND_L_FEED = 3'd1;
+    localparam SEG_CART_SOUND_R_FEED = 3'd2;
+    localparam SEG_USB_VIDEO_FEED    = 3'd3;
+    localparam SEG_USB_SOUND_L_FEED  = 3'd4;
+    localparam SEG_USB_SOUND_R_FEED  = 3'd5;
+    localparam SEG_NONE              = 3'b111;
+
+    logic [3:0] current_seg;
     logic [25:0] current_base_address;
     logic [25:0] current_offset;
     assign mux_buffer.mem_addr = current_base_address + current_offset;
     always_comb begin
         if(mux_buffer.cart_usb_addr[25] == 1'b0) begin
             if(mux_buffer.cart_usb_addr[24] == 1'b0) begin
-                current_seg_index = SEG_INDEX_NONE;
+                current_seg = SEG_NONE;
                 current_base_address = CODE_ADDRESS;
                 current_offset = mux_buffer.cart_usb_addr & CODE_OFFSET_MASK;
             end else if(mux_buffer.cart_usb_addr[24:20] == 5'b11110) begin
-                current_seg_index =
-                    mux_buffer.from_cart ? SEG_INDEX_CART_SOUND_L_FEED :
-                    mux_buffer.from_usb ? SEG_INDEX_USB_SOUND_L_FEED :
-                    SEG_INDEX_NONE;
+                current_seg =
+                    mux_buffer.from_cart ? SEG_CART_SOUND_L_FEED :
+                    mux_buffer.from_usb ? SEG_USB_SOUND_L_FEED :
+                    SEG_NONE;
                 current_base_address = current_frame_occ_addr;
                 current_offset = mux_buffer.cart_usb_addr & SOUND_FEED_FRAME_OFFSET_MASK;
             end else if(mux_buffer.cart_usb_addr[24:20] == 5'b11111) begin
-                current_seg_index =
-                    mux_buffer.from_cart ? SEG_INDEX_CART_SOUND_R_FEED :
-                    mux_buffer.from_usb ? SEG_INDEX_USB_SOUND_R_FEED :
-                    SEG_INDEX_NONE;
+                current_seg =
+                    mux_buffer.from_cart ? SEG_CART_SOUND_R_FEED :
+                    mux_buffer.from_usb ? SEG_USB_SOUND_R_FEED :
+                    SEG_NONE;
                 current_base_address = current_frame_occ_addr;
                 current_offset = mux_buffer.cart_usb_addr & SOUND_FEED_FRAME_OFFSET_MASK;
             end else begin
-                current_seg_index =
-                    mux_buffer.from_cart ? SEG_INDEX_CART_VIDEO_FEED :
-                    mux_buffer.from_usb ? SEG_INDEX_USB_VIDEO_FEED :
-                    SEG_INDEX_NONE;
+                current_seg =
+                    mux_buffer.from_cart ? SEG_CART_VIDEO_FEED :
+                    mux_buffer.from_usb ? SEG_USB_VIDEO_FEED :
+                    SEG_NONE;
                 current_base_address = current_frame_occ_addr;
                 current_offset = mux_buffer.cart_usb_addr & VIDEO_FEED_FRAME_OFFSET_MASK;
             end
         end else begin
-            current_seg_index = SEG_INDEX_NONE;
+            current_seg = SEG_NONE;
             current_base_address = KEY_AND_STATUS_ADDRESS;
             current_offset = mux_buffer.cart_usb_addr & KEY_AND_STATUS_OFFSET_MASK;
         end
@@ -111,21 +112,21 @@ module buffer (
     };
     logic [1:0] current_seg_occ_sel;
     assign current_seg_occ_sel =
-        (current_seg_index == SEG_INDEX_CART_VIDEO_FEED  ) ? OCC_SEL_V  :
-        (current_seg_index == SEG_INDEX_CART_SOUND_L_FEED) ? OCC_SEL_SL :
-        (current_seg_index == SEG_INDEX_CART_SOUND_R_FEED) ? OCC_SEL_SR :
-        (current_seg_index == SEG_INDEX_USB_VIDEO_FEED   ) ? OCC_SEL_V  :
-        (current_seg_index == SEG_INDEX_USB_SOUND_L_FEED ) ? OCC_SEL_SL :
-        (current_seg_index == SEG_INDEX_USB_SOUND_R_FEED ) ? OCC_SEL_SR :
+        (current_seg == SEG_CART_VIDEO_FEED  ) ? OCC_SEL_V  :
+        (current_seg == SEG_CART_SOUND_L_FEED) ? OCC_SEL_SL :
+        (current_seg == SEG_CART_SOUND_R_FEED) ? OCC_SEL_SR :
+        (current_seg == SEG_USB_VIDEO_FEED   ) ? OCC_SEL_V  :
+        (current_seg == SEG_USB_SOUND_L_FEED ) ? OCC_SEL_SL :
+        (current_seg == SEG_USB_SOUND_R_FEED ) ? OCC_SEL_SR :
         OCC_SEL_NONE;
     logic [1:0] current_seg_occupier;
     assign current_seg_occupier =
-        (current_seg_index == SEG_INDEX_CART_VIDEO_FEED  ) ? OCCUPIER_CART :
-        (current_seg_index == SEG_INDEX_CART_SOUND_L_FEED) ? OCCUPIER_CART :
-        (current_seg_index == SEG_INDEX_CART_SOUND_R_FEED) ? OCCUPIER_CART :
-        (current_seg_index == SEG_INDEX_USB_VIDEO_FEED   ) ? OCCUPIER_USB :
-        (current_seg_index == SEG_INDEX_USB_SOUND_L_FEED ) ? OCCUPIER_USB :
-        (current_seg_index == SEG_INDEX_USB_SOUND_R_FEED ) ? OCCUPIER_USB :
+        (current_seg == SEG_CART_VIDEO_FEED  ) ? OCCUPIER_CART :
+        (current_seg == SEG_CART_SOUND_L_FEED) ? OCCUPIER_CART :
+        (current_seg == SEG_CART_SOUND_R_FEED) ? OCCUPIER_CART :
+        (current_seg == SEG_USB_VIDEO_FEED   ) ? OCCUPIER_USB :
+        (current_seg == SEG_USB_SOUND_L_FEED ) ? OCCUPIER_USB :
+        (current_seg == SEG_USB_SOUND_R_FEED ) ? OCCUPIER_USB :
         OCCUPIER_INVALID;
     logic [1:0] next_free_occ_index;
     assign next_free_occ_index = 
@@ -172,10 +173,10 @@ module buffer (
             };
         end else begin
             if(
-                (current_seg_index != SEG_INDEX_NONE) &
+                (current_seg != SEG_NONE) &
                 (current_seg_occ_sel != OCC_SEL_NONE) &
                 (next_free_occ_index != OCC_INDEX_INVALID) &
-                (current_offset == 26'h0)) begin
+                (current_offset == 26'h0)) begin // TODO: The swiching occurs after the first 0 offset access
                 frame_occ[current_seg_occ_sel][next_free_occ_index] <= current_seg_occupier;
                 frame_occ[current_seg_occ_sel][current_occ_index] <= OCCUPIER_NONE;
             end

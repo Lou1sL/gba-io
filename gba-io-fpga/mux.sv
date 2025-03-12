@@ -41,7 +41,7 @@ module mux (
     // assign mux_mem.mem_addr = mux_buffer.mem_addr;
     // assign mux_mem.mem_rd_data = cart_mux.cart_rd_data; // TODO: Add USB
     // assign mux_mem.mem_wr_data = cart_mux.cart_wr_data; // TODO: Add USB
-    // assign mux_mem.mem_rd_valid = cart_mux.mux_rd_valid;
+    // assign mux_mem.mem_rd_valid = cart_mux.cart_rd_valid;
 
     // Testing
     assign mux_mem.mem_data_width = 2'b11; // 01: 8-bit cart cs2, 10: 16-bit cart cs1, 11: 32-bit usb

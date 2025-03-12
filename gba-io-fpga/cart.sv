@@ -77,7 +77,7 @@ module cart (
         end else begin
             if(cs1_falling_edge)                           cart_bus_cs1_addr_hold <= { gba_adh, gba_adl, 1'b0 };
             if((rd_rising_edge | wr_rising_edge) & cs1_lo) cart_bus_cs1_addr_hold <= cart_bus_cs1_addr_hold + 2;
-            if(cart_mux.mux_rd_valid)                      cart_bus_rd_data_hold <= cart_mux.cart_rd_data;
+            if(cart_mux.cart_rd_valid)                     cart_bus_rd_data_hold <= cart_mux.cart_rd_data;
         end
     end
 
@@ -140,7 +140,7 @@ module cart (
         .probe20(cart_mux.cart_addr),
         .probe21(cart_mux.cart_rd_data),
         .probe22(cart_mux.cart_wr_data),
-        .probe23(cart_mux.mux_rd_valid),
+        .probe23(cart_mux.cart_rd_valid),
         .probe24(gba_rd),
         .probe25(gba_wr),
         .probe26(gba_cs1),

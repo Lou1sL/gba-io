@@ -25,35 +25,40 @@ module usb (
     localparam SOUND_FEED_FRAME_SIZE         = 26'h00000010;
     localparam KEY_AND_STATUS_ADDRESS        = 26'h02000000;
     localparam KEY_AND_STATUS_SIZE           = 26'h00000020;
-    localparam USB_TRANS_TYPE_NONE           = 3'b000; // 0
-    localparam USB_TRANS_TYPE_CODE           = 3'b001; // 1
-    localparam USB_TRANS_TYPE_V_BUFFER       = 3'b010; // 2
-    localparam USB_TRANS_TYPE_SL_BUFFER      = 3'b110; // 6
-    localparam USB_TRANS_TYPE_SR_BUFFER      = 3'b101; // 5
-    localparam USB_TRANS_TYPE_KEY_AND_STATUS = 3'b011; // 3
-    
-    bit [2:0] current_trans_type = USB_TRANS_TYPE_NONE;
 
-    logic [25:0] current_trans_type_size;
-    assign current_trans_type_size =
-        current_trans_type == USB_TRANS_TYPE_NONE ? 26'h0 :
-        current_trans_type == USB_TRANS_TYPE_CODE ? CODE_SIZE :
-        current_trans_type == USB_TRANS_TYPE_V_BUFFER ? VIDEO_FEED_FRAME_SIZE :
-        current_trans_type == USB_TRANS_TYPE_SL_BUFFER ? SOUND_FEED_FRAME_SIZE :
-        current_trans_type == USB_TRANS_TYPE_SR_BUFFER ? SOUND_FEED_FRAME_SIZE :
-        current_trans_type == USB_TRANS_TYPE_KEY_AND_STATUS ? KEY_AND_STATUS_SIZE :
+    localparam USB_TRANS_DIR_NONE            = 4'b0000; // 0x0X
+    localparam USB_TRANS_DIR_IN_RX           = 4'b0100; // 0x4X
+    localparam USB_TRANS_DIR_OUT_TX          = 4'b1000; // 0x8X
+    localparam USB_TRANS_SEG_NONE            = 4'd0; // 0xX0
+    localparam USB_TRANS_SEG_CODE            = 4'd1; // 0xX1
+    localparam USB_TRANS_SEG_V_BUFFER        = 4'd2; // 0xX2
+    localparam USB_TRANS_SEG_SL_BUFFER       = 4'd3; // 0xX3
+    localparam USB_TRANS_SEG_SR_BUFFER       = 4'd4; // 0xX4
+    localparam USB_TRANS_SEG_KEY_AND_STATUS  = 4'd5; // 0xX5
+    
+    bit [3:0] current_seg = USB_TRANS_SEG_NONE;
+    bit [3:0] current_dir = USB_TRANS_DIR_NONE;
+
+    logic [25:0] current_seg_size;
+    assign current_seg_size =
+        current_seg == USB_TRANS_SEG_NONE ? 26'h0 :
+        current_seg == USB_TRANS_SEG_CODE ? CODE_SIZE :
+        current_seg == USB_TRANS_SEG_V_BUFFER ? VIDEO_FEED_FRAME_SIZE :
+        current_seg == USB_TRANS_SEG_SL_BUFFER ? SOUND_FEED_FRAME_SIZE :
+        current_seg == USB_TRANS_SEG_SR_BUFFER ? SOUND_FEED_FRAME_SIZE :
+        current_seg == USB_TRANS_SEG_KEY_AND_STATUS ? KEY_AND_STATUS_SIZE :
         26'h0;
-    logic [25:0] current_trans_type_base_address;
-    assign current_trans_type_base_address =
-        current_trans_type == USB_TRANS_TYPE_NONE ? 26'h0 :
-        current_trans_type == USB_TRANS_TYPE_CODE ? CODE_ADDRESS :
-        current_trans_type == USB_TRANS_TYPE_V_BUFFER ? VIDEO_FEED_FRAME_0_ADDRESS :
-        current_trans_type == USB_TRANS_TYPE_SL_BUFFER ? SOUND_L_FEED_FRAME_0_ADDRESS :
-        current_trans_type == USB_TRANS_TYPE_SR_BUFFER ? SOUND_R_FEED_FRAME_0_ADDRESS :
-        current_trans_type == USB_TRANS_TYPE_KEY_AND_STATUS ? KEY_AND_STATUS_ADDRESS :
+    logic [25:0] current_base_address;
+    assign current_base_address =
+        current_seg == USB_TRANS_SEG_NONE ? 26'h0 :
+        current_seg == USB_TRANS_SEG_CODE ? CODE_ADDRESS :
+        current_seg == USB_TRANS_SEG_V_BUFFER ? VIDEO_FEED_FRAME_0_ADDRESS :
+        current_seg == USB_TRANS_SEG_SL_BUFFER ? SOUND_L_FEED_FRAME_0_ADDRESS :
+        current_seg == USB_TRANS_SEG_SR_BUFFER ? SOUND_R_FEED_FRAME_0_ADDRESS :
+        current_seg == USB_TRANS_SEG_KEY_AND_STATUS ? KEY_AND_STATUS_ADDRESS :
         26'h0;
-    bit [25:0] current_trans_type_offset;
-    assign mux_usb.usb_addr = current_trans_type_base_address + current_trans_type_offset;
+    bit [25:0] current_offset;
+    assign mux_usb.usb_addr = current_base_address + current_offset;
 
 
     // fifo_ctrl_tx, 0x04, OUT, read from fifo, pc -> fpga
@@ -63,22 +68,25 @@ module usb (
     logic [31:0] ctrl_tx;
 
     assign ctrl_tx_ready =
-        (current_trans_type == USB_TRANS_TYPE_NONE) |
-        ((current_trans_type != USB_TRANS_TYPE_NONE) & (current_trans_type_offset >= current_trans_type_size - 4));
+        (current_seg == USB_TRANS_SEG_NONE) |
+        (current_dir == USB_TRANS_DIR_NONE) |
+        ((current_seg != USB_TRANS_SEG_NONE) & (current_dir != USB_TRANS_DIR_NONE) & (current_offset >= current_seg_size - 4));
 
     always_ff @(posedge clk) begin
         if(rst) begin
-            current_trans_type <= USB_TRANS_TYPE_NONE;
-            current_trans_type_offset <= 26'h0;
+            current_seg <= USB_TRANS_SEG_NONE;
+            current_dir <= USB_TRANS_DIR_NONE;
+            current_offset <= 26'h0;
         end else begin
-            // It appears like the current_trans_type_offset could be in a metastable state, however it's not the case.
-            // Because, to assert the ctrl_tx_ready, the current_trans_type must be NONE, but to assert the usb_rd or the usb_wr signal, the current_trans_type must be something meaningful.
+            // It appears like the current_offset could be in a metastable state, however it's not the case.
+            // Because, to assert the ctrl_tx_ready, the current_seg must be NONE, but to assert the usb_rd or the usb_wr signal, the current_seg must be something meaningful.
             if(ctrl_tx_ready & ctrl_tx_valid) begin
-                current_trans_type <= ctrl_tx[2:0];
-                current_trans_type_offset <= 26'h0;
+                current_seg <= ctrl_tx[3:0];
+                current_dir <= ctrl_tx[7:4];
+                current_offset <= 26'h0;
             end
             if(mux_usb.usb_rd | mux_usb.usb_wr) begin
-                current_trans_type_offset <= (current_trans_type_offset + 4);
+                current_offset <= (current_offset + 4);
             end
         end
     end
@@ -113,12 +121,8 @@ module usb (
     logic data_tx_pktend; // in
     logic [31:0] data_tx; // in
 
-    assign data_tx_ready = mux_usb.usb_wr_ready & (current_trans_type_offset <= (current_trans_type_size - 4)) & (
-        current_trans_type == USB_TRANS_TYPE_CODE |
-        current_trans_type == USB_TRANS_TYPE_V_BUFFER |
-        current_trans_type == USB_TRANS_TYPE_SL_BUFFER |
-        current_trans_type == USB_TRANS_TYPE_SR_BUFFER
-    );
+    assign data_tx_ready = mux_usb.usb_wr_ready & (current_dir == USB_TRANS_DIR_OUT_TX) &
+        (current_offset <= (current_seg_size - 4)) & (current_seg != USB_TRANS_SEG_NONE);
     assign mux_usb.usb_wr = data_tx_ready & data_tx_valid;
     assign mux_usb.usb_wr_data = 
         (data_tx_ready & data_tx_valid) ? data_tx :
@@ -130,11 +134,10 @@ module usb (
     logic data_rx_pktend; // out
     logic [31:0] data_rx; // out
 
-    assign data_rx_valid = data_rx_ready & mux_usb.usb_rd_ready & mux_usb.usb_rd_valid & (current_trans_type_offset <= (current_trans_type_size - 4)) & (
-        current_trans_type == USB_TRANS_TYPE_KEY_AND_STATUS
-    );
+    assign data_rx_valid = data_rx_ready & mux_usb.usb_rd_ready & mux_usb.usb_rd_valid & (current_dir == USB_TRANS_DIR_IN_RX) &
+        (current_offset <= (current_seg_size - 4)) & (current_seg != USB_TRANS_SEG_NONE);
     assign data_rx_pktend =
-        data_rx_valid ? (current_trans_type_offset >= (current_trans_type_size - 4)) :
+        data_rx_valid ? (current_offset >= (current_seg_size - 4)) :
         1'b0;
     assign data_rx = 
         data_rx_valid ? mux_usb.usb_rd_data :
@@ -172,7 +175,7 @@ module usb (
         if(rst) begin
             counter_rcv <= 0;
         end else begin
-            if((current_trans_type != USB_TRANS_TYPE_NONE) & (current_trans_type_offset == 26'h0)) counter_rcv <= 1000000;
+            if((current_seg != USB_TRANS_SEG_NONE) & (current_offset == 26'h0)) counter_rcv <= 1000000;
             else if(counter_rcv > 0) counter_rcv <= counter_rcv - 1;
         end
     end

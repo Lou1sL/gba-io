@@ -45,12 +45,11 @@ private:
 
 	const std::string FIFO_CTRL_RX_ENDPOINT_FINGERPRINT = "GBA I/O\n";
 
-	static const UCHAR TRANS_TYPE_NONE = 0b000;
-	static const UCHAR TRANS_TYPE_CODE = 0b001;
-	static const UCHAR TRANS_TYPE_V_BUFFER = 0b010;
-	static const UCHAR TRANS_TYPE_SL_BUFFER = 0b110;
-	static const UCHAR TRANS_TYPE_SR_BUFFER = 0b101;
-	static const UCHAR TRANS_TYPE_KEY_AND_STATUS = 0b011;
+	static const UCHAR TRANS_OUT_CODE = 0x81;
+	static const UCHAR TRANS_OUT_V_BUFFER = 0x82;
+	static const UCHAR TRANS_OUT_SL_BUFFER = 0x83;
+	static const UCHAR TRANS_OUT_SR_BUFFER = 0x84;
+	static const UCHAR TRANS_IN_KEY_AND_STATUS = 0x45;
 
 	static const LONG  TRANS_SIZE_CODE = 0x1000000;
 	static const LONG  TRANS_SIZE_V_BUFFER = 0x20000;
