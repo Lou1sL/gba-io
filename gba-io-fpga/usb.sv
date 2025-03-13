@@ -1,7 +1,25 @@
 
 // https://docs.amd.com/r/en-US/pg080-axi-fifo-mm-s/Protocol-Description
 
-// TODO: Fix the defination of signals
+// TODO: Fix this
+
+// BULK OUT transfer 
+// 0000 83
+// BULK OUT transfer completed
+
+// BULK OUT transfer 
+// 0000 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+// BULK OUT transfer completed
+
+// BULK OUT transfer 
+// 0000 43
+// BULK OUT transfer completed
+
+// BULK IN transfer 
+// 0000 04 05 06 07 04 05 06 07 04 05 06 07 04 05 06 07
+// BULK IN transfer completed
+
+
 
 `timescale 1ns / 1ps
 
@@ -87,7 +105,7 @@ module usb (
                 current_dir <= ctrl_tx[7:4];
                 current_offset <= 26'h0;
             end
-            if(mux_usb.usb_rd | mux_usb.usb_wr) begin
+            if(data_tx_ready | data_rx_valid) begin
                 current_offset <= (current_offset + 4);
             end
         end
@@ -117,34 +135,29 @@ module usb (
     end
 
 
-    // fifo_data_tx, 0x02, OUT, read from fifo, pc -> fpga
+    // fifo_data_tx, 0x02, OUT, read from fifo, write to sdram, pc -> fpga
     logic data_tx_ready; // out
     logic data_tx_valid; // in
     logic data_tx_pktend; // in
+
     logic [31:0] data_tx; // in
-
-    assign data_tx_ready = mux_usb.usb_wr_ready & (current_dir == USB_TRANS_DIR_OUT_TX) &
+    assign mux_usb.usb_wr = data_tx_valid & (current_dir == USB_TRANS_DIR_OUT_TX) &
         (current_offset <= (current_seg_size - 4)) & (current_seg != USB_TRANS_SEG_NONE);
-    assign mux_usb.usb_wr = data_tx_ready & data_tx_valid;
-    assign mux_usb.usb_wr_data = 
-        (data_tx_ready & data_tx_valid) ? data_tx :
-        32'h0;
+    assign mux_usb.usb_wr_data = data_tx_valid ? data_tx : 32'h0;
+    assign data_tx_ready = mux_usb.usb_wr & mux_usb.usb_wr_ready;
 
-    // fifo_data_rx, 0x86, IN, write to fifo, fpga -> pc
+
+    // fifo_data_rx, 0x86, IN, write to fifo, read from sdram, fpga -> pc
     logic data_rx_ready; // in
     logic data_rx_valid; // out
     logic data_rx_pktend; // out
     logic [31:0] data_rx; // out
 
-    assign data_rx_valid = data_rx_ready & mux_usb.usb_rd_valid & (current_dir == USB_TRANS_DIR_IN_RX) &
+    assign mux_usb.usb_rd = data_rx_ready & (current_dir == USB_TRANS_DIR_IN_RX) &
         (current_offset <= (current_seg_size - 4)) & (current_seg != USB_TRANS_SEG_NONE);
-    assign data_rx_pktend =
-        data_rx_valid ? (current_offset >= (current_seg_size - 4)) :
-        1'b0;
-    assign data_rx = 
-        data_rx_valid ? mux_usb.usb_rd_data :
-        32'h0;
-    assign mux_usb.usb_rd = data_rx_valid;
+    assign data_rx_valid = mux_usb.usb_rd & mux_usb.usb_rd_valid;
+    assign data_rx_pktend = data_rx_valid ? (current_offset >= (current_seg_size - 4)) : 1'b0;
+    assign data_rx = data_rx_valid ? mux_usb.usb_rd_data : 32'h0;
 
 
     gpif2_to_fifo32 gpif2_to_fifo32 (
