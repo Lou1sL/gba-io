@@ -1,6 +1,8 @@
 
 // https://docs.amd.com/r/en-US/pg080-axi-fifo-mm-s/Protocol-Description
 
+// TODO: Fix the defination of signals
+
 `timescale 1ns / 1ps
 
 module usb (
@@ -134,7 +136,7 @@ module usb (
     logic data_rx_pktend; // out
     logic [31:0] data_rx; // out
 
-    assign data_rx_valid = data_rx_ready & mux_usb.usb_rd_ready & mux_usb.usb_rd_valid & (current_dir == USB_TRANS_DIR_IN_RX) &
+    assign data_rx_valid = data_rx_ready & mux_usb.usb_rd_valid & (current_dir == USB_TRANS_DIR_IN_RX) &
         (current_offset <= (current_seg_size - 4)) & (current_seg != USB_TRANS_SEG_NONE);
     assign data_rx_pktend =
         data_rx_valid ? (current_offset >= (current_seg_size - 4)) :

@@ -62,8 +62,8 @@ module cart (
     assign cart_mux.cart_rd = cs1_rd | cs2_rd;
     assign cart_mux.cart_wr = cs1_wr | cs2_wr;
     assign cart_mux.cart_data_width = 
-        (cs1_rd | cs1_wr) ? 2'b10 :
-        (cs2_rd | cs2_wr) ? 2'b01 :
+        (cs1_rd | (cs1_lo & rd_lo) | cs1_wr | (cs1_lo & wr_lo)) ? 2'b10 :
+        (cs2_rd | (cs2_lo & rd_lo) | cs2_wr | (cs2_lo & wr_lo)) ? 2'b01 :
         2'b00;
 
     // Cart Address -> Address Holding Register, Mux Read Data -> Read Data Holding Registers
@@ -87,9 +87,9 @@ module cart (
 
     // Cart Address / Address Holding Register -> Mux Address
     assign cart_mux.cart_addr = 
-        (cs1_rd | cs1_wr) ? { 1'b0, cart_bus_cs1_addr_hold } :
+        (cs1_rd | (cs1_lo & rd_lo) | cs1_wr | (cs1_lo & wr_lo)) ? { 1'b0, cart_bus_cs1_addr_hold } :
         // The address/data lines are prepared already before the r/w edges thus not in a metastable state
-        (cs2_rd | cs2_wr) ? { 1'b1, 9'b0, gba_adl } :
+        (cs2_rd | (cs2_lo & rd_lo) | cs2_wr | (cs2_lo & wr_lo)) ? { 1'b1, 9'b0, gba_adl } :
         26'b0;
 
     // Cart Write Data -> Mux Write Data
