@@ -1,6 +1,5 @@
 
-// See: https://www.xilinx.com/support/documents/ip_documentation/mig_7series/v4_1/ug586_7Series_MIS.pdf
-// https://numato.com/kb/simple-ddr3-interfacing-on-skoll-using-xilinx-mig-7-2/
+// https://www.xilinx.com/support/documents/ip_documentation/mig_7series/v4_1/ug586_7Series_MIS.pdf
 
 `timescale 1ps / 1ps
 `include "gba_io_fpga_header.svh"
@@ -35,6 +34,11 @@ module mem #(
     mux_mem_interface.mem mux_mem
 );
 
+    localparam DATA_WIDTH_0 = 2'b00;
+    localparam DATA_WIDTH_8 = 2'b01;
+    localparam DATA_WIDTH_16 = 2'b10;
+    localparam DATA_WIDTH_32 = 2'b11;
+
     // DDR3 SDRAM
     localparam DATA_WIDTH = 16;
     localparam PAYLOAD_WIDTH = (ECC_TEST == "OFF") ? DATA_WIDTH : DQ_WIDTH;
@@ -44,7 +48,7 @@ module mem #(
     logic init_calib_complete;
     logic [15:0] mem_wr_mask;
 
-    logic [ADDR_WIDTH-1:0] mem_addr; // [29:0]
+    logic [ADDR_WIDTH-1:0] mem_addr; // [28:0]
     localparam CMD_WRITE = 3'b000;
     localparam CMD_READ = 3'b001;
     logic [2:0] mem_cmd;
@@ -119,8 +123,8 @@ module mem #(
         // This bus provides the data currently being written to the external memory.
         .app_wdf_data(mem_wr_data),
         // This input indicates that the data on the app_wdf_data[] bus in the current cycle is the last data for the current request.
-        // We set it to always one since we do not need to strech the request accross multiple cycles now.
-        .app_wdf_end(1'b1),
+        // We set it to mem_wr_valid since we do not need to strech the request accross multiple cycles now.
+        .app_wdf_end(mem_wr_valid),
         // This bus indicates which bytes of app_wdf_data[] are written to the external memory and which bytes remain in their current state.
         // The bytes are masked by setting a value of 1 to the corresponding bits in app_wdf_mask.
         // For example, if the application data width is 256, the mask width takes a value of 32.
@@ -162,25 +166,62 @@ module mem #(
     // Memory -> Mux
     assign mux_mem.mem_rd_ready = init_calib_complete & mem_ready;
     assign mux_mem.mem_wr_ready = init_calib_complete & mem_ready & mem_wr_ready;
-    assign mux_mem.mem_rd_data = mem_rd_data[31:0];
+    assign mux_mem.mem_rd_data =
+        (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? (
+            (mux_mem.mem_addr[0] == 1'b0) ? { mem_rd_data[7:0], 24'h0 } : { mem_rd_data[15:8], 24'h0 }
+        ) :
+        (mux_mem.mem_data_width == DATA_WIDTH_16) ? { mem_rd_data[7:0], mem_rd_data[15:8], 16'h0 } :
+        (mux_mem.mem_data_width == DATA_WIDTH_32) ? { mem_rd_data[7:0], mem_rd_data[15:8], mem_rd_data[23:16], mem_rd_data[31:24] } :
+        { 32'h0 };
+    // assign mux_mem.mem_rd_data = mem_rd_data[31:0];
+    assign mux_mem.debug_mem_rd_data = mem_rd_data;
     assign mux_mem.mem_rd_valid = mem_rd_valid;
 
     // Mux -> Memory
     assign mem_wr_mask =
-        (mux_mem.mem_data_width == 2'b00) ? 16'b11111111_11111111 :
-        (mux_mem.mem_data_width == 2'b01) ? 16'b11111111_11111110 :
-        (mux_mem.mem_data_width == 2'b10) ? 16'b11111111_11111100 :
-        (mux_mem.mem_data_width == 2'b11) ? 16'b11111111_11110000 :
+        (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? (
+            (mux_mem.mem_addr[0] == 1'b0) ? 16'b11111111_11111110 : 16'b11111111_11111101
+        ) :
+        (mux_mem.mem_data_width == DATA_WIDTH_16) ? 16'b11111111_11111100 :
+        (mux_mem.mem_data_width == DATA_WIDTH_32) ? 16'b11111111_11110000 :
         16'b11111111_11111111;
-    assign mem_addr = { {(ADDR_WIDTH-26){ 1'b0 }}, mux_mem.mem_addr };
+    // assign mem_wr_mask =
+    //     (mux_mem.mem_data_width == DATA_WIDTH_0 ) ? 16'b11111111_11111111 :
+    //     (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? 16'b11111111_11111110 :
+    //     (mux_mem.mem_data_width == DATA_WIDTH_16) ? 16'b11111111_11111100 :
+    //     (mux_mem.mem_data_width == DATA_WIDTH_32) ? 16'b11111111_11110000 :
+    //     16'b11111111_11111111;
+    assign mem_addr = { {(ADDR_WIDTH-26){ 1'b0 }}, (mux_mem.mem_addr >> 1) };
     assign mem_cmd = mux_mem.mem_rd ? CMD_READ : mux_mem.mem_wr ? CMD_WRITE : 3'b000;
-    assign mem_en =
-        (init_calib_complete & mem_ready & mux_mem.mem_rd) |
-        (init_calib_complete & mem_ready & mem_wr_ready & mux_mem.mem_wr);
-    assign mem_wr_data = { {(APP_DATA_WIDTH-32){ 1'b0 }}, mux_mem.mem_wr_data };
-    assign mem_wr_valid = init_calib_complete & mem_ready & mem_wr_ready & mux_mem.mem_wr;
+    assign mem_en = mux_mem.mem_rd | mux_mem.mem_wr;
+    assign mem_wr_data =
+        (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? (
+            (mux_mem.mem_addr[0] == 1'b0) ? { 120'h0, mux_mem.mem_wr_data[7:0] } : { 112'h0, mux_mem.mem_wr_data[7:0], 8'h0 }
+        ) :
+        (mux_mem.mem_data_width == DATA_WIDTH_16) ? { 112'h0, mux_mem.mem_wr_data[7:0], mux_mem.mem_wr_data[15:8] } :
+        (mux_mem.mem_data_width == DATA_WIDTH_32) ? { 96'h0, mux_mem.mem_wr_data[7:0], mux_mem.mem_wr_data[15:8], mux_mem.mem_wr_data[23:16], mux_mem.mem_wr_data[31:24] } :
+        { 120'h0 };
+    // assign mem_wr_data = { {(APP_DATA_WIDTH-32){ 1'b0 }}, mux_mem.mem_wr_data };
+    assign mem_wr_valid = mux_mem.mem_wr;
 
     // Status -> LED
     assign led_rdy = init_calib_complete & mem_ready;
+
+    ila_mem i(
+        .clk(clk),
+        .probe0 (mem_addr),
+        .probe1 (mem_cmd),
+        .probe2 (mem_en),
+        .probe3 (mem_ready),
+        .probe4 (mem_rd_data),
+        .probe5 (mem_rd_valid),
+        .probe6 (mem_wr_data),
+        .probe7 (mem_wr_valid),
+        .probe8 (mem_wr_mask),
+        .probe9 (mem_wr_ready),
+        .probe10(mem_wr_valid),
+        .probe11(init_calib_complete),
+        .probe12(rst_ui_sync)
+    );
 
 endmodule

@@ -68,6 +68,6 @@ private:
 
 	UCHAR* pCode;
 	KeyAndStatus* pKeyAndStatus;
-
+	// TODO: Change to SendTransCode and send address, size, and direction to the device
 	void SendTransType(UCHAR transType);
 };

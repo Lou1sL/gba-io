@@ -35,12 +35,13 @@ interface mux_mem_interface();
     logic [25:0] mem_addr;
     logic [31:0] mem_rd_data;
     logic [31:0] mem_wr_data;
+    logic [127:0] debug_mem_rd_data;
     modport mux (
-        input mem_rd_ready, mem_wr_ready, mem_rd_data, mem_rd_valid,
+        input mem_rd_ready, mem_wr_ready, mem_rd_data, mem_rd_valid, debug_mem_rd_data,
         output mem_addr, mem_rd, mem_wr, mem_data_width, mem_wr_data);
     modport mem (
         input mem_addr, mem_rd, mem_wr, mem_data_width, mem_wr_data,
-        output mem_rd_ready, mem_wr_ready, mem_rd_data, mem_rd_valid);
+        output mem_rd_ready, mem_wr_ready, mem_rd_data, mem_rd_valid, debug_mem_rd_data);
 endinterface
 
 interface mux_usb_interface();

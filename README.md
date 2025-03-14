@@ -124,10 +124,10 @@ We emphasize both the default CYUSB driver for the PC and the default 2-bit addr
 
 | FPGA FIFO Component | GPIF2 Slave FIFO Address | EndPoint Address / Pipe / Socket | Direction | Transfer Type / Attributes | Maximum Packet Size (Bytes) | Usage |
 |-|-|-|-|-|-|-|
-| fifo_data_tx | 0b00 | 0x02 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | CODE, V_Buffer, SL_Buffer, and SR_Buffer |
-| fifo_data_rx | 0b01 | 0x86 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | KEY_AND_STATUS |
-| fifo_ctrl_tx | 0b10 | 0x04 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | Current Transmission Code |
-| fifo_ctrl_rx | 0b11 | 0x88 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | Repeating 0x47424120492F4F0A (`GBA I/O\n` in Hex) for Device Identification |
+| fifo_data_tx (m_axis) | 0b00 | 0x02 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | CODE, V_Buffer, SL_Buffer, and SR_Buffer |
+| fifo_data_rx (s_axis) | 0b01 | 0x86 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | KEY_AND_STATUS |
+| fifo_ctrl_tx (m_axis) | 0b10 | 0x04 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | Current Transmission Code |
+| fifo_ctrl_rx (s_axis) | 0b11 | 0x88 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | Repeating 0x47424120492F4F0A (`GBA I/O\n` in Hex) for Device Identification |
 
 The address offset is automatically incremented, and it will reset to 0 when any of the Transmission Code (1 byte in size) is sent to the fifo_ctrl_tx.
 

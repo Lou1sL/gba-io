@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
-| Date         : Thu Mar 13 23:41:20 2025
+| Date         : Sun Mar 16 17:41:49 2025
 | Host         : RyuBAI-PC running 64-bit major release  (build 9200)
 | Command      : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
 | Design       : top
@@ -31,11 +31,11 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs*             |  585 |     0 |          0 |     63400 |  0.92 |
-|   LUT as Logic          |  585 |     0 |          0 |     63400 |  0.92 |
+| Slice LUTs*             |  909 |     0 |          0 |     63400 |  1.43 |
+|   LUT as Logic          |  909 |     0 |          0 |     63400 |  1.43 |
 |   LUT as Memory         |    0 |     0 |          0 |     19000 |  0.00 |
-| Slice Registers         |  401 |     0 |          0 |    126800 |  0.32 |
-|   Register as Flip Flop |  401 |     0 |          0 |    126800 |  0.32 |
+| Slice Registers         |  344 |     0 |          0 |    126800 |  0.27 |
+|   Register as Flip Flop |  344 |     0 |          0 |    126800 |  0.27 |
 |   Register as Latch     |    0 |     0 |          0 |    126800 |  0.00 |
 | F7 Muxes                |    0 |     0 |          0 |     31700 |  0.00 |
 | F8 Muxes                |    0 |     0 |          0 |     15850 |  0.00 |
@@ -60,7 +60,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
 | 11    |          Yes |         Set |            - |
-| 390   |          Yes |       Reset |            - |
+| 333   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -152,16 +152,16 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDRE     |  390 |        Flop & Latch |
-| LUT2     |  244 |                 LUT |
-| LUT6     |  122 |                 LUT |
-| LUT5     |  122 |                 LUT |
-| LUT1     |  105 |                 LUT |
-| LUT3     |   66 |                 LUT |
+| FDRE     |  333 |        Flop & Latch |
+| LUT2     |  274 |                 LUT |
+| LUT1     |  272 |                 LUT |
+| LUT6     |  147 |                 LUT |
+| LUT5     |  145 |                 LUT |
+| LUT3     |  100 |                 LUT |
+| CARRY4   |   67 |          CarryLogic |
 | IBUF     |   63 |                  IO |
-| LUT4     |   61 |                 LUT |
-| CARRY4   |   61 |          CarryLogic |
 | OBUFT    |   56 |                  IO |
+| LUT4     |   53 |                 LUT |
 | OBUF     |   13 |                  IO |
 | FDSE     |   11 |        Flop & Latch |
 +----------+------+---------------------+
@@ -170,14 +170,18 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 8. Black Boxes
 --------------
 
-+----------+------+
-| Ref Name | Used |
-+----------+------+
-| fifo     |    4 |
-| sdram    |    1 |
-| ila_cart |    1 |
-| clk_wiz  |    1 |
-+----------+------+
++------------+------+
+|  Ref Name  | Used |
++------------+------+
+| fifo       |    4 |
+| sdram      |    1 |
+| ila_usb    |    1 |
+| ila_mux    |    1 |
+| ila_mem    |    1 |
+| ila_cart   |    1 |
+| ila_buffer |    1 |
+| clk_wiz    |    1 |
++------------+------+
 
 
 9. Instantiated Netlists

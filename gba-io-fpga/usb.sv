@@ -1,25 +1,6 @@
 
 // https://docs.amd.com/r/en-US/pg080-axi-fifo-mm-s/Protocol-Description
-
-// TODO: Fix this
-
-// BULK OUT transfer 
-// 0000 83
-// BULK OUT transfer completed
-
-// BULK OUT transfer 
-// 0000 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
-// BULK OUT transfer completed
-
-// BULK OUT transfer 
-// 0000 43
-// BULK OUT transfer completed
-
-// BULK IN transfer 
-// 0000 04 05 06 07 04 05 06 07 04 05 06 07 04 05 06 07
-// BULK IN transfer completed
-
-
+// https://docs.amd.com/r/en-US/pg327-emb-fifo-gen/AXI-Interface-FIFOs
 
 `timescale 1ns / 1ps
 
@@ -35,7 +16,7 @@ module usb (
     output logic sloe, slcs, pktend,
     mux_usb_interface.usb mux_usb
 );
-
+    // TODO: recieve and set address, size, and direction from the host
     localparam CODE_ADDRESS                  = 26'h00000000;
     localparam CODE_SIZE                     = 26'h01000000;
     localparam VIDEO_FEED_FRAME_0_ADDRESS    = 26'h01000000;
@@ -81,7 +62,7 @@ module usb (
     assign mux_usb.usb_addr = current_base_address + current_offset;
 
 
-    // fifo_ctrl_tx, 0x04, OUT, read from fifo, pc -> fpga
+    // fifo_ctrl_tx, m_axis, 0b10, 0x04, OUT, read from fifo, pc -> fpga
     logic ctrl_tx_ready; // Ready means the valid signal will be accepted
     logic ctrl_tx_valid; // Valid means data has already presented on the bus
     logic ctrl_tx_pktend;
@@ -112,7 +93,7 @@ module usb (
     end
 
 
-    // fifo_ctrl_rx, 0x88, IN, write to fifo, fpga -> pc
+    // fifo_ctrl_rx, s_axis, 0b11, 0x88, IN, write to fifo, fpga -> pc
     logic ctrl_rx_ready;
     logic ctrl_rx_valid;
     logic ctrl_rx_pktend;
@@ -135,19 +116,19 @@ module usb (
     end
 
 
-    // fifo_data_tx, 0x02, OUT, read from fifo, write to sdram, pc -> fpga
+    // fifo_data_tx, m_axis, 0b00, 0x02, OUT, read from fifo, write to sdram, pc -> fpga
     logic data_tx_ready; // out
     logic data_tx_valid; // in
     logic data_tx_pktend; // in
-
     logic [31:0] data_tx; // in
+
     assign mux_usb.usb_wr = data_tx_valid & (current_dir == USB_TRANS_DIR_OUT_TX) &
         (current_offset <= (current_seg_size - 4)) & (current_seg != USB_TRANS_SEG_NONE);
     assign mux_usb.usb_wr_data = data_tx_valid ? data_tx : 32'h0;
     assign data_tx_ready = mux_usb.usb_wr & mux_usb.usb_wr_ready;
 
 
-    // fifo_data_rx, 0x86, IN, write to fifo, read from sdram, fpga -> pc
+    // fifo_data_rx, s_axis, 0b01, 0x86, IN, write to fifo, read from sdram, fpga -> pc
     logic data_rx_ready; // in
     logic data_rx_valid; // out
     logic data_rx_pktend; // out
@@ -194,5 +175,29 @@ module usb (
             else if(counter_rcv > 0) counter_rcv <= counter_rcv - 1;
         end
     end
+
+    ila_usb i(
+        .clk(clk),
+        .probe0 (current_seg),
+        .probe1 (current_dir),
+        .probe2 (current_base_address),
+        .probe3 (current_offset),
+        .probe4 (ctrl_tx_ready),
+        .probe5 (ctrl_tx_valid),
+        .probe6 (ctrl_tx_pktend),
+        .probe7 (ctrl_tx),
+        .probe8 (ctrl_rx_ready),
+        .probe9 (ctrl_rx_valid),
+        .probe10(ctrl_rx_pktend),
+        .probe11(ctrl_rx),
+        .probe12(data_tx_ready),
+        .probe13(data_tx_valid),
+        .probe14(data_tx_pktend),
+        .probe15(data_tx),
+        .probe16(data_rx_ready),
+        .probe17(data_rx_valid),
+        .probe18(data_rx_pktend),
+        .probe19(data_rx)
+    );
 
 endmodule

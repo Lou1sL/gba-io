@@ -182,4 +182,10 @@ module buffer (
             end
         end
     end
+
+    ila_buffer i(
+        .clk(clk),
+        .probe0(1'b0)
+    );
+
 endmodule
