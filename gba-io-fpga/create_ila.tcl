@@ -98,8 +98,8 @@ set_property -dict [list \
 
 set_property -dict [list \
     CONFIG.C_NUM_OF_PROBES {20} \
-    CONFIG.C_PROBE0_WIDTH {4} \
-    CONFIG.C_PROBE1_WIDTH {4} \
+    CONFIG.C_PROBE0_WIDTH {1} \
+    CONFIG.C_PROBE1_WIDTH {8} \
     CONFIG.C_PROBE2_WIDTH {26} \
     CONFIG.C_PROBE3_WIDTH {26} \
     CONFIG.C_PROBE4_WIDTH {1} \

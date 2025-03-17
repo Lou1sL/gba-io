@@ -45,16 +45,19 @@ private:
 
 	const std::string FIFO_CTRL_RX_ENDPOINT_FINGERPRINT = "GBA I/O\n";
 
-	static const UCHAR TRANS_OUT_CODE = 0x81;
-	static const UCHAR TRANS_OUT_V_BUFFER = 0x82;
-	static const UCHAR TRANS_OUT_SL_BUFFER = 0x83;
-	static const UCHAR TRANS_OUT_SR_BUFFER = 0x84;
-	static const UCHAR TRANS_IN_KEY_AND_STATUS = 0x45;
+    static const uint8_t TRANS_TYPE_DISABLE = 8'b0000; // 0x00
+    static const uint8_t TRANS_TYPE_IN_RX   = 8'b0100; // 0x40
+    static const uint8_t TRANS_TYPE_OUT_TX  = 8'b1000; // 0x80
 
-	static const LONG  TRANS_SIZE_CODE = 0x1000000;
-	static const LONG  TRANS_SIZE_V_BUFFER = 0x20000;
-	static const LONG  TRANS_SIZE_S_BUFFER = 0x10;
-	static const LONG  TRANS_SIZE_KEY_AND_STATUS = 0x20;
+    static const uint32_t TRANS_ADDRESS_CODE           = 0x00000000;
+	static const uint32_t TRANS_SIZE_CODE              = 0x01000000;
+    static const uint32_t TRANS_ADDRESS_V_BUFFER       = 0x01000000;
+	static const uint32_t TRANS_SIZE_V_BUFFER          = 0x00020000;
+    static const uint32_t TRANS_ADDRESS_SL_BUFFER      = 0x01E00000;
+    static const uint32_t TRANS_ADDRESS_SR_BUFFER      = 0x01F00000;
+	static const uint32_t TRANS_SIZE_S_BUFFER          = 0x00000010;
+    static const uint32_t TRANS_ADDRESS_KEY_AND_STATUS = 0x02000000;
+	static const uint32_t TRANS_SIZE_KEY_AND_STATUS    = 0x00000020;
 
 	// The USB data transmission is not an atomic operation, hence the lock guard is required for thread safety.
 	std::mutex mutex;
@@ -68,6 +71,6 @@ private:
 
 	UCHAR* pCode;
 	KeyAndStatus* pKeyAndStatus;
-	// TODO: Change to SendTransCode and send address, size, and direction to the device
-	void SendTransType(UCHAR transType);
+
+	void SendTransCode(uint8_t transType, uint32_t address, uint32_t size);
 };

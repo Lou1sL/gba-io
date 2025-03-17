@@ -124,27 +124,34 @@ We emphasize both the default CYUSB driver for the PC and the default 2-bit addr
 
 | FPGA FIFO Component | GPIF2 Slave FIFO Address | EndPoint Address / Pipe / Socket | Direction | Transfer Type / Attributes | Maximum Packet Size (Bytes) | Usage |
 |-|-|-|-|-|-|-|
-| fifo_data_tx (m_axis) | 0b00 | 0x02 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | CODE, V_Buffer, SL_Buffer, and SR_Buffer |
-| fifo_data_rx (s_axis) | 0b01 | 0x86 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | KEY_AND_STATUS |
-| fifo_ctrl_tx (m_axis) | 0b10 | 0x04 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | Current Transmission Code |
-| fifo_ctrl_rx (s_axis) | 0b11 | 0x88 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | Repeating 0x47424120492F4F0A (`GBA I/O\n` in Hex) for Device Identification |
+| fifo_data_tx (m_axis) | 0b00 | 0x02 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | PC → GBA data transmission, i.e., CODE, V_Buffer, SL_Buffer, and SR_Buffer |
+| fifo_data_rx (s_axis) | 0b01 | 0x86 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | GBA → PC data transmission, i.e., KEY_AND_STATUS |
+| fifo_ctrl_tx (m_axis) | 0b10 | 0x04 | 0x0X = OUT | Bulk 2 | 0x2000 = 8192 | PC → FPGA code transmission |
+| fifo_ctrl_rx (s_axis) | 0b11 | 0x88 | 0x8X = IN | Bulk 2 | 0x2000 = 8192 | FPGA → FPGA repeating 0x47424120492F4F0A (`GBA I/O\n` in Hex) for device identification |
 
-The address offset is automatically incremented, and it will reset to 0 when any of the Transmission Code (1 byte in size) is sent to the fifo_ctrl_tx.
+The address offset is automatically incremented, and it will reset to 0 when any of the Transmission Code is sent to the fifo_ctrl_tx.
 
-| Transmission Code High | Enabled FPGA FIFO Component | Direction |
-|-|-|-|
-| 0x0X | None | N/A |
-| 0x4X | fifo_data_rx | IN |
-| 0x8X | fifo_data_tx | OUT |
+Here's the encoding of the Transmission Code:
 
-| Transmission Code Low | FPGA SDRAM Address (gba-io-fpga) | Packet Count for a Complete Transmission |
-|-|-|-|
-| 0xX0 | None | N/A |
-| 0xX1 | CODE 0x00000000 | 0x1000000 / 0x2000 = 0x800 = 2048 |
-| 0xX2 | V_Buffer 0x01000000 | 0x20000 / 0x2000 = 0x10 = 16 |
-| 0xX3 | SL_Buffer 0x01E00000 | 0x10 / 0x10 = 1 |
-| 0xX4 | SR_Buffer 0x01F00000 | 0x10 / 0x10 = 1 |
-| 0xX5 | KEY_AND_STATUS 0x02000000 | 0x20 / 0x20 = 1 |
+```text
+64     32      0
+00 │ 0000 │ 0000
+││   ││││   ││││
+││   ││││   └┴┴┴── 32-bit transmission data size, 32-bit alignment required
+││   ││││
+││   └┴┴┴───────── 32-bit transmission address
+││
+└┴──────────────── 0x00: DISABLE, 0x40: Enable fifo_data_rx IN, 0x80: Enable fifo_data_tx OUT
+```
+
+| FPGA SDRAM Address (gba-io-fpga) | Packet Count for a Complete Transmission |
+|-|-|
+| None | N/A |
+| CODE 0x00000000 | 0x1000000 / 0x2000 = 0x800 = 2048 |
+| V_Buffer 0x01000000 | 0x20000 / 0x2000 = 0x10 = 16 |
+| SL_Buffer 0x01E00000 | 0x10 / 0x10 = 1 |
+| SR_Buffer 0x01F00000 | 0x10 / 0x10 = 1 |
+| KEY_AND_STATUS 0x02000000 | 0x20 / 0x20 = 1 |
 
 ### Handling CDC (Clock Domain Crossing) between the GBA Console and the FPGA
 

@@ -2,6 +2,12 @@
 // https://docs.amd.com/r/en-US/pg080-axi-fifo-mm-s/Protocol-Description
 // https://docs.amd.com/r/en-US/pg327-emb-fifo-gen/AXI-Interface-FIFOs
 
+// Example Usage:
+// 0x88 OUT -> 80 00000000 00000004
+// 0x02 OUT -> 8C 8D 8E 8F
+// 0x88 OUT -> 40 00000000 00000004
+// 0x04 IN  <- 8C 8D 8E 8F
+
 `timescale 1ns / 1ps
 
 module usb (
@@ -16,50 +22,28 @@ module usb (
     output logic sloe, slcs, pktend,
     mux_usb_interface.usb mux_usb
 );
-    // TODO: recieve and set address, size, and direction from the host
-    localparam CODE_ADDRESS                  = 26'h00000000;
-    localparam CODE_SIZE                     = 26'h01000000;
-    localparam VIDEO_FEED_FRAME_0_ADDRESS    = 26'h01000000;
-    localparam VIDEO_FEED_FRAME_SIZE         = 26'h00020000;
-    localparam SOUND_L_FEED_FRAME_0_ADDRESS  = 26'h01E00000;
-    localparam SOUND_R_FEED_FRAME_0_ADDRESS  = 26'h01F00000;
-    localparam SOUND_FEED_FRAME_SIZE         = 26'h00000010;
-    localparam KEY_AND_STATUS_ADDRESS        = 26'h02000000;
-    localparam KEY_AND_STATUS_SIZE           = 26'h00000020;
 
-    localparam USB_TRANS_DIR_NONE            = 4'b0000; // 0x0X
-    localparam USB_TRANS_DIR_IN_RX           = 4'b0100; // 0x4X
-    localparam USB_TRANS_DIR_OUT_TX          = 4'b1000; // 0x8X
-    localparam USB_TRANS_SEG_NONE            = 4'd0; // 0xX0
-    localparam USB_TRANS_SEG_CODE            = 4'd1; // 0xX1
-    localparam USB_TRANS_SEG_V_BUFFER        = 4'd2; // 0xX2
-    localparam USB_TRANS_SEG_SL_BUFFER       = 4'd3; // 0xX3
-    localparam USB_TRANS_SEG_SR_BUFFER       = 4'd4; // 0xX4
-    localparam USB_TRANS_SEG_KEY_AND_STATUS  = 4'd5; // 0xX5
-    
-    bit [3:0] current_seg = USB_TRANS_SEG_NONE;
-    bit [3:0] current_dir = USB_TRANS_DIR_NONE;
+    // Transmission Code Encoding
+    //
+    // 64     32      0
+    // 00 │ 0000 │ 0000
+    // ││   ││││   ││││
+    // ││   ││││   └┴┴┴── 32-bit transmission data size, 32-bit alignment required
+    // ││   ││││
+    // ││   └┴┴┴───────── 32-bit transmission address
+    // ││
+    // └┴──────────────── 0x00: DISABLE, 0x40: IN_RX, 0x80: OUT_TX
 
-    logic [25:0] current_seg_size;
-    assign current_seg_size =
-        current_seg == USB_TRANS_SEG_NONE ? 26'h0 :
-        current_seg == USB_TRANS_SEG_CODE ? CODE_SIZE :
-        current_seg == USB_TRANS_SEG_V_BUFFER ? VIDEO_FEED_FRAME_SIZE :
-        current_seg == USB_TRANS_SEG_SL_BUFFER ? SOUND_FEED_FRAME_SIZE :
-        current_seg == USB_TRANS_SEG_SR_BUFFER ? SOUND_FEED_FRAME_SIZE :
-        current_seg == USB_TRANS_SEG_KEY_AND_STATUS ? KEY_AND_STATUS_SIZE :
-        26'h0;
-    logic [25:0] current_base_address;
-    assign current_base_address =
-        current_seg == USB_TRANS_SEG_NONE ? 26'h0 :
-        current_seg == USB_TRANS_SEG_CODE ? CODE_ADDRESS :
-        current_seg == USB_TRANS_SEG_V_BUFFER ? VIDEO_FEED_FRAME_0_ADDRESS :
-        current_seg == USB_TRANS_SEG_SL_BUFFER ? SOUND_L_FEED_FRAME_0_ADDRESS :
-        current_seg == USB_TRANS_SEG_SR_BUFFER ? SOUND_R_FEED_FRAME_0_ADDRESS :
-        current_seg == USB_TRANS_SEG_KEY_AND_STATUS ? KEY_AND_STATUS_ADDRESS :
-        26'h0;
-    bit [25:0] current_offset;
-    assign mux_usb.usb_addr = current_base_address + current_offset;
+    localparam FINGERPRINT = 64'h47424120492F4F0A; // "GBA I/O\n"
+    localparam TRANS_TYPE_DISABLE = 8'b0000; // 0x00
+    localparam TRANS_TYPE_IN_RX   = 8'b0100; // 0x40
+    localparam TRANS_TYPE_OUT_TX  = 8'b1000; // 0x80
+
+    bit [7:0] transmit_type = TRANS_TYPE_DISABLE;
+    bit [31:0] transmit_start_address;
+    bit [31:0] transmit_size;
+    bit [31:0] transmit_current_offset;
+    assign mux_usb.usb_addr = transmit_start_address + transmit_current_offset;
 
 
     // fifo_ctrl_tx, m_axis, 0b10, 0x04, OUT, read from fifo, pc -> fpga
@@ -67,27 +51,32 @@ module usb (
     logic ctrl_tx_valid; // Valid means data has already presented on the bus
     logic ctrl_tx_pktend;
     logic [31:0] ctrl_tx;
+    byte ctrl_tx_pkt_index = 0;
 
     assign ctrl_tx_ready =
-        (current_seg == USB_TRANS_SEG_NONE) |
-        (current_dir == USB_TRANS_DIR_NONE) |
-        ((current_seg != USB_TRANS_SEG_NONE) & (current_dir != USB_TRANS_DIR_NONE) & (current_offset >= current_seg_size - 4));
+        (transmit_type == TRANS_TYPE_DISABLE) |
+        ((transmit_type != TRANS_TYPE_DISABLE) & (transmit_current_offset >= transmit_size - 4));
 
     always_ff @(posedge clk) begin
         if(rst) begin
-            current_seg <= USB_TRANS_SEG_NONE;
-            current_dir <= USB_TRANS_DIR_NONE;
-            current_offset <= 26'h0;
+            transmit_type <= TRANS_TYPE_DISABLE;
+            transmit_start_address <= 32'h0;
+            transmit_size <= 32'h0;
+            transmit_current_offset <= 32'h0;
+            ctrl_tx_pkt_index <= 0;
         end else begin
-            // It appears like the current_offset could be in a metastable state, however it's not the case.
-            // Because, to assert the ctrl_tx_ready, the current_seg must be NONE, but to assert the usb_rd or the usb_wr signal, the current_seg must be something meaningful.
+            // It appears like the transmit_current_offset could be in a metastable state, however it's not the case.
+            // Because, to assert the ctrl_tx_ready, the transmit_type must be disabled, but to assert the usb_rd or the usb_wr signal, the transmit_type must be something meaningful.
             if(ctrl_tx_ready & ctrl_tx_valid) begin
-                current_seg <= ctrl_tx[3:0];
-                current_dir <= ctrl_tx[7:4];
-                current_offset <= 26'h0;
+                if(ctrl_tx_pkt_index == 2) transmit_type <= ctrl_tx[7:0];
+                if(ctrl_tx_pkt_index == 1) transmit_start_address <= ctrl_tx;
+                if(ctrl_tx_pkt_index == 0) transmit_size <= ctrl_tx;
+                transmit_current_offset <= 32'h0;
+                if(ctrl_tx_pkt_index < 2) ctrl_tx_pkt_index <= ctrl_tx_pkt_index + 1;
+                else ctrl_tx_pkt_index <= 0;
             end
             if(data_tx_ready | data_rx_valid) begin
-                current_offset <= (current_offset + 4);
+                transmit_current_offset <= (transmit_current_offset + 4);
             end
         end
     end
@@ -97,9 +86,8 @@ module usb (
     logic ctrl_rx_ready;
     logic ctrl_rx_valid;
     logic ctrl_rx_pktend;
-    logic [31:0] ctrl_rx; 
+    logic [31:0] ctrl_rx;
 
-    localparam FINGERPRINT = 64'h47424120492F4F0A; // "GBA I/O\n"
     bit current_fingerprint = 1'b0;
     assign ctrl_rx_valid = ctrl_rx_ready;
     assign ctrl_rx_pktend = current_fingerprint == 1'b1;
@@ -122,8 +110,8 @@ module usb (
     logic data_tx_pktend; // in
     logic [31:0] data_tx; // in
 
-    assign mux_usb.usb_wr = data_tx_valid & (current_dir == USB_TRANS_DIR_OUT_TX) &
-        (current_offset <= (current_seg_size - 4)) & (current_seg != USB_TRANS_SEG_NONE);
+    assign mux_usb.usb_wr = data_tx_valid & (transmit_type == TRANS_TYPE_OUT_TX) &
+        (transmit_current_offset <= (transmit_size - 4));
     assign mux_usb.usb_wr_data = data_tx_valid ? data_tx : 32'h0;
     assign data_tx_ready = mux_usb.usb_wr & mux_usb.usb_wr_ready;
 
@@ -134,10 +122,10 @@ module usb (
     logic data_rx_pktend; // out
     logic [31:0] data_rx; // out
 
-    assign mux_usb.usb_rd = data_rx_ready & (current_dir == USB_TRANS_DIR_IN_RX) &
-        (current_offset <= (current_seg_size - 4)) & (current_seg != USB_TRANS_SEG_NONE);
+    assign mux_usb.usb_rd = data_rx_ready & (transmit_type == TRANS_TYPE_IN_RX) &
+        (transmit_current_offset <= (transmit_size - 4));
     assign data_rx_valid = mux_usb.usb_rd & mux_usb.usb_rd_valid;
-    assign data_rx_pktend = data_rx_valid ? (current_offset >= (current_seg_size - 4)) : 1'b0;
+    assign data_rx_pktend = data_rx_valid ? (transmit_current_offset >= (transmit_size - 4)) : 1'b0;
     assign data_rx = data_rx_valid ? mux_usb.usb_rd_data : 32'h0;
 
 
@@ -171,17 +159,17 @@ module usb (
         if(rst) begin
             counter_rcv <= 0;
         end else begin
-            if((current_seg != USB_TRANS_SEG_NONE) & (current_offset == 26'h0)) counter_rcv <= 1000000;
+            if((transmit_type != TRANS_TYPE_DISABLE) & (transmit_current_offset == 26'h0)) counter_rcv <= 1000000;
             else if(counter_rcv > 0) counter_rcv <= counter_rcv - 1;
         end
     end
 
     ila_usb i(
         .clk(clk),
-        .probe0 (current_seg),
-        .probe1 (current_dir),
-        .probe2 (current_base_address),
-        .probe3 (current_offset),
+        .probe0 (1'b0),
+        .probe1 (transmit_type),
+        .probe2 (transmit_start_address),
+        .probe3 (transmit_current_offset),
         .probe4 (ctrl_tx_ready),
         .probe5 (ctrl_tx_valid),
         .probe6 (ctrl_tx_pktend),

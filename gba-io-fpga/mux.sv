@@ -93,6 +93,8 @@ module mux (
                 if (mux_mem.mem_rd_valid) begin
                     cart_mux.cart_rd_data <= mux_mem.mem_rd_data;
                     cart_mux.cart_rd_valid <= 1'b1;
+                end
+                if (~cart_mux.cart_rd) begin
                     state <= IDLE;
                 end
             end
@@ -144,9 +146,7 @@ module mux (
                 mux_mem.mem_wr <= 1'b0;
                 mux_usb.usb_wr_ready <= 1'b0;
                 mux_usb.usb_rd_valid <= 1'b0;
-                if (~mux_usb.usb_wr) begin
-                    state <= IDLE;
-                end
+                state <= IDLE;
             end
             default: state <= IDLE;
             endcase
