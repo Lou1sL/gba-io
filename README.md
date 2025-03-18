@@ -134,14 +134,14 @@ The address offset is automatically incremented, and it will reset to 0 when any
 Here's the encoding of the Transmission Code:
 
 ```text
-64     32      0
-00 │ 0000 │ 0000
-││   ││││   ││││
-││   ││││   └┴┴┴── 32-bit transmission data size, 32-bit alignment required
-││   ││││
-││   └┴┴┴───────── 32-bit transmission address
+64          32           0
+00 │ 0000 0000 │ 0000 0000
+││   ││││ ││││   ││││ ││││
+││   ││││ ││││   └┴┴┴─┴┴┴┴── 32-bit transmission data size, 32-bit alignment required
+││   ││││ ││││
+││   └┴┴┴─┴┴┴┴────────────── 32-bit transmission address
 ││
-└┴──────────────── 0x00: DISABLE, 0x40: Enable fifo_data_rx IN, 0x80: Enable fifo_data_tx OUT
+└┴────────────────────────── 0x00: DISABLE, 0x40: Enable fifo_data_rx IN, 0x80: Enable fifo_data_tx OUT
 ```
 
 | FPGA SDRAM Address (gba-io-fpga) | Packet Count for a Complete Transmission |

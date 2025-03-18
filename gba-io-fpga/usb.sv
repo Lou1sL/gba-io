@@ -3,10 +3,11 @@
 // https://docs.amd.com/r/en-US/pg327-emb-fifo-gen/AXI-Interface-FIFOs
 
 // Example Usage:
-// 0x88 OUT -> 80 00000000 00000004
-// 0x02 OUT -> 8C 8D 8E 8F
-// 0x88 OUT -> 40 00000000 00000004
-// 0x04 IN  <- 8C 8D 8E 8F
+// 0x04 OUT -> 80 00000000 00000004
+// 0x02 OUT -> 1F 1E 1D 1C
+// 0x04 OUT -> 40 00000000 00000040
+// 0x86 IN  <- 1F 1E 1D 1C ....
+// TODO: Fix big size failure issue
 
 `timescale 1ns / 1ps
 
@@ -25,19 +26,20 @@ module usb (
 
     // Transmission Code Encoding
     //
-    // 64     32      0
-    // 00 │ 0000 │ 0000
-    // ││   ││││   ││││
-    // ││   ││││   └┴┴┴── 32-bit transmission data size, 32-bit alignment required
-    // ││   ││││
-    // ││   └┴┴┴───────── 32-bit transmission address
+    // 64          32           0
+    // 00 │ 0000 0000 │ 0000 0000
+    // ││   ││││ ││││   ││││ ││││
+    // ││   ││││ ││││   └┴┴┴─┴┴┴┴── 32-bit transmission data size, 32-bit alignment required
+    // ││   ││││ ││││
+    // ││   └┴┴┴─┴┴┴┴────────────── 32-bit transmission address
     // ││
-    // └┴──────────────── 0x00: DISABLE, 0x40: IN_RX, 0x80: OUT_TX
+    // └┴────────────────────────── 0x00: DISABLE, 0x40: IN_RX, 0x80: OUT_TX
 
+    localparam ADDRESS_SPACE_SIZE = 32'h20000000;
     localparam FINGERPRINT = 64'h47424120492F4F0A; // "GBA I/O\n"
-    localparam TRANS_TYPE_DISABLE = 8'b0000; // 0x00
-    localparam TRANS_TYPE_IN_RX   = 8'b0100; // 0x40
-    localparam TRANS_TYPE_OUT_TX  = 8'b1000; // 0x80
+    localparam TRANS_TYPE_DISABLE = 8'h00;
+    localparam TRANS_TYPE_IN_RX   = 8'h40;
+    localparam TRANS_TYPE_OUT_TX  = 8'h80;
 
     bit [7:0] transmit_type = TRANS_TYPE_DISABLE;
     bit [31:0] transmit_start_address;
@@ -57,7 +59,7 @@ module usb (
     assign ctrl_tx_ready = (transmit_type == TRANS_TYPE_DISABLE);
 
     byte ctrl_tx_pkt_index = 0;
-    bit [63:0] transmit_code_buffer;
+    bit [71:0] transmit_code_buffer;
     always_ff @(posedge clk) begin
         if(rst) begin
             transmit_type <= TRANS_TYPE_DISABLE;
@@ -70,25 +72,38 @@ module usb (
             if(ctrl_tx_ready & ctrl_tx_valid) begin
                 case(ctrl_tx_pkt_index)
                 0: begin
-                    transmit_code_buffer[31:0] <= ctrl_tx;
+                    transmit_code_buffer[71:64] <= ctrl_tx[7:0];
+                    transmit_code_buffer[63:56] <= ctrl_tx[15:8];
+                    transmit_code_buffer[55:48] <= ctrl_tx[23:16];
+                    transmit_code_buffer[47:40] <= ctrl_tx[31:24];
                     ctrl_tx_pkt_index <= 1;
                 end
                 1: begin
-                    transmit_code_buffer[63:32] <= ctrl_tx;
+                    transmit_code_buffer[39:32] <= ctrl_tx[7:0];
+                    transmit_code_buffer[32:25] <= ctrl_tx[15:8];
+                    transmit_code_buffer[24:16] <= ctrl_tx[23:16];
+                    transmit_code_buffer[15:8] <= ctrl_tx[31:24];
                     ctrl_tx_pkt_index <= 2;
                 end
                 2: begin
-                    transmit_type <= ctrl_tx[7:0];
-                    transmit_start_address <= transmit_code_buffer[63:32];
-                    transmit_size <= transmit_code_buffer[31:0];
-                    transmit_offset <= 32'h0;
-                    ctrl_tx_pkt_index <= 0;
+                    transmit_code_buffer[7:0] <= ctrl_tx[7:0];
+                    if(
+                        ((transmit_code_buffer[71:64] == TRANS_TYPE_IN_RX) | (transmit_code_buffer[71:64] == TRANS_TYPE_OUT_TX)) &
+                        ((transmit_code_buffer[63:32] + { transmit_code_buffer[31:8], ctrl_tx[7:0] }) < ADDRESS_SPACE_SIZE) &
+                        ({ transmit_code_buffer[31:8], ctrl_tx[7:0] } > 0)
+                    ) begin
+                        transmit_type <= transmit_code_buffer[71:64];
+                        transmit_start_address <= transmit_code_buffer[63:32];
+                        transmit_size <= { transmit_code_buffer[31:8], ctrl_tx[7:0] };
+                        transmit_offset <= 32'h0;
+                    end
                     transmit_code_buffer <= 64'h0;
+                    ctrl_tx_pkt_index <= 0;
                 end
                 endcase
             end
             if(transmit_type != TRANS_TYPE_DISABLE) begin
-                if(transmit_offset < (transmit_size - 4)) begin
+                if(transmit_offset <= (transmit_size - 4)) begin
                     if(data_tx_ready | data_rx_valid) begin
                         transmit_offset <= (transmit_offset + 4);
                     end
@@ -137,12 +152,13 @@ module usb (
 
 
     // fifo_data_rx, s_axis, 0b01, 0x86, IN, write to fifo, read from sdram, fpga -> pc
+    logic data_rx_full; // in
     logic data_rx_ready; // in
     logic data_rx_valid; // out
     logic data_rx_pktend; // out
     logic [31:0] data_rx; // out
 
-    assign mux_usb.usb_rd = data_rx_ready & (transmit_type == TRANS_TYPE_IN_RX);
+    assign mux_usb.usb_rd = data_rx_ready & (transmit_type == TRANS_TYPE_IN_RX) & ~data_rx_full;
     assign data_rx_valid = mux_usb.usb_rd & mux_usb.usb_rd_valid;
     assign data_rx_pktend = last_pkt;
     assign data_rx = mux_usb.usb_rd_data;
@@ -164,7 +180,7 @@ module usb (
         // fifo_data_tx 0b00 0x02
         .tx_tdata(data_tx), .tx_tlast(data_tx_pktend), .tx_tvalid(data_tx_valid), .tx_tready(data_tx_ready),
         // fifo_data_rx 0b01 0x86
-        .rx_tdata(data_rx), .rx_tlast(data_rx_pktend), .rx_tvalid(data_rx_valid), .rx_tready(data_rx_ready),
+        .rx_tdata(data_rx), .rx_tlast(data_rx_pktend), .rx_tvalid(data_rx_valid), .rx_tready(data_rx_ready), .rx_full(data_rx_full),
         // fifo_ctrl_tx 0b10 0x04
         .ctrl_tdata(ctrl_tx), .ctrl_tlast(ctrl_tx_pktend), .ctrl_tvalid(ctrl_tx_valid), .ctrl_tready(ctrl_tx_ready),
         // fifo_ctrl_rx 0b11 0x88

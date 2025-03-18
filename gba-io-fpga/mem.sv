@@ -194,6 +194,7 @@ module mem #(
     assign mem_addr = { {(ADDR_WIDTH-26){ 1'b0 }}, (mux_mem.mem_addr >> 1) };
     assign mem_cmd = mux_mem.mem_rd ? CMD_READ : mux_mem.mem_wr ? CMD_WRITE : 3'b000;
     assign mem_en = mux_mem.mem_rd | mux_mem.mem_wr;
+    // TODO: When writing, the address must be aligned to the 128 bit boundary, and the write mask and the data shall be shifted according to the offset. 
     assign mem_wr_data =
         (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? (
             (mux_mem.mem_addr[0] == 1'b0) ? { 120'h0, mux_mem.mem_wr_data[7:0] } : { 112'h0, mux_mem.mem_wr_data[7:0], 8'h0 }

@@ -48,7 +48,7 @@ module gpif2_to_fifo32
     // High speed TX Data interface 0x02
     output [31:0] tx_tdata, output tx_tlast, output tx_tvalid, input tx_tready,
     // High speed RX Data interface 0x86
-    input [31:0] rx_tdata, input rx_tlast, input rx_tvalid, output rx_tready,
+    input [31:0] rx_tdata, input rx_tlast, input rx_tvalid, output rx_tready, output rx_full,
     // Incomming control interface 0x04
     output [31:0] ctrl_tdata, output ctrl_tlast, output ctrl_tvalid, input ctrl_tready,
     // Outgoing control interface 0x88
@@ -494,6 +494,7 @@ module gpif2_to_fifo32
    fifo fifo_data_rx(
         .s_aclk(gpif_clk), .s_aresetn(~gpif_rst),
         .s_axis_tdata(rx_tdata), .s_axis_tlast(rx_tlast), .s_axis_tvalid(rx_tvalid), .s_axis_tready(rx_tready),
+        .axis_prog_full(rx_full), .axis_prog_empty(),
         .m_axis_tdata(data_rx_tdata), .m_axis_tlast(data_rx_tlast), .m_axis_tvalid(data_rx_tvalid), .m_axis_tready(data_rx_tready)
    );
 
