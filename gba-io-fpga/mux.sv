@@ -90,6 +90,7 @@ module mux (
             CART_RD_VALID: begin
                 mux_mem.mem_rd <= 1'b0;
                 mux_mem.mem_wr <= 1'b0;
+                // TODO: Check ready again, if it's not asserted,try CART_RD again, same with USB and write
                 if (mux_mem.mem_rd_valid) begin
                     cart_mux.cart_rd_data <= mux_mem.mem_rd_data;
                     cart_mux.cart_rd_valid <= 1'b1;
