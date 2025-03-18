@@ -42,8 +42,10 @@ module usb (
     bit [7:0] transmit_type = TRANS_TYPE_DISABLE;
     bit [31:0] transmit_start_address;
     bit [31:0] transmit_size;
-    bit [31:0] transmit_current_offset;
-    assign mux_usb.usb_addr = transmit_start_address + transmit_current_offset;
+    bit [31:0] transmit_offset;
+    assign mux_usb.usb_addr = transmit_start_address + transmit_offset;
+    logic last_pkt;
+    assign last_pkt = transmit_offset >= (transmit_size - 4);
 
 
     // fifo_ctrl_tx, m_axis, 0b10, 0x04, OUT, read from fifo, pc -> fpga
@@ -51,32 +53,51 @@ module usb (
     logic ctrl_tx_valid; // Valid means data has already presented on the bus
     logic ctrl_tx_pktend;
     logic [31:0] ctrl_tx;
+
+    assign ctrl_tx_ready = (transmit_type == TRANS_TYPE_DISABLE);
+
     byte ctrl_tx_pkt_index = 0;
-
-    assign ctrl_tx_ready =
-        (transmit_type == TRANS_TYPE_DISABLE) |
-        ((transmit_type != TRANS_TYPE_DISABLE) & (transmit_current_offset >= transmit_size - 4));
-
+    bit [63:0] transmit_code_buffer;
     always_ff @(posedge clk) begin
         if(rst) begin
             transmit_type <= TRANS_TYPE_DISABLE;
             transmit_start_address <= 32'h0;
             transmit_size <= 32'h0;
-            transmit_current_offset <= 32'h0;
+            transmit_offset <= 32'h0;
             ctrl_tx_pkt_index <= 0;
+            transmit_code_buffer <= 96'h0;
         end else begin
-            // It appears like the transmit_current_offset could be in a metastable state, however it's not the case.
-            // Because, to assert the ctrl_tx_ready, the transmit_type must be disabled, but to assert the usb_rd or the usb_wr signal, the transmit_type must be something meaningful.
             if(ctrl_tx_ready & ctrl_tx_valid) begin
-                if(ctrl_tx_pkt_index == 2) transmit_type <= ctrl_tx[7:0];
-                if(ctrl_tx_pkt_index == 1) transmit_start_address <= ctrl_tx;
-                if(ctrl_tx_pkt_index == 0) transmit_size <= ctrl_tx;
-                transmit_current_offset <= 32'h0;
-                if(ctrl_tx_pkt_index < 2) ctrl_tx_pkt_index <= ctrl_tx_pkt_index + 1;
-                else ctrl_tx_pkt_index <= 0;
+                case(ctrl_tx_pkt_index)
+                0: begin
+                    transmit_code_buffer[31:0] <= ctrl_tx;
+                    ctrl_tx_pkt_index <= 1;
+                end
+                1: begin
+                    transmit_code_buffer[63:32] <= ctrl_tx;
+                    ctrl_tx_pkt_index <= 2;
+                end
+                2: begin
+                    transmit_type <= ctrl_tx[7:0];
+                    transmit_start_address <= transmit_code_buffer[63:32];
+                    transmit_size <= transmit_code_buffer[31:0];
+                    transmit_offset <= 32'h0;
+                    ctrl_tx_pkt_index <= 0;
+                    transmit_code_buffer <= 64'h0;
+                end
+                endcase
             end
-            if(data_tx_ready | data_rx_valid) begin
-                transmit_current_offset <= (transmit_current_offset + 4);
+            if(transmit_type != TRANS_TYPE_DISABLE) begin
+                if(transmit_offset < (transmit_size - 4)) begin
+                    if(data_tx_ready | data_rx_valid) begin
+                        transmit_offset <= (transmit_offset + 4);
+                    end
+                end else begin
+                    transmit_type <= TRANS_TYPE_DISABLE;
+                    transmit_start_address <= 32'h0;
+                    transmit_size <= 32'h0;
+                    transmit_offset <= 32'h0;
+                end
             end
         end
     end
@@ -110,9 +131,8 @@ module usb (
     logic data_tx_pktend; // in
     logic [31:0] data_tx; // in
 
-    assign mux_usb.usb_wr = data_tx_valid & (transmit_type == TRANS_TYPE_OUT_TX) &
-        (transmit_current_offset <= (transmit_size - 4));
-    assign mux_usb.usb_wr_data = data_tx_valid ? data_tx : 32'h0;
+    assign mux_usb.usb_wr = data_tx_valid & (transmit_type == TRANS_TYPE_OUT_TX);
+    assign mux_usb.usb_wr_data = data_tx;
     assign data_tx_ready = mux_usb.usb_wr & mux_usb.usb_wr_ready;
 
 
@@ -122,11 +142,10 @@ module usb (
     logic data_rx_pktend; // out
     logic [31:0] data_rx; // out
 
-    assign mux_usb.usb_rd = data_rx_ready & (transmit_type == TRANS_TYPE_IN_RX) &
-        (transmit_current_offset <= (transmit_size - 4));
+    assign mux_usb.usb_rd = data_rx_ready & (transmit_type == TRANS_TYPE_IN_RX);
     assign data_rx_valid = mux_usb.usb_rd & mux_usb.usb_rd_valid;
-    assign data_rx_pktend = data_rx_valid ? (transmit_current_offset >= (transmit_size - 4)) : 1'b0;
-    assign data_rx = data_rx_valid ? mux_usb.usb_rd_data : 32'h0;
+    assign data_rx_pktend = last_pkt;
+    assign data_rx = mux_usb.usb_rd_data;
 
 
     gpif2_to_fifo32 gpif2_to_fifo32 (
@@ -159,33 +178,36 @@ module usb (
         if(rst) begin
             counter_rcv <= 0;
         end else begin
-            if((transmit_type != TRANS_TYPE_DISABLE) & (transmit_current_offset == 26'h0)) counter_rcv <= 1000000;
+            if((transmit_type != TRANS_TYPE_DISABLE) & (transmit_offset == 26'h0)) counter_rcv <= 1000000;
             else if(counter_rcv > 0) counter_rcv <= counter_rcv - 1;
         end
     end
 
     ila_usb i(
         .clk(clk),
-        .probe0 (1'b0),
-        .probe1 (transmit_type),
-        .probe2 (transmit_start_address),
-        .probe3 (transmit_current_offset),
-        .probe4 (ctrl_tx_ready),
-        .probe5 (ctrl_tx_valid),
-        .probe6 (ctrl_tx_pktend),
-        .probe7 (ctrl_tx),
-        .probe8 (ctrl_rx_ready),
-        .probe9 (ctrl_rx_valid),
-        .probe10(ctrl_rx_pktend),
-        .probe11(ctrl_rx),
-        .probe12(data_tx_ready),
-        .probe13(data_tx_valid),
-        .probe14(data_tx_pktend),
-        .probe15(data_tx),
-        .probe16(data_rx_ready),
-        .probe17(data_rx_valid),
-        .probe18(data_rx_pktend),
-        .probe19(data_rx)
+        .probe0 (transmit_type),
+        .probe1 (transmit_start_address),
+        .probe2 (transmit_size),
+        .probe3 (transmit_offset),
+        .probe4 (last_pkt),
+        .probe5 (ctrl_tx_pkt_index),
+        .probe6 (transmit_code_buffer),
+        .probe7 (ctrl_tx_ready),
+        .probe8 (ctrl_tx_valid),
+        .probe9 (ctrl_tx_pktend),
+        .probe10(ctrl_tx),
+        .probe11(ctrl_rx_ready),
+        .probe12(ctrl_rx_valid),
+        .probe13(ctrl_rx_pktend),
+        .probe14(ctrl_rx),
+        .probe15(data_tx_ready),
+        .probe16(data_tx_valid),
+        .probe17(data_tx_pktend),
+        .probe18(data_tx),
+        .probe19(data_rx_ready),
+        .probe20(data_rx_valid),
+        .probe21(data_rx_pktend),
+        .probe22(data_rx)
     );
 
 endmodule
