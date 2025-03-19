@@ -3,11 +3,11 @@
 // https://docs.amd.com/r/en-US/pg327-emb-fifo-gen/AXI-Interface-FIFOs
 
 // Example Usage:
-// 0x04 OUT -> 80 00000000 00000004
-// 0x02 OUT -> 1F 1E 1D 1C
-// 0x04 OUT -> 40 00000000 00000040
-// 0x86 IN  <- 1F 1E 1D 1C ....
-// TODO: Fix big size failure issue
+// 0x04 OUT -> 80 00000000 00000010
+// 0x02 OUT -> 1F 1E 1D 1C 1B 1A 19 18 17 16 15 14 13 12 11 10
+// 0x04 OUT -> 40 00000000 00000100
+// 0x86 IN  <- 1F 1E 1D 1C 1B 1A 19 18 17 16 15 14 13 12 11 10 ....
+// TODO: Test long write data
 
 `timescale 1ns / 1ps
 

@@ -59,6 +59,7 @@ int wmain(int argc, wchar_t* argv[]) {
 		usb = new USB();
 		usb->WriteCode("..\\gba-io-rom\\target\\gba-io-rom.gba");
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		return 0; // TODO: Delete this
 #endif
 
 #ifdef NDEBUG

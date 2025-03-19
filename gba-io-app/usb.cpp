@@ -92,10 +92,16 @@ USB::~USB()
 void USB::SendTransCode(uint8_t transType, uint32_t address, uint32_t size)
 {
 	LONG len = 9;
-	uint8_t data[9];
+	uint8_t data[9]{};
 	data[0] = transType;
-	std::memcpy(&data[1], &address, sizeof(address));
-	std::memcpy(&data[5], &size, sizeof(size));
+	data[1] = (address >> 24) & 0xFF;
+	data[2] = (address >> 16) & 0xFF;
+	data[3] = (address >> 8) & 0xFF;
+	data[4] = address & 0xFF;
+	data[5] = (size >> 24) & 0xFF;
+	data[6] = (size >> 16) & 0xFF;
+	data[7] = (size >> 8) & 0xFF;
+	data[8] = size & 0xFF;
 	if (!FIFOCtrlTxEndPt->XferData(data, len)) {
 		std::cout << "Failed to send the transmission type to the fifo_ctrl_tx." << std::endl;
 	}
@@ -122,7 +128,7 @@ void USB::WriteCode(std::string GBAIOROMPath)
 	romFile.close();
 
 	std::cout << "Transferring GBA I/O ROM to the GBA I/O USB device..." << std::endl;
-	SendTransCode(TRANS_TYPE_OUT_TX, TRANS_ADDRESS_CODE, TRANS_SIZE_CODE);
+	SendTransCode(TRANS_TYPE_OUT_TX, TRANS_ADDRESS_CODE, TRANS_SIZE_CODE); // TODO: Max ept->MaxPktSize
 	LONG len = TRANS_SIZE_CODE;
 	if (!FIFODataTxEndPt->XferData(pCode, len)) {
 		std::cout << "Failed to transfer ROM data to the device." << std::endl;

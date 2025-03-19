@@ -45,9 +45,9 @@ private:
 
 	const std::string FIFO_CTRL_RX_ENDPOINT_FINGERPRINT = "GBA I/O\n";
 
-    static const uint8_t TRANS_TYPE_DISABLE = 8'b0000; // 0x00
-    static const uint8_t TRANS_TYPE_IN_RX   = 8'b0100; // 0x40
-    static const uint8_t TRANS_TYPE_OUT_TX  = 8'b1000; // 0x80
+	static const uint8_t TRANS_TYPE_DISABLE = 0x00;
+	static const uint8_t TRANS_TYPE_IN_RX = 0x40;
+	static const uint8_t TRANS_TYPE_OUT_TX = 0x80;
 
     static const uint32_t TRANS_ADDRESS_CODE           = 0x00000000;
 	static const uint32_t TRANS_SIZE_CODE              = 0x01000000;
