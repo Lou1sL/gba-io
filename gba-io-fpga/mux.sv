@@ -68,7 +68,6 @@ module mux (
                 mux_usb.usb_rd_data <= 32'h0;
                 mux_usb.usb_wr_ready <= 1'b0;
                 mux_usb.usb_rd_valid <= 1'b0;
-                mux_usb.incr_offset <= 1'b0;
                 if (cart_mux.cart_rd) begin
                     state <= CART_RD;
                 end else if (cart_mux.cart_wr) begin
@@ -82,18 +81,14 @@ module mux (
                 end
             end
             CART_RD: begin
-                cart_mux.cart_rd_valid <= 1'b0;
                 if (mux_mem.mem_rd_ready) begin
                     mux_mem.mem_rd <= 1'b1;
-                    mux_mem.mem_wr <= 1'b0;
                     state <= CART_RD_VALID;
                 end
             end
             CART_RD_VALID: begin
                 mux_mem.mem_rd <= 1'b0;
-                mux_mem.mem_wr <= 1'b0;
                 if (~mux_mem.mem_rd_ready) begin
-                     cart_mux.cart_rd_valid <= 1'b0;
                     state <= CART_RD;
                 end else if (mux_mem.mem_rd_valid) begin
                     cart_mux.cart_rd_data <= mux_mem.mem_rd_data;
@@ -103,24 +98,18 @@ module mux (
             end
             CART_RD_DONE: begin
                 cart_mux.cart_rd_valid <= 1'b0;
-                mux_mem.mem_rd <= 1'b0;
-                mux_mem.mem_wr <= 1'b0;
                 if (~cart_mux.cart_rd) begin
                     state <= IDLE;
                 end
             end
             CART_WR: begin
-                cart_mux.cart_rd_valid <= 1'b0;
                 if (mux_mem.mem_wr_ready) begin
-                    mux_mem.mem_rd <= 1'b0;
                     mux_mem.mem_wr <= 1'b1;
                     state <= CART_WR_DONE;
                 end
             end
             CART_WR_DONE: begin
-                mux_mem.mem_rd <= 1'b0;
                 mux_mem.mem_wr <= 1'b0;
-                cart_mux.cart_rd_valid <= 1'b0;
                 if (~mux_mem.mem_wr_ready) begin
                     state <= CART_WR;
                 end if (~cart_mux.cart_wr) begin
@@ -128,51 +117,33 @@ module mux (
                 end
             end
             USB_RD: begin
-                mux_usb.usb_wr_ready <= 1'b0;
-                mux_usb.usb_rd_valid <= 1'b0;
-                mux_usb.incr_offset <= 1'b0;
                 if (mux_mem.mem_rd_ready) begin
                     mux_mem.mem_rd <= 1'b1;
-                    mux_mem.mem_wr <= 1'b0;
                     state <= USB_RD_VALID;
                 end
             end
             USB_RD_VALID: begin
                 mux_mem.mem_rd <= 1'b0;
-                mux_mem.mem_wr <= 1'b0;
                 if (~mux_mem.mem_rd_ready) begin
-                    mux_usb.usb_wr_ready <= 1'b0;
-                    mux_usb.usb_rd_valid <= 1'b0;
-                    mux_usb.incr_offset <= 1'b0;
                     state <= USB_RD;
                 end else if (mux_mem.mem_rd_valid) begin
                     mux_usb.usb_rd_data <= mux_mem.mem_rd_data;
-                    mux_usb.usb_wr_ready <= 1'b0;
                     mux_usb.usb_rd_valid <= 1'b1;
-                    mux_usb.incr_offset <= 1'b1;
                     state <= IDLE;
                 end
             end
             USB_WR: begin
                 if (mux_mem.mem_wr_ready) begin
-                    mux_mem.mem_rd <= 1'b0;
                     mux_mem.mem_wr <= 1'b1;
-                    mux_usb.usb_wr_ready <= 1'b1;
-                    mux_usb.usb_rd_valid <= 1'b0;
-                    mux_usb.incr_offset <= 1'b0;
                     state <= USB_WR_DONE;
                 end
             end
             USB_WR_DONE: begin
-                mux_mem.mem_rd <= 1'b0;
                 mux_mem.mem_wr <= 1'b0;
-                mux_usb.usb_wr_ready <= 1'b0;
-                mux_usb.usb_rd_valid <= 1'b0;
                 if (~mux_mem.mem_wr_ready) begin
-                    mux_usb.incr_offset <= 1'b0;
-                    state <= CART_WR;
+                    state <= USB_WR;
                 end else begin
-                    mux_usb.incr_offset <= 1'b1;
+                    mux_usb.usb_wr_ready <= 1'b1;
                     state <= IDLE;
                 end
             end
