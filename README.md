@@ -104,6 +104,10 @@ When the GBA console starts to read from the SDRAM, the FPGA will immediately fe
 
 When the GBA console starts to write to the SDRAM, the FPGA will first check if the address range is within the available SRAM address range, then send the data to the SDRAM directly. The USB FIFO will be put on hold during the GBA console ↔ SDRAM transaction.
 
+#### The Pain of Memory Stalling
+
+Well, I have to admit, I'm not a professional in hardware development, and I only discovered this halfway building the project, yes, the DDR3 SDRAM may stall for a pretty long time to refresh the memory content, according to the info from the datasheet of the chip I've been using (MT41K256M16TW-107), the 4Gbit DDR3 tRFC is 260ns ~ 70200ns, which is about 4.3 ~ 1170 GBA cycles (60ns/cycle for the 16.78MHz GBA clock).
+
 ### SDRAM Triple Frame Buffering, Cross Frequency Synchronization with Semaphores and Frames
 
 This part is dedicated only to the buffers including V_Buffer, SL_Buffer, and the SR_Buffer.

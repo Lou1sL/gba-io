@@ -47,15 +47,16 @@ endinterface
 interface mux_usb_interface();
     logic usb_rd, usb_rd_valid;
     logic usb_wr, usb_wr_ready;
+    logic incr_offset;
     logic [25:0] usb_addr;
     logic [31:0] usb_rd_data;
     logic [31:0] usb_wr_data;
     modport mux (
         input usb_addr, usb_rd, usb_wr, usb_wr_data,
-        output usb_wr_ready, usb_rd_data, usb_rd_valid
+        output usb_wr_ready, usb_rd_data, usb_rd_valid, incr_offset
     );
     modport usb (
-        input usb_wr_ready, usb_rd_data, usb_rd_valid,
+        input usb_wr_ready, usb_rd_data, usb_rd_valid, incr_offset,
         output usb_addr, usb_rd, usb_wr, usb_wr_data
     );
 endinterface

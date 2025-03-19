@@ -104,7 +104,7 @@ module usb (
             end
             if(transmit_type != TRANS_TYPE_DISABLE) begin
                 if(transmit_offset <= (transmit_size - 4)) begin
-                    if(data_tx_ready | data_rx_valid) begin
+                    if(mux_usb.incr_offset) begin
                         transmit_offset <= (transmit_offset + 4);
                     end
                 end else begin

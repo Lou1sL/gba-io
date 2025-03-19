@@ -163,6 +163,11 @@ module mem #(
         .ui_clk_sync_rst(rst_ui_sync)
     );
 
+    logic [26:0] mem_start_address;
+    assign mem_start_address = mux_mem.mem_addr & 26'h3FFFFF0;
+    logic [3:0] mem_offset;
+    assign mem_offset = mux_mem.mem_addr[3:0];
+
     // Memory -> Mux
     assign mux_mem.mem_rd_ready = init_calib_complete & mem_ready;
     assign mux_mem.mem_wr_ready = init_calib_complete & mem_ready & mem_wr_ready;
@@ -173,36 +178,23 @@ module mem #(
         (mux_mem.mem_data_width == DATA_WIDTH_16) ? { mem_rd_data[7:0], mem_rd_data[15:8], 16'h0 } :
         (mux_mem.mem_data_width == DATA_WIDTH_32) ? { mem_rd_data[7:0], mem_rd_data[15:8], mem_rd_data[23:16], mem_rd_data[31:24] } :
         { 32'h0 };
-    // assign mux_mem.mem_rd_data = mem_rd_data[31:0];
     assign mux_mem.debug_mem_rd_data = mem_rd_data;
     assign mux_mem.mem_rd_valid = mem_rd_valid;
 
     // Mux -> Memory
     assign mem_wr_mask =
-        (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? (
-            (mux_mem.mem_addr[0] == 1'b0) ? 16'b11111111_11111110 : 16'b11111111_11111101
-        ) :
-        (mux_mem.mem_data_width == DATA_WIDTH_16) ? 16'b11111111_11111100 :
-        (mux_mem.mem_data_width == DATA_WIDTH_32) ? 16'b11111111_11110000 :
+        (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? { (4'hF - mem_offset){ 1'b1 }, 1'b0, (mem_offset){ 1'b1 } } :
+        (mux_mem.mem_data_width == DATA_WIDTH_16) ? { (4'hE - mem_offset){ 1'b1 }, 2'b0, (mem_offset){ 1'b1 } } :
+        (mux_mem.mem_data_width == DATA_WIDTH_32) ? { (4'hC - mem_offset){ 1'b1 }, 4'b0, (mem_offset){ 1'b1 } } :
         16'b11111111_11111111;
-    // assign mem_wr_mask =
-    //     (mux_mem.mem_data_width == DATA_WIDTH_0 ) ? 16'b11111111_11111111 :
-    //     (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? 16'b11111111_11111110 :
-    //     (mux_mem.mem_data_width == DATA_WIDTH_16) ? 16'b11111111_11111100 :
-    //     (mux_mem.mem_data_width == DATA_WIDTH_32) ? 16'b11111111_11110000 :
-    //     16'b11111111_11111111;
-    assign mem_addr = { {(ADDR_WIDTH-26){ 1'b0 }}, (mux_mem.mem_addr >> 1) };
+    assign mem_addr = { {(ADDR_WIDTH-26){ 1'b0 }}, (mem_start_address >> 1) };
     assign mem_cmd = mux_mem.mem_rd ? CMD_READ : mux_mem.mem_wr ? CMD_WRITE : 3'b000;
     assign mem_en = mux_mem.mem_rd | mux_mem.mem_wr;
-    // TODO: When writing, the address must be aligned to the 128 bit boundary, and the write mask and the data shall be shifted according to the offset. 
     assign mem_wr_data =
-        (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? (
-            (mux_mem.mem_addr[0] == 1'b0) ? { 120'h0, mux_mem.mem_wr_data[7:0] } : { 112'h0, mux_mem.mem_wr_data[7:0], 8'h0 }
-        ) :
-        (mux_mem.mem_data_width == DATA_WIDTH_16) ? { 112'h0, mux_mem.mem_wr_data[7:0], mux_mem.mem_wr_data[15:8] } :
-        (mux_mem.mem_data_width == DATA_WIDTH_32) ? { 96'h0, mux_mem.mem_wr_data[7:0], mux_mem.mem_wr_data[15:8], mux_mem.mem_wr_data[23:16], mux_mem.mem_wr_data[31:24] } :
+        (mux_mem.mem_data_width == DATA_WIDTH_8 ) ? { (4'hF - mem_offset){ 8'b0 }, mux_mem.mem_wr_data[7:0], ({ mem_offset }){ 8'b0 } } :
+        (mux_mem.mem_data_width == DATA_WIDTH_16) ? { (4'hE - mem_offset){ 8'b0 }, mux_mem.mem_wr_data[7:0], mux_mem.mem_wr_data[15:8], ({ mem_offset }){ 8'b0 } } :
+        (mux_mem.mem_data_width == DATA_WIDTH_32) ? { (4'hC - mem_offset){ 8'b0 }, mux_mem.mem_wr_data[7:0], mux_mem.mem_wr_data[15:8], mux_mem.mem_wr_data[23:16], mux_mem.mem_wr_data[31:24], ({ mem_offset }){ 8'b0 } } :
         { 120'h0 };
-    // assign mem_wr_data = { {(APP_DATA_WIDTH-32){ 1'b0 }}, mux_mem.mem_wr_data };
     assign mem_wr_valid = mux_mem.mem_wr;
 
     // Status -> LED
