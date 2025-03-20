@@ -32,6 +32,7 @@ public:
 	void WriteVBuffer(uint8_t* v);
 	void WriteSLAndSRBuffer(uint8_t* sl, uint8_t* sr);
 	KeyAndStatus* ReadKeyAndStatus();
+	void TEST_WriteKeyFeedRaw(uint16_t key);
 private:
 	static const UCHAR ATTR_CONTROL = 0x00;
 	static const UCHAR ATTR_ISOCHRONOUS = 0x01;

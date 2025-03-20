@@ -59,7 +59,6 @@ int wmain(int argc, wchar_t* argv[]) {
 		usb = new USB();
 		usb->WriteCode("..\\gba-io-rom\\target\\gba-io-rom.gba");
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-		return 0; // TODO: Delete this
 #endif
 
 #ifdef NDEBUG
@@ -112,6 +111,7 @@ int wmain(int argc, wchar_t* argv[]) {
 				return ~(static_cast<uint16_t>(GBA_KEY::KEY_RIGHT) | static_cast<uint16_t>(GBA_KEY::KEY_DOWN));
 			}
 #else
+			usb->TEST_WriteKeyFeedRaw(~(static_cast<uint16_t>(GBA_KEY::KEY_RIGHT) | static_cast<uint16_t>(GBA_KEY::KEY_DOWN)));
 			return usb->ReadKeyAndStatus()->keyFeedRaw;
 #endif
 		});

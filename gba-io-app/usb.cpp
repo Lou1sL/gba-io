@@ -7,6 +7,7 @@
 #include <array>
 #include <filesystem>
 #include <map>
+#include <cstddef>
 
 #include "usb.h"
 
@@ -128,7 +129,7 @@ void USB::WriteCode(std::string GBAIOROMPath)
 	romFile.close();
 
 	std::cout << "Transferring GBA I/O ROM to the GBA I/O USB device..." << std::endl;
-	SendTransCode(TRANS_TYPE_OUT_TX, TRANS_ADDRESS_CODE, TRANS_SIZE_CODE); // TODO: Max ept->MaxPktSize
+	SendTransCode(TRANS_TYPE_OUT_TX, TRANS_ADDRESS_CODE, TRANS_SIZE_CODE);
 	LONG len = TRANS_SIZE_CODE;
 	if (!FIFODataTxEndPt->XferData(pCode, len)) {
 		std::cout << "Failed to transfer ROM data to the device." << std::endl;
@@ -170,4 +171,14 @@ KeyAndStatus* USB::ReadKeyAndStatus()
 		std::cout << "Failed to read from the KEY_AND_STATUS." << std::endl;
 	}
 	return pKeyAndStatus;
+}
+
+void USB::TEST_WriteKeyFeedRaw(uint16_t key)
+{
+	std::lock_guard<std::mutex> lock(mutex);
+	SendTransCode(TRANS_TYPE_OUT_TX, TRANS_ADDRESS_KEY_AND_STATUS + offsetof(KeyAndStatus, key), 2);
+	LONG len = 2;
+	if (!FIFODataTxEndPt->XferData(reinterpret_cast<PUCHAR>(&key), len)) {
+		std::cout << "Failed to write to the KeyFeedRaw value of the KEY_AND_STATUS." << std::endl;
+	}
 }

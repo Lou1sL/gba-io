@@ -104,13 +104,6 @@ When the GBA console starts to read from the SDRAM, the FPGA will immediately fe
 
 When the GBA console starts to write to the SDRAM, the FPGA will first check if the address range is within the available SRAM address range, then send the data to the SDRAM directly. The USB FIFO will be put on hold during the GBA console ↔ SDRAM transaction.
 
-#### The Pain of Memory Stalling
-
-Well, I have to admit, I'm not a professional in hardware development, and I only discovered this halfway building the project, yes, the DDR3 SDRAM may stall for a pretty long time to refresh the memory content, according to the info from the datasheet of the chip I've been using (MT41K256M16TW-107), the 4Gbit DDR3 tRFC is 260ns ~ 70200ns, which is about 4.3 ~ 1170 GBA cycles (60ns/cycle for the 16.78MHz GBA clock).
-
-TODO
-To mitigate this problem, 
-
 ### SDRAM Triple Frame Buffering, Cross Frequency Synchronization with Semaphores and Frames
 
 This part is dedicated only to the buffers including V_Buffer, SL_Buffer, and the SR_Buffer.
@@ -124,6 +117,26 @@ This part is dedicated only to the buffers including V_Buffer, SL_Buffer, and th
 The GBA console will always only consume one single frame at a time from the triple frame buffer, since the GBA cartridge bus address space is a lot larger, this single frame will be presented repeatedly in a mirrored style.
 
 Since the GBA console and the PC are accessing the buffer across different clock frequencies (and domains of course), the binary [Semaphore](https://en.wikipedia.org/wiki/Semaphore_(programming))s are utilized for each frame of the triple frame buffer. In short, each frame can be marked as `OCCUPIER_CART`, `OCCUPIER_USB`, or `OCCUPIER_NONE`, at each time when the GBA console or the PC tries to access the buffer, the FPGA logic will choose the appropriate frame according to its semaphore status, and update it with the new one.
+
+### The Pain of Memory Stalling
+
+Well, I have to admit, I'm not a professional in hardware development, and I only discovered this halfway building the project, yes, the DDR3 SDRAM may stall for a pretty long time to refresh the memory content, according to the info from the datasheet of the chip I've been using (MT41K256M16TW-107), the 4Gbit DDR3 tRFC is 260ns ~ 70200ns, which is about 4.3 ~ 1170 GBA cycles (60ns/cycle for the 16.78MHz GBA clock), this does not even count the precharging time.
+
+This is totally unacceptable, I cannot plead the GBA console to grant me some generosity when it's trying to read the ROM, otherwise it can be mitigated by using caches, but in this brutal case, I cannot afford any cache miss, refresh scheduling is also not viable, since I never know when will the GBA console request data from the cartridge bus (Well, if it's just gba-io-rom that's running on the console, I know, but I also want to play any legit game with my FPGA board, oof)
+
+To mitigate this timing problem, I'll be storing the same duplicated ROM data accross multiple memory banks, and make the GBA console always pick the current-available one to read. Writing data will take significant longer time (in a nanosecond sense), but it's okay, the GBA console will not write to the ROM section, and will only write SRAM when saving game anyway.
+
+This method gets described in the next section.
+
+### Interleaved Redundant SDRAM Memory Bank (Wat?)
+
+[Interleaved memory](https://en.wikipedia.org/wiki/Interleaved_memory)
+
+[Bank Interleaving](https://www.intel.com/content/www/us/en/docs/programmable/683663/24-1-19-1-2/bank-interleaving.html)
+
+[Reducing main memory access latency through SDRAM address mapping techniques and access reordering mechanisms](https://digitalcommons.mtu.edu/cgi/viewcontent.cgi?article=1071&context=etds)
+
+TODO
 
 ### USB 3.1 Implementation
 
@@ -160,7 +173,7 @@ Here's the encoding of the Transmission Code:
 | SR_Buffer 0x01F00000 | 0x10 / 0x10 = 1 |
 | KEY_AND_STATUS 0x02000000 | 0x20 / 0x20 = 1 |
 
-### Handling CDC (Clock Domain Crossing) between the GBA Console and the FPGA
+### CDC (Clock Domain Crossing) between the GBA Console and the FPGA
 
 [Crossing Clock Domains in an FPGA](https://nandland.com/lesson-14-crossing-clock-domains/)
 
