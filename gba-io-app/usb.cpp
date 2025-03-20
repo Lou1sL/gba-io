@@ -62,9 +62,13 @@ USB::USB()
 	std::cout << std::endl;
 
 	FIFODataTxEndPt = USBDevice->EndPointOf(FIFO_DATA_TX_ENDPOINT_ADDRESS);
+	FIFODataTxEndPtMaxPktSize = FIFODataTxEndPt->MaxPktSize;
 	FIFODataRxEndPt = USBDevice->EndPointOf(FIFO_DATA_RX_ENDPOINT_ADDRESS);
+	FIFODataRxEndPtMaxPktSize = FIFODataRxEndPt->MaxPktSize;
 	FIFOCtrlTxEndPt = USBDevice->EndPointOf(FIFO_CTRL_TX_ENDPOINT_ADDRESS);
+	FIFOCtrlTxEndPtMaxPktSize = FIFOCtrlTxEndPt->MaxPktSize;
 	FIFOCtrlRxEndPt = USBDevice->EndPointOf(FIFO_CTRL_RX_ENDPOINT_ADDRESS);
+	FIFOCtrlRxEndPtMaxPktSize = FIFOCtrlRxEndPt->MaxPktSize;
 
 	std::cout << "Checking device fingerprint..." << std::endl;
 
@@ -130,6 +134,16 @@ void USB::WriteCode(std::string GBAIOROMPath)
 
 	std::cout << "Transferring GBA I/O ROM to the GBA I/O USB device..." << std::endl;
 	SendTransCode(TRANS_TYPE_OUT_TX, TRANS_ADDRESS_CODE, TRANS_SIZE_CODE);
+	// TODO: Might not need to split the data into smaller packets.
+	for (uint32_t offset = 0; offset < sz; offset += FIFODataTxEndPtMaxPktSize) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
+		std::cout << "Transferring 0x" << std::hex << offset << " bytes of ROM data to the device..." << std::endl;
+		LONG len = std::min<LONG>(FIFODataTxEndPtMaxPktSize, sz - offset);
+		if (!FIFODataTxEndPt->XferData(pCode + offset, len)) {
+			std::cout << "Failed to transfer ROM data to the device." << std::endl;
+			return;
+		}
+	}
 	LONG len = TRANS_SIZE_CODE;
 	if (!FIFODataTxEndPt->XferData(pCode, len)) {
 		std::cout << "Failed to transfer ROM data to the device." << std::endl;
@@ -176,7 +190,7 @@ KeyAndStatus* USB::ReadKeyAndStatus()
 void USB::TEST_WriteKeyFeedRaw(uint16_t key)
 {
 	std::lock_guard<std::mutex> lock(mutex);
-	SendTransCode(TRANS_TYPE_OUT_TX, TRANS_ADDRESS_KEY_AND_STATUS + offsetof(KeyAndStatus, key), 2);
+	SendTransCode(TRANS_TYPE_OUT_TX, TRANS_ADDRESS_KEY_AND_STATUS + offsetof(KeyAndStatus, keyFeedRaw), 2);
 	LONG len = 2;
 	if (!FIFODataTxEndPt->XferData(reinterpret_cast<PUCHAR>(&key), len)) {
 		std::cout << "Failed to write to the KeyFeedRaw value of the KEY_AND_STATUS." << std::endl;

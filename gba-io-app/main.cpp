@@ -60,7 +60,7 @@ int wmain(int argc, wchar_t* argv[]) {
 		usb->WriteCode("..\\gba-io-rom\\target\\gba-io-rom.gba");
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 #endif
-
+		return 0;
 #ifdef NDEBUG
 		std::cout << "The capture will start in 10 seconds..." << std::endl;
 		std::this_thread::sleep_for(std::chrono::milliseconds(10000));

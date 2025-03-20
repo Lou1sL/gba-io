@@ -51,7 +51,8 @@ module mux (
     localparam USB_RD = 4'd6;
     localparam USB_RD_VALID = 4'd7;
     localparam USB_WR = 4'd8;
-    localparam USB_WR_DONE = 4'd9;
+    localparam USB_WR_READY = 4'd9;
+    localparam USB_WR_DONE = 4'd10;
 
     bit [3:0] state = IDLE;
 
@@ -88,7 +89,7 @@ module mux (
             end
             CART_RD_VALID: begin
                 mux_mem.mem_rd <= 1'b0;
-                if (~mux_mem.mem_rd_ready) begin
+                if (mux_mem.mem_rd & ~mux_mem.mem_rd_ready) begin
                     state <= CART_RD;
                 end else if (mux_mem.mem_rd_valid) begin
                     cart_mux.cart_rd_data <= mux_mem.mem_rd_data;
@@ -110,7 +111,7 @@ module mux (
             end
             CART_WR_DONE: begin
                 mux_mem.mem_wr <= 1'b0;
-                if (~mux_mem.mem_wr_ready) begin
+                if (mux_mem.mem_wr & ~mux_mem.mem_wr_ready) begin
                     state <= CART_WR;
                 end if (~cart_mux.cart_wr) begin
                     state <= IDLE;
@@ -124,7 +125,7 @@ module mux (
             end
             USB_RD_VALID: begin
                 mux_mem.mem_rd <= 1'b0;
-                if (~mux_mem.mem_rd_ready) begin
+                if (mux_mem.mem_rd & ~mux_mem.mem_rd_ready) begin
                     state <= USB_RD;
                 end else if (mux_mem.mem_rd_valid) begin
                     mux_usb.usb_rd_data <= mux_mem.mem_rd_data;
@@ -135,17 +136,21 @@ module mux (
             USB_WR: begin
                 if (mux_mem.mem_wr_ready) begin
                     mux_mem.mem_wr <= 1'b1;
+                    state <= USB_WR_READY;
+                end
+            end
+            USB_WR_READY: begin
+                mux_mem.mem_wr <= 1'b0;
+                if (mux_mem.mem_wr & ~mux_mem.mem_wr_ready) begin
+                    state <= USB_WR;
+                end else begin
+                    mux_usb.usb_wr_ready <= 1'b1;
                     state <= USB_WR_DONE;
                 end
             end
             USB_WR_DONE: begin
-                mux_mem.mem_wr <= 1'b0;
-                if (~mux_mem.mem_wr_ready) begin
-                    state <= USB_WR;
-                end else begin
-                    mux_usb.usb_wr_ready <= 1'b1;
-                    state <= IDLE;
-                end
+                mux_usb.usb_wr_ready <= 1'b0;
+                state <= IDLE;
             end
             default: state <= IDLE;
             endcase

@@ -66,9 +66,13 @@ private:
 	CCyUSBDevice* USBDevice;
 	HANDLE DeviceHandle;
 	CCyUSBEndPoint* FIFODataTxEndPt;
+	USHORT FIFODataTxEndPtMaxPktSize;
 	CCyUSBEndPoint* FIFODataRxEndPt;
+	USHORT FIFODataRxEndPtMaxPktSize;
 	CCyUSBEndPoint* FIFOCtrlTxEndPt;
+	USHORT FIFOCtrlTxEndPtMaxPktSize;
 	CCyUSBEndPoint* FIFOCtrlRxEndPt;
+	USHORT FIFOCtrlRxEndPtMaxPktSize;
 
 	UCHAR* pCode;
 	KeyAndStatus* pKeyAndStatus;
