@@ -20,28 +20,13 @@ interface mux_buffer_interface();
     logic from_cart, from_usb;
     logic [25:0] cart_usb_addr;
     logic [25:0] mem_addr;
+    logic [18:0] compact_addr;
     modport mux (
-        input mem_addr,
+        input mem_addr, compact_addr,
         output from_cart, from_usb, cart_usb_addr);
     modport buffer (
         input from_cart, from_usb, cart_usb_addr,
-        output mem_addr);
-endinterface
-
-interface mux_mem_interface();
-    logic mem_rd, mem_rd_ready, mem_rd_valid;
-    logic mem_wr, mem_wr_ready;
-    logic [1:0] mem_data_width; // 01: 8-bit cart cs2, 10: 16-bit cart cs1, 11: 32-bit usb
-    logic [25:0] mem_addr;
-    logic [31:0] mem_rd_data;
-    logic [31:0] mem_wr_data;
-    logic [127:0] debug_mem_rd_data;
-    modport mux (
-        input mem_rd_ready, mem_wr_ready, mem_rd_data, mem_rd_valid, debug_mem_rd_data,
-        output mem_addr, mem_rd, mem_wr, mem_data_width, mem_wr_data);
-    modport mem (
-        input mem_addr, mem_rd, mem_wr, mem_data_width, mem_wr_data,
-        output mem_rd_ready, mem_wr_ready, mem_rd_data, mem_rd_valid, debug_mem_rd_data);
+        output mem_addr, compact_addr);
 endinterface
 
 interface mux_usb_interface();

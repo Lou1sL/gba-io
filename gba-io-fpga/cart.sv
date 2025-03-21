@@ -14,11 +14,6 @@ module cart (
     cart_mux_interface.cart cart_mux
 );
 
-    localparam DATA_WIDTH_0 = 2'b00;
-    localparam DATA_WIDTH_8 = 2'b01;
-    localparam DATA_WIDTH_16 = 2'b10;
-    localparam DATA_WIDTH_32 = 2'b11;
-
     // CDC
     bit [0:2] cs1_history = 3'b0;
     bit [0:2] cs2_history = 3'b0;
@@ -60,17 +55,17 @@ module cart (
 
     // Cart Signals -> Mux Signals
     logic cs1_rd, cs1_wr, cs2_rd, cs2_wr;
-    assign cs1_rd = cs1_lo & (rd_falling_edge | rd_lo);
-    assign cs1_wr = cs1_lo & (wr_falling_edge | wr_lo);
-    assign cs2_rd = cs2_lo & (rd_falling_edge | rd_lo); // TODO: Verify if it's cs2_lo or cs2_falling_edge
-    assign cs2_wr = cs2_lo & (wr_falling_edge | wr_lo); // TODO: Verify if it's cs2_lo or cs2_falling_edge
+    assign cs1_rd = cs1_lo & rd_falling_edge;
+    assign cs1_wr = cs1_lo & wr_falling_edge;
+    assign cs2_rd = cs2_lo & rd_falling_edge; // TODO: Verify if it's cs2_lo or cs2_falling_edge
+    assign cs2_wr = cs2_lo & wr_falling_edge; // TODO: Verify if it's cs2_lo or cs2_falling_edge
 
     assign cart_mux.cart_rd = cs1_rd | cs2_rd;
     assign cart_mux.cart_wr = cs1_wr | cs2_wr;
     assign cart_mux.cart_data_width = 
-        (cs1_rd | cs1_wr) ? DATA_WIDTH_16 :
-        (cs2_rd | cs2_wr) ? DATA_WIDTH_8 :
-        DATA_WIDTH_0;
+        (cs1_rd | (cs1_lo & rd_lo) | cs1_wr | (cs1_lo & wr_lo)) ? 2'b10 :
+        (cs2_rd | (cs2_lo & rd_lo) | cs2_wr | (cs2_lo & wr_lo)) ? 2'b01 :
+        2'b00;
 
     // Cart Address -> Address Holding Register, Mux Read Data -> Read Data Holding Registers
     bit [24:0] cart_bus_cs1_addr_hold = 25'h0;
@@ -93,9 +88,9 @@ module cart (
 
     // Cart Address / Address Holding Register -> Mux Address
     assign cart_mux.cart_addr = 
-        (cs1_rd | cs1_wr) ? { 1'b0, cart_bus_cs1_addr_hold } :
+        (cs1_rd | (cs1_lo & rd_lo) | cs1_wr | (cs1_lo & wr_lo)) ? { 1'b0, cart_bus_cs1_addr_hold } :
         // The address/data lines are prepared already before the r/w edges thus not in a metastable state
-        (cs2_rd | cs2_wr) ? { 1'b1, 9'b0, gba_adl } :
+        (cs2_rd | (cs2_lo & rd_lo) | cs2_wr | (cs2_lo & wr_lo)) ? { 1'b1, 9'b0, gba_adl } :
         26'b0;
 
     // Cart Write Data -> Mux Write Data

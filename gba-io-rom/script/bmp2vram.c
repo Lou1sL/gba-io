@@ -122,13 +122,14 @@ int main(int argc, char *argv[])
     FILE *outputFile = fopen(".\\data\\fill.vram.bin", "wb");
     for(int32_t i = 0; i < VIDEO_FEED_SIZE; i += VIDEO_FEED_FRAME_SIZE)
     {
-        fprintf(stdout, "0x%05x... \n", i);
         fwrite(VRAM, VIDEO_FEED_VRAM_SIZE, 1, outputFile);
         fwrite(PaletteRAM, VIDEO_FEED_PALETTE_RAM_SIZE, 1, outputFile);
         const uint8_t MODE_4 = 4;
         fwrite(&MODE_4, sizeof(uint8_t), 1, outputFile);
-        const uint8_t ZERO = 0;
-        fwrite(&ZERO, (VIDEO_FEED_FRAME_SIZE - VIDEO_FEED_VRAM_SIZE - VIDEO_FEED_PALETTE_RAM_SIZE - 1), 1, outputFile);
+        size_t padSize = VIDEO_FEED_FRAME_SIZE - VIDEO_FEED_VRAM_SIZE - VIDEO_FEED_PALETTE_RAM_SIZE - 1;
+        uint8_t *pad = (uint8_t *)calloc(padSize, 1);
+        fwrite(pad, padSize, 1, outputFile);
+        free(pad);
     }
     fclose(outputFile);
 
