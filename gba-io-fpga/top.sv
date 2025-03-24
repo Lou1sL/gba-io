@@ -28,6 +28,7 @@ module top (
 
     cart_mux_interface cart_mux_i();
     mux_buffer_interface mux_buffer_i();
+    mux_mem_interface mux_mem_i();
     mux_usb_interface mux_usb_i();
 
     cart cart (
@@ -52,6 +53,7 @@ module top (
         .rst(rst),
         .cart_mux(cart_mux_i.mux),
         .mux_buffer(mux_buffer_i.mux),
+        .mux_mem(mux_mem_i.mux),
         .mux_usb(mux_usb_i.mux)
     );
 
@@ -59,6 +61,12 @@ module top (
         .clk(clk),
         .rst(rst),
         .mux_buffer(mux_buffer_i.buffer)
+    );
+
+    mem mem (
+        .clk(clk),
+        .rst(rst),
+        .mux_mem(mux_mem_i.mem)
     );
 
     usb usb (

@@ -7,6 +7,7 @@ module mux (
     input logic rst,
     cart_mux_interface.mux cart_mux,
     mux_buffer_interface.mux mux_buffer,
+    mux_mem_interface.mux mux_mem,
     mux_usb_interface.mux mux_usb
 );
 
@@ -15,50 +16,29 @@ module mux (
     localparam DATA_WIDTH_16 = 2'b10;
     localparam DATA_WIDTH_32 = 2'b11;
 
-    localparam COMPACT_BRAM_SIZE = 'h62080;
-
-    (* ram_style = "block", keep = "true" *) reg [31:0] BRAM [0:(COMPACT_BRAM_SIZE >> 2)-1];
-    initial begin
-        $readmemh("./init_bram.hex", BRAM);
-    end
-
     localparam CMD_IDLE = 2'b00;
     localparam CMD_READ = 2'b01;
     localparam CMD_WRITE = 2'b10;
-    bit [18:0] temp_address;
-    bit [31:0] temp_rd_data;
-    bit [31:0] temp_wr_data;
-    bit [1:0] mem_cmd;
-    always_ff @ (posedge clk) begin
-        if (rst) begin
-            temp_address <= 19'h0;
-            temp_rd_data <= 32'h0;
-            temp_wr_data <= 32'h0;
-            mem_cmd <= CMD_IDLE;
-        end else begin
-            case (mem_cmd)
-            CMD_READ: begin
-                temp_rd_data <= BRAM[temp_address];
-            end
-            CMD_WRITE: begin
-                BRAM[temp_address] <= temp_wr_data;
-            end
-            default: mem_cmd <= CMD_IDLE;
-            endcase
-        end
-    end
 
-    localparam IDLE = 4'd0;
-    localparam CART_RD = 4'd1;
-    localparam CART_RD_VALID = 4'd2;
-    localparam CART_WR = 4'd3;
-    localparam CART_WR_READY = 4'd4;
-    localparam USB_RD = 4'd5;
-    localparam USB_RD_VALID = 4'd6;
-    localparam USB_WR = 4'd7;
-    localparam USB_WR_READY = 4'd8;
+    localparam IDLE = 0;
+    localparam CART_RD_ADDR = 1;
+    localparam CART_RD = 2;
+    localparam CART_RD_PREP = 3;
+    localparam CART_RD_VALID = 4;
+    localparam CART_WR_ADDR = 5;
+    localparam CART_WR = 6;
+    localparam CART_WR_PREP = 7;
+    localparam CART_WR_READY = 8;
+    localparam USB_RD_ADDR = 9;
+    localparam USB_RD = 10;
+    localparam USB_RD_PREP = 11;
+    localparam USB_RD_VALID = 12;
+    localparam USB_WR_ADDR = 13;
+    localparam USB_WR = 14;
+    localparam USB_WR_PREP = 15;
+    localparam USB_WR_READY = 16;
 
-    bit [3:0] state = IDLE;
+    byte state = IDLE;
 
     always_ff @ (posedge clk) begin
         if (rst) begin
@@ -68,32 +48,32 @@ module mux (
             IDLE: begin
                 cart_mux.cart_rd_data <= 16'h0;
                 cart_mux.cart_rd_valid <= 1'b0;
+                mux_mem.mem_cmd <= CMD_IDLE;
+                mux_mem.mem_addr <= 17'h0;
+                mux_mem.mem_wr_data <= 32'h0;
                 mux_usb.usb_rd_data <= 32'h0;
                 mux_usb.usb_wr_ready <= 1'b0;
                 mux_usb.usb_rd_valid <= 1'b0;
-                temp_address <= 19'h0;
-                temp_wr_data <= 32'h0;
-                mem_cmd <= CMD_IDLE;
                 if (cart_mux.cart_rd) begin
                     mux_buffer.from_cart <= 1'b1;
                     mux_buffer.from_usb <= 1'b0;
                     mux_buffer.cart_usb_addr <= cart_mux.cart_addr;
-                    state <= CART_RD;
+                    state <= CART_RD_ADDR;
                 end else if (cart_mux.cart_wr) begin
                     mux_buffer.from_cart <= 1'b1;
                     mux_buffer.from_usb <= 1'b0;
                     mux_buffer.cart_usb_addr <= cart_mux.cart_addr;
-                    state <= CART_WR;
+                    state <= CART_WR_ADDR;
                 end else if (mux_usb.usb_rd) begin
                     mux_buffer.from_cart <= 1'b0;
                     mux_buffer.from_usb <= 1'b1;
                     mux_buffer.cart_usb_addr <= mux_usb.usb_addr;
-                    state <= USB_RD;
+                    state <= USB_RD_ADDR;
                 end else if (mux_usb.usb_wr) begin
                     mux_buffer.from_cart <= 1'b0;
                     mux_buffer.from_usb <= 1'b1;
                     mux_buffer.cart_usb_addr <= mux_usb.usb_addr;
-                    state <= USB_WR;
+                    state <= USB_WR_ADDR;
                 end else begin
                     mux_buffer.from_cart <= 1'b0;
                     mux_buffer.from_usb <= 1'b0;
@@ -101,74 +81,103 @@ module mux (
                     state <= IDLE;
                 end
             end
-            CART_RD: begin
+            CART_RD_ADDR: begin
                 mux_buffer.from_cart <= 1'b0;
                 mux_buffer.cart_usb_addr <= 26'b0;
-                mem_cmd <= CMD_READ;
-                temp_address <= mux_buffer.compact_addr[18:2];
+                state <= CART_RD;
+            end
+            CART_RD: begin
+                mux_mem.mem_cmd <= CMD_READ;
+                mux_mem.mem_addr <= mux_buffer.compact_addr[18:2];
+                state <= CART_RD_PREP;
+            end
+            CART_RD_PREP: begin
+                mux_mem.mem_cmd <= CMD_IDLE;
+                mux_mem.mem_addr <= 17'h0;
                 state <= CART_RD_VALID;
             end
             CART_RD_VALID: begin
-                mem_cmd <= CMD_IDLE;
-                temp_address <= 19'h0;
                 cart_mux.cart_rd_data <= 
                     (cart_mux.cart_data_width == DATA_WIDTH_8) ?
                         {
                             8'h0,
-                            { temp_rd_data >> ((2'b11 - mux_buffer.compact_addr[1:0]) << 3) }[7:0]
+                            { mux_mem.mem_rd_data >> ((2'b11 - mux_buffer.compact_addr[1:0]) << 3) }[7:0]
                         } :
                     (cart_mux.cart_data_width == DATA_WIDTH_16) ?
                         {
-                            { temp_rd_data >> (((2'b11 - mux_buffer.compact_addr[1:0]) - 1) << 3) }[7:0],
-                            { temp_rd_data >> (((2'b11 - mux_buffer.compact_addr[1:0]) - 1) << 3) }[15:8]
+                            { mux_mem.mem_rd_data >> (((2'b11 - mux_buffer.compact_addr[1:0]) - 1) << 3) }[7:0],
+                            { mux_mem.mem_rd_data >> (((2'b11 - mux_buffer.compact_addr[1:0]) - 1) << 3) }[15:8]
                         } :
                     { 16'hDEAD };
                 cart_mux.cart_rd_valid <= 1'b1;
                 state <= IDLE;
             end
-            CART_WR: begin
+            CART_WR_ADDR: begin
                 mux_buffer.from_cart <= 1'b0;
                 mux_buffer.cart_usb_addr <= 26'b0;
-                mem_cmd <= CMD_READ;
-                temp_address <= mux_buffer.compact_addr[18:2];
+                state <= CART_WR;
+            end
+            CART_WR: begin
+                mux_mem.mem_cmd <= CMD_READ;
+                mux_mem.mem_addr <= mux_buffer.compact_addr[18:2];
+                state <= CART_WR_PREP;
+            end
+            CART_WR_PREP: begin
+                mux_mem.mem_cmd <= CMD_IDLE;
+                mux_mem.mem_addr <= 17'h0;
                 state <= CART_WR_READY;
             end
             CART_WR_READY: begin
-                mem_cmd <= CMD_WRITE;
+                mux_mem.mem_cmd <= CMD_WRITE;
                 if(cart_mux.cart_data_width == DATA_WIDTH_8) begin
-                    temp_wr_data <=
-                        (temp_rd_data & (32'hFFFFFF00 << ((2'b11 - mux_buffer.compact_addr[1:0]) << 3))) |
-                        (32{ 24'h0, cart_mux.cart_wr_data[7:0] } << ((2'b11 - mux_buffer.compact_addr[1:0]) << 3));
+                    mux_mem.mem_wr_data <=
+                        (mux_mem.mem_rd_data & (32'hFFFFFF00 << ((2'b11 - mux_buffer.compact_addr[1:0]) << 3))) |
+                        ({ 32{ 24'h0, cart_mux.cart_wr_data[7:0] } } << ((2'b11 - mux_buffer.compact_addr[1:0]) << 3));
                 end else if(cart_mux.cart_data_width == DATA_WIDTH_16) begin
-                    temp_wr_data <=
-                        (temp_rd_data & (32'hFFFF0000 << ((2'b11 - mux_buffer.compact_addr[1:0] - 1) << 3))) |
-                        (32{ 16'h0, cart_mux.cart_wr_data[7:0], cart_mux.cart_wr_data[15:8] } << ((2'b11 - mux_buffer.compact_addr[1:0] - 1) << 3));
+                    mux_mem.mem_wr_data <=
+                        (mux_mem.mem_rd_data & (32'hFFFF0000 << ((2'b11 - mux_buffer.compact_addr[1:0] - 1) << 3))) |
+                        ({ 32{ 16'h0, cart_mux.cart_wr_data[7:0], cart_mux.cart_wr_data[15:8] } } << ((2'b11 - mux_buffer.compact_addr[1:0] - 1) << 3));
                 end
                 state <= IDLE;
             end
-            USB_RD: begin
+            USB_RD_ADDR: begin
                 mux_buffer.from_usb <= 1'b0;
                 mux_buffer.cart_usb_addr <= 26'b0;
-                mem_cmd <= CMD_READ;
-                temp_address <= mux_buffer.compact_addr[18:2];
+                state <= USB_RD;
+            end
+            USB_RD: begin
+                mux_mem.mem_cmd <= CMD_READ;
+                mux_mem.mem_addr <= mux_buffer.compact_addr[18:2];
+                state <= USB_RD_PREP;
+            end
+            USB_RD_PREP: begin
+                mux_mem.mem_cmd <= CMD_IDLE;
+                mux_mem.mem_addr <= 17'h0;
                 state <= USB_RD_VALID;
             end
             USB_RD_VALID: begin
-                mem_cmd <= CMD_IDLE;
-                temp_address <= 19'h0;
-                mux_usb.usb_rd_data <= temp_rd_data;
+                mux_usb.usb_rd_data <= mux_mem.mem_rd_data;
                 mux_usb.usb_rd_valid <= 1'b1;
                 state <= IDLE;
             end
-            USB_WR: begin
+            USB_WR_ADDR: begin
                 mux_buffer.from_usb <= 1'b0;
                 mux_buffer.cart_usb_addr <= 26'b0;
-                temp_address <= mux_buffer.compact_addr[18:2];
+                state <= USB_WR;
+            end
+            USB_WR: begin
+                mux_mem.mem_cmd <= CMD_READ;
+                mux_mem.mem_addr <= mux_buffer.compact_addr[18:2];
+                state <= USB_WR_PREP;
+            end
+            USB_WR_PREP: begin
+                mux_mem.mem_cmd <= CMD_IDLE;
+                mux_mem.mem_addr <= 17'h0;
                 state <= USB_WR_READY;
             end
             USB_WR_READY: begin
-                mem_cmd <= CMD_WRITE;
-                temp_wr_data <= mux_usb.usb_wr_data;
+                mux_mem.mem_cmd <= CMD_WRITE;
+                mux_mem.mem_wr_data <= mux_usb.usb_wr_data;
                 mux_usb.usb_wr_ready <= 1'b1;
                 state <= IDLE;
             end

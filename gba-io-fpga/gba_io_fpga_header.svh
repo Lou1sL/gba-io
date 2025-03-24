@@ -29,6 +29,19 @@ interface mux_buffer_interface();
         output mem_addr, compact_addr);
 endinterface
 
+interface mux_mem_interface();
+    logic [1:0] mem_cmd;
+    logic [16:0] mem_addr;
+    logic [31:0] mem_rd_data;
+    logic [31:0] mem_wr_data;
+    modport mux (
+        input mem_rd_data,
+        output mem_cmd, mem_addr, mem_wr_data);
+    modport mem (
+        input mem_cmd, mem_addr, mem_wr_data,
+        output mem_rd_data);
+endinterface
+
 interface mux_usb_interface();
     logic usb_rd, usb_rd_valid;
     logic usb_wr, usb_wr_ready;
