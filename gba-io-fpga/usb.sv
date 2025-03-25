@@ -14,6 +14,7 @@
 module usb (
     input logic clk,
     input logic rst,
+    // output logic rst_cmd,
     output logic led_rcv,
     // USB3.1 FX3 GPIF2 Interface
     inout logic [31:0] fdata,
@@ -33,13 +34,14 @@ module usb (
     // ││   ││││ ││││
     // ││   └┴┴┴─┴┴┴┴────────────── 32-bit transmission address
     // ││
-    // └┴────────────────────────── 0x00: DISABLE, 0x40: IN_RX, 0x80: OUT_TX
+    // └┴────────────────────────── 0x00: DISABLE, 0x40: IN_RX, 0x80: OUT_TX, 0xFF: RESET
 
     localparam ADDRESS_SPACE_SIZE = 32'h20000000;
     localparam FINGERPRINT = 64'h47424120492F4F0A; // "GBA I/O\n"
     localparam TRANS_TYPE_DISABLE = 8'h00;
     localparam TRANS_TYPE_IN_RX   = 8'h40;
     localparam TRANS_TYPE_OUT_TX  = 8'h80;
+    localparam TRANS_TYPE_RESET   = 8'hFF;
 
     bit [7:0] transmit_type = TRANS_TYPE_DISABLE;
     bit [31:0] transmit_start_address;
@@ -87,7 +89,9 @@ module usb (
                 end
                 2: begin
                     transmit_code_buffer[7:0] <= ctrl_tx[7:0];
-                    if(
+                    if(transmit_code_buffer[71:64] == TRANS_TYPE_RESET) begin
+                        // TODO: rst_cmd <= 1;
+                    end else if(
                         ((transmit_code_buffer[71:64] == TRANS_TYPE_IN_RX) | (transmit_code_buffer[71:64] == TRANS_TYPE_OUT_TX)) &
                         ((transmit_code_buffer[63:32] + { transmit_code_buffer[31:8], ctrl_tx[7:0] }) < ADDRESS_SPACE_SIZE) &
                         ({ transmit_code_buffer[31:8], ctrl_tx[7:0] } > 0)
