@@ -83,8 +83,10 @@ module cart (
     end
 
     // Read Data Holding Registers -> Cart Read Data
-    assign gba_adl = (cs1_lo & rd_lo) ? cart_bus_rd_data_hold : 16'bz;
-    assign gba_adh = (cs2_lo & rd_lo) ? cart_bus_rd_data_hold[7:0] : 8'bz;
+    // assign gba_adl = (cs1_lo & rd_lo) ? cart_bus_rd_data_hold : 16'bz;
+    // assign gba_adh = (cs2_lo & rd_lo) ? cart_bus_rd_data_hold[7:0] : 8'bz;
+    assign gba_adl = 16'bz;
+    assign gba_adh = 8'bz;
 
     // Cart Address / Address Holding Register -> Mux Address
     assign cart_mux.cart_addr = 

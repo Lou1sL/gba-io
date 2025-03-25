@@ -21,22 +21,26 @@ module mux (
     localparam CMD_WRITE = 2'b10;
 
     localparam IDLE = 0;
-    localparam CART_RD_ADDR = 1;
+    localparam CART_RD_ADDR_WAIT = 1;
     localparam CART_RD = 2;
-    localparam CART_RD_PREP = 3;
+    localparam CART_RD_WAIT = 3;
     localparam CART_RD_VALID = 4;
-    localparam CART_WR_ADDR = 5;
-    localparam CART_WR = 6;
-    localparam CART_WR_PREP = 7;
-    localparam CART_WR_READY = 8;
-    localparam USB_RD_ADDR = 9;
-    localparam USB_RD = 10;
-    localparam USB_RD_PREP = 11;
-    localparam USB_RD_VALID = 12;
-    localparam USB_WR_ADDR = 13;
-    localparam USB_WR = 14;
-    localparam USB_WR_PREP = 15;
-    localparam USB_WR_READY = 16;
+    localparam CART_RD_VALID_WAIT = 5;
+    localparam CART_WR_ADDR_WAIT = 6;
+    localparam CART_WR = 7;
+    localparam CART_WR_WAIT = 8;
+    localparam CART_WR_READY = 9;
+    localparam CART_WR_READY_WAIT = 10;
+    localparam USB_RD_ADDR_WAIT = 11;
+    localparam USB_RD = 12;
+    localparam USB_RD_WAIT = 13;
+    localparam USB_RD_VALID = 14;
+    localparam USB_RD_VALID_WAIT = 15;
+    localparam USB_WR_ADDR_WAIT = 16;
+    localparam USB_WR = 17;
+    localparam USB_WR_WAIT = 18;
+    localparam USB_WR_READY = 19;
+    localparam USB_WR_READY_WAIT = 20;
 
     byte state = IDLE;
 
@@ -58,22 +62,22 @@ module mux (
                     mux_buffer.from_cart <= 1'b1;
                     mux_buffer.from_usb <= 1'b0;
                     mux_buffer.cart_usb_addr <= cart_mux.cart_addr;
-                    state <= CART_RD_ADDR;
+                    state <= CART_RD_ADDR_WAIT;
                 end else if (cart_mux.cart_wr) begin
                     mux_buffer.from_cart <= 1'b1;
                     mux_buffer.from_usb <= 1'b0;
                     mux_buffer.cart_usb_addr <= cart_mux.cart_addr;
-                    state <= CART_WR_ADDR;
+                    state <= CART_WR_ADDR_WAIT;
                 end else if (mux_usb.usb_rd) begin
                     mux_buffer.from_cart <= 1'b0;
                     mux_buffer.from_usb <= 1'b1;
                     mux_buffer.cart_usb_addr <= mux_usb.usb_addr;
-                    state <= USB_RD_ADDR;
+                    state <= USB_RD_ADDR_WAIT;
                 end else if (mux_usb.usb_wr) begin
                     mux_buffer.from_cart <= 1'b0;
                     mux_buffer.from_usb <= 1'b1;
                     mux_buffer.cart_usb_addr <= mux_usb.usb_addr;
-                    state <= USB_WR_ADDR;
+                    state <= USB_WR_ADDR_WAIT;
                 end else begin
                     mux_buffer.from_cart <= 1'b0;
                     mux_buffer.from_usb <= 1'b0;
@@ -81,7 +85,7 @@ module mux (
                     state <= IDLE;
                 end
             end
-            CART_RD_ADDR: begin
+            CART_RD_ADDR_WAIT: begin
                 mux_buffer.from_cart <= 1'b0;
                 mux_buffer.cart_usb_addr <= 26'b0;
                 state <= CART_RD;
@@ -89,9 +93,9 @@ module mux (
             CART_RD: begin
                 mux_mem.mem_cmd <= CMD_READ;
                 mux_mem.mem_addr <= mux_buffer.compact_addr[18:2];
-                state <= CART_RD_PREP;
+                state <= CART_RD_WAIT;
             end
-            CART_RD_PREP: begin
+            CART_RD_WAIT: begin
                 mux_mem.mem_cmd <= CMD_IDLE;
                 mux_mem.mem_addr <= 17'h0;
                 state <= CART_RD_VALID;
@@ -110,9 +114,12 @@ module mux (
                         } :
                     { 16'hDEAD };
                 cart_mux.cart_rd_valid <= 1'b1;
+                state <= CART_RD_VALID_WAIT;
+            end
+            CART_RD_VALID_WAIT: begin
                 state <= IDLE;
             end
-            CART_WR_ADDR: begin
+            CART_WR_ADDR_WAIT: begin
                 mux_buffer.from_cart <= 1'b0;
                 mux_buffer.cart_usb_addr <= 26'b0;
                 state <= CART_WR;
@@ -120,9 +127,9 @@ module mux (
             CART_WR: begin
                 mux_mem.mem_cmd <= CMD_READ;
                 mux_mem.mem_addr <= mux_buffer.compact_addr[18:2];
-                state <= CART_WR_PREP;
+                state <= CART_WR_WAIT;
             end
-            CART_WR_PREP: begin
+            CART_WR_WAIT: begin
                 mux_mem.mem_cmd <= CMD_IDLE;
                 mux_mem.mem_addr <= 17'h0;
                 state <= CART_WR_READY;
@@ -138,9 +145,12 @@ module mux (
                         (mux_mem.mem_rd_data & (32'hFFFF0000 << ((2'b11 - mux_buffer.compact_addr[1:0] - 1) << 3))) |
                         ({ 32{ 16'h0, cart_mux.cart_wr_data[7:0], cart_mux.cart_wr_data[15:8] } } << ((2'b11 - mux_buffer.compact_addr[1:0] - 1) << 3));
                 end
+                state <= CART_WR_READY_WAIT;
+            end
+            CART_WR_READY_WAIT: begin
                 state <= IDLE;
             end
-            USB_RD_ADDR: begin
+            USB_RD_ADDR_WAIT: begin
                 mux_buffer.from_usb <= 1'b0;
                 mux_buffer.cart_usb_addr <= 26'b0;
                 state <= USB_RD;
@@ -148,9 +158,9 @@ module mux (
             USB_RD: begin
                 mux_mem.mem_cmd <= CMD_READ;
                 mux_mem.mem_addr <= mux_buffer.compact_addr[18:2];
-                state <= USB_RD_PREP;
+                state <= USB_RD_WAIT;
             end
-            USB_RD_PREP: begin
+            USB_RD_WAIT: begin
                 mux_mem.mem_cmd <= CMD_IDLE;
                 mux_mem.mem_addr <= 17'h0;
                 state <= USB_RD_VALID;
@@ -158,9 +168,12 @@ module mux (
             USB_RD_VALID: begin
                 mux_usb.usb_rd_data <= mux_mem.mem_rd_data;
                 mux_usb.usb_rd_valid <= 1'b1;
+                state <= USB_RD_VALID_WAIT;
+            end
+            USB_RD_VALID_WAIT: begin
                 state <= IDLE;
             end
-            USB_WR_ADDR: begin
+            USB_WR_ADDR_WAIT: begin
                 mux_buffer.from_usb <= 1'b0;
                 mux_buffer.cart_usb_addr <= 26'b0;
                 state <= USB_WR;
@@ -168,9 +181,9 @@ module mux (
             USB_WR: begin
                 mux_mem.mem_cmd <= CMD_READ;
                 mux_mem.mem_addr <= mux_buffer.compact_addr[18:2];
-                state <= USB_WR_PREP;
+                state <= USB_WR_WAIT;
             end
-            USB_WR_PREP: begin
+            USB_WR_WAIT: begin
                 mux_mem.mem_cmd <= CMD_IDLE;
                 mux_mem.mem_addr <= 17'h0;
                 state <= USB_WR_READY;
@@ -179,6 +192,9 @@ module mux (
                 mux_mem.mem_cmd <= CMD_WRITE;
                 mux_mem.mem_wr_data <= mux_usb.usb_wr_data;
                 mux_usb.usb_wr_ready <= 1'b1;
+                state <= USB_WR_READY_WAIT;
+            end
+            USB_WR_READY_WAIT: begin
                 state <= IDLE;
             end
             default: state <= IDLE;
