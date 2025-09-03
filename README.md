@@ -1,8 +1,11 @@
-# GBA I/O
+# GBA I/O (IN PROGRESS UNFINISHED)
 
 Turning the Gameboy Advance into a USB 3.1 peripheral I/O device, allowing us to use it freely for anything we'd like.
 
 For example, it can be used as a display monitor while simultaneously as a keyboard/mouse controller and a speaker, allowing us to play computer games on it!
+
+Current Obstacle: See [The Pain of Memory Stalling](#the-pain-of-memory-stalling)
+A custom SRAM expansion PCB board is required, it'll be added to /gba-io-pcb.
 
 ## Contents
 
@@ -124,19 +127,9 @@ Well, I have to admit, I'm not a professional in hardware development, and I onl
 
 This is totally unacceptable, I cannot plead the GBA console to grant me some generosity when it's trying to read the ROM, otherwise it can be mitigated by using caches, but in this brutal case, I cannot afford any cache miss, refresh scheduling is also not viable, since I never know when will the GBA console request data from the cartridge bus (Well, if it's just gba-io-rom that's running on the console, I know, but I also want to play any legit game with my FPGA board, oof)
 
-To mitigate this timing problem, I'll be storing the same duplicated ROM data accross multiple memory banks, and make the GBA console always pick the current-available one to read. Writing data will take significant longer time (in a nanosecond sense), but it's okay, the GBA console will not write to the ROM section, and will only write SRAM when saving game anyway.
+~~To mitigate this timing problem, I'll be storing the same duplicated ROM data accross multiple memory banks, and make the GBA console always pick the current-available one to read. Writing data will take significant longer time (in a nanosecond sense), but it's okay, the GBA console will not write to the ROM section, and will only write SRAM when saving game anyway.~~
 
-This method gets described in the next section.
-
-### Interleaved Redundant SDRAM Memory Bank (Wat?)
-
-[Interleaved memory](https://en.wikipedia.org/wiki/Interleaved_memory)
-
-[Bank Interleaving](https://www.intel.com/content/www/us/en/docs/programmable/683663/24-1-19-1-2/bank-interleaving.html)
-
-[Reducing main memory access latency through SDRAM address mapping techniques and access reordering mechanisms](https://digitalcommons.mtu.edu/cgi/viewcontent.cgi?article=1071&context=etds)
-
-TODO
+~~This method gets described in the next section.~~
 
 ### USB 3.1 Implementation
 
@@ -247,5 +240,16 @@ https://sites.google.com/site/tedrossin/home/electronics/xilinxamd-fpga
 CYUSB SDK
 https://softwaretools.infineon.com/tools/com.ifx.tb.tool.ezusbfx3sdk
 https://github.com/YosysHQ/oss-cad-suite-build
+
+
+#######
+Interleaved Redundant SDRAM Memory Bank
+
+https://en.wikipedia.org/wiki/Interleaved_memory
+
+https://www.intel.com/content/www/us/en/docs/programmable/683663/24-1-19-1-2/bank-interleaving.html
+
+Reducing main memory access latency through SDRAM address mapping techniques and access reordering mechanisms
+https://digitalcommons.mtu.edu/cgi/viewcontent.cgi?article=1071&context=etds
 
 ```
