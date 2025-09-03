@@ -5,6 +5,7 @@ Turning the Gameboy Advance into a USB 3.1 peripheral I/O device, allowing us to
 For example, it can be used as a display monitor while simultaneously as a keyboard/mouse controller and a speaker, allowing us to play computer games on it!
 
 Current Obstacle: See [The Pain of Memory Stalling](#the-pain-of-memory-stalling)
+
 A custom SRAM expansion PCB board is required, it'll be added to /gba-io-pcb.
 
 ## Contents
